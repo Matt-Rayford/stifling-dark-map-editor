@@ -1,0 +1,14 @@
+export const MAP_CONSTANTS = {
+	ROWS: 24,
+	COLS: 21,
+	SPACER_X: 57.95,
+	SPACER_Y: 50.3,
+	INDENT: 29,
+	SPACE_RADIUS: 15,
+	PADDING_X: 61,
+	PADDING_Y: 76,
+};
+
+export const DRAW_CONSTANTS = {
+	SPACE_COLOR: '#B6B6B5',
+};

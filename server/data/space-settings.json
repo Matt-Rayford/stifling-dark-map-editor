@@ -1,0 +1,3837 @@
+[
+	{
+		"id": "SyF2h6sxq",
+		"title": "The Sawmill",
+		"drawOptions": {
+			"backgroundImageUrl": "/images/boards/sawmill-board.png",
+			"spaceColor": "#c7c7c7"
+		},
+		"spaces": [
+			{
+				"id": 0,
+				"number": 1,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 1,
+				"connections": [21, 1]
+			},
+			{
+				"id": 1,
+				"number": 2,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 2,
+				"connections": [21, 0, 2]
+			},
+			{
+				"id": 2,
+				"number": 3,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 3,
+				"connections": [23, 1, 3]
+			},
+			{
+				"id": 3,
+				"number": 4,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 4,
+				"connections": [23, 2, 4]
+			},
+			{
+				"id": 4,
+				"number": 5,
+				"type": "ADVERSARY",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 5,
+				"connections": [3, 5]
+			},
+			{
+				"id": 5,
+				"number": 6,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 6,
+				"connections": [26, 4, 6]
+			},
+			{
+				"id": 6,
+				"number": 7,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 7,
+				"connections": [26, 27, 5, 7]
+			},
+			{
+				"id": 7,
+				"number": 8,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 8,
+				"connections": [28, 6, 8]
+			},
+			{
+				"id": 8,
+				"number": 9,
+				"type": "DOOR",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 9,
+				"connections": [7, 9, 28, 29]
+			},
+			{
+				"id": 9,
+				"number": 10,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 10,
+				"connections": [29, 30, 8, 10]
+			},
+			{
+				"id": 10,
+				"number": 11,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 11,
+				"connections": [30, 31, 9, 11]
+			},
+			{
+				"id": 11,
+				"number": 12,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 12,
+				"connections": [31, 10, 12]
+			},
+			{
+				"id": 12,
+				"number": 13,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 13,
+				"connections": [11, 13]
+			},
+			{
+				"id": 13,
+				"number": 14,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 14,
+				"connections": [34, 12, 14]
+			},
+			{
+				"id": 14,
+				"number": 15,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 15,
+				"connections": [34, 13, 15]
+			},
+			{
+				"id": 15,
+				"number": 16,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 16,
+				"connections": [14, 16]
+			},
+			{
+				"id": 16,
+				"number": 17,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 17,
+				"connections": [15, 17]
+			},
+			{
+				"id": 17,
+				"number": 18,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 18,
+				"connections": [16, 18]
+			},
+			{
+				"id": 18,
+				"number": 19,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 19,
+				"connections": [17, 19]
+			},
+			{
+				"id": 19,
+				"number": 20,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 20,
+				"connections": [40, 18, 20]
+			},
+			{
+				"id": 20,
+				"number": 21,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 1,
+				"col": 21,
+				"connections": [40, 41, 19]
+			},
+			{
+				"id": 21,
+				"number": 22,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 1,
+				"connections": [0, 1, 42, 43]
+			},
+			{
+				"id": 23,
+				"number": 23,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 3,
+				"connections": [2, 3, 44, 45]
+			},
+			{
+				"id": 25,
+				"number": 24,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 5,
+				"connections": [26, 46, 47]
+			},
+			{
+				"id": 26,
+				"number": 25,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 6,
+				"connections": [5, 6, 47, 48, 25, 27]
+			},
+			{
+				"id": 27,
+				"number": 26,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 7,
+				"connections": [6, 26, 48, 49]
+			},
+			{
+				"id": 28,
+				"number": 27,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 8,
+				"connections": [7, 8]
+			},
+			{
+				"id": 29,
+				"number": 28,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 9,
+				"connections": [8, 9, 30]
+			},
+			{
+				"id": 30,
+				"number": 29,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 10,
+				"connections": [9, 10, 29, 31, 52]
+			},
+			{
+				"id": 31,
+				"number": 30,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 11,
+				"connections": [10, 11, 52, 53, 30]
+			},
+			{
+				"id": 32,
+				"number": 31,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 12,
+				"connections": [53, 54]
+			},
+			{
+				"id": 34,
+				"number": 32,
+				"type": "ADVERSARY",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 14,
+				"connections": [13, 14, 56]
+			},
+			{
+				"id": 36,
+				"number": 33,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 16,
+				"connections": [37, 57, 58]
+			},
+			{
+				"id": 37,
+				"number": 34,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 17,
+				"connections": [36, 38, 58, 59]
+			},
+			{
+				"id": 38,
+				"number": 35,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 18,
+				"connections": [37, 59, 60]
+			},
+			{
+				"id": 40,
+				"number": 36,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 20,
+				"connections": [19, 20, 61, 41]
+			},
+			{
+				"id": 41,
+				"number": 37,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 2,
+				"col": 21,
+				"connections": [20, 40]
+			},
+			{
+				"id": 42,
+				"number": 38,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 1,
+				"connections": [21, 63, 43]
+			},
+			{
+				"id": 43,
+				"number": 39,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 2,
+				"connections": [21, 42, 63]
+			},
+			{
+				"id": 44,
+				"number": 40,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 3,
+				"connections": [23, 45]
+			},
+			{
+				"id": 45,
+				"number": 41,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 4,
+				"connections": [23, 66, 44, 46]
+			},
+			{
+				"id": 46,
+				"number": 42,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 5,
+				"connections": [25, 66, 67, 45, 47]
+			},
+			{
+				"id": 47,
+				"number": 43,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 6,
+				"connections": [25, 26, 67, 68, 46, 48]
+			},
+			{
+				"id": 48,
+				"number": 44,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 7,
+				"connections": [26, 27, 68, 47, 49]
+			},
+			{
+				"id": 49,
+				"number": 45,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 8,
+				"connections": [27, 70, 48, 50]
+			},
+			{
+				"id": 50,
+				"number": 46,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 9,
+				"connections": [70, 71, 49, 51]
+			},
+			{
+				"id": 51,
+				"number": 47,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 10,
+				"connections": [71, 72, 50, 52]
+			},
+			{
+				"id": 52,
+				"number": 48,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 11,
+				"connections": [30, 31, 72, 73, 51, 53]
+			},
+			{
+				"id": 53,
+				"number": 49,
+				"type": "DOOR",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 12,
+				"connections": [31, 32, 52, 54, 73, 74]
+			},
+			{
+				"id": 54,
+				"number": 50,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 13,
+				"connections": [32, 53, 74]
+			},
+			{
+				"id": 56,
+				"number": 51,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 15,
+				"connections": [34, 76, 77, 57]
+			},
+			{
+				"id": 57,
+				"number": 52,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 16,
+				"connections": [36, 77, 56, 58]
+			},
+			{
+				"id": 58,
+				"number": 53,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 17,
+				"connections": [36, 37, 79, 57, 59]
+			},
+			{
+				"id": 59,
+				"number": 54,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 18,
+				"connections": [37, 38, 79, 58, 60]
+			},
+			{
+				"id": 60,
+				"number": 55,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 19,
+				"connections": [38, 59]
+			},
+			{
+				"id": 61,
+				"number": 56,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 3,
+				"col": 20,
+				"connections": [40, 82]
+			},
+			{
+				"id": 63,
+				"number": 57,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 1,
+				"connections": [42, 43, 84]
+			},
+			{
+				"id": 66,
+				"number": 58,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 4,
+				"connections": [45, 46, 87, 88, 67]
+			},
+			{
+				"id": 67,
+				"number": 59,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 5,
+				"connections": [46, 47, 66, 88]
+			},
+			{
+				"id": 68,
+				"number": 60,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 6,
+				"connections": [47, 48, 90]
+			},
+			{
+				"id": 70,
+				"number": 61,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 8,
+				"connections": [49, 50, 91, 92, 71]
+			},
+			{
+				"id": 71,
+				"number": 62,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 9,
+				"connections": [50, 51, 92, 70, 72]
+			},
+			{
+				"id": 72,
+				"number": 63,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 10,
+				"connections": [51, 52, 94, 71, 73]
+			},
+			{
+				"id": 73,
+				"number": 64,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 11,
+				"connections": [52, 53, 94, 95, 72]
+			},
+			{
+				"id": 74,
+				"number": 65,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 12,
+				"connections": [53, 54, 75]
+			},
+			{
+				"id": 75,
+				"number": 66,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 13,
+				"connections": [96, 97, 74, 76]
+			},
+			{
+				"id": 76,
+				"number": 67,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 14,
+				"connections": [56, 97, 98, 75, 77]
+			},
+			{
+				"id": 77,
+				"number": 68,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 15,
+				"connections": [56, 57, 76]
+			},
+			{
+				"id": 79,
+				"number": 69,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 17,
+				"connections": [58, 59, 100, 101]
+			},
+			{
+				"id": 82,
+				"number": 70,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 20,
+				"connections": [61, 103, 104, 83]
+			},
+			{
+				"id": 83,
+				"number": 71,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 4,
+				"col": 21,
+				"connections": [104, 82]
+			},
+			{
+				"id": 84,
+				"number": 72,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 1,
+				"connections": [63, 105]
+			},
+			{
+				"id": 86,
+				"number": 73,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 3,
+				"connections": [106, 107, 87]
+			},
+			{
+				"id": 87,
+				"number": 74,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 4,
+				"connections": [66, 107, 86, 88]
+			},
+			{
+				"id": 88,
+				"number": 75,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 5,
+				"connections": [66, 67, 87]
+			},
+			{
+				"id": 90,
+				"number": 76,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 7,
+				"connections": [68, 110, 111, 91]
+			},
+			{
+				"id": 91,
+				"number": 77,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 8,
+				"connections": [70, 111, 112, 90, 92]
+			},
+			{
+				"id": 92,
+				"number": 78,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 9,
+				"connections": [70, 71, 112, 113, 91]
+			},
+			{
+				"id": 94,
+				"number": 79,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 11,
+				"connections": [72, 73, 115, 95]
+			},
+			{
+				"id": 95,
+				"number": 80,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 12,
+				"connections": [73, 115, 94, 96]
+			},
+			{
+				"id": 96,
+				"number": 81,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 13,
+				"connections": [75, 117, 95, 97]
+			},
+			{
+				"id": 97,
+				"number": 82,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 14,
+				"connections": [75, 76, 117, 118, 96, 98]
+			},
+			{
+				"id": 98,
+				"number": 83,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 15,
+				"connections": [76, 118, 119, 97, 99]
+			},
+			{
+				"id": 99,
+				"number": 84,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 16,
+				"connections": [119, 120, 98, 100]
+			},
+			{
+				"id": 100,
+				"number": 85,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 17,
+				"connections": [79, 120, 121, 99, 101]
+			},
+			{
+				"id": 101,
+				"number": 86,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 18,
+				"connections": [79, 121, 122, 100]
+			},
+			{
+				"id": 103,
+				"number": 87,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 20,
+				"connections": [82, 123, 124, 104]
+			},
+			{
+				"id": 104,
+				"number": 88,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 5,
+				"col": 21,
+				"connections": [82, 83, 124, 125, 103]
+			},
+			{
+				"id": 105,
+				"number": 89,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 1,
+				"connections": [84, 126, 127, 106]
+			},
+			{
+				"id": 106,
+				"number": 90,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 2,
+				"connections": [86, 127, 128, 105, 107]
+			},
+			{
+				"id": 107,
+				"number": 91,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 3,
+				"connections": [86, 87, 128, 129, 106]
+			},
+			{
+				"id": 110,
+				"number": 92,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 6,
+				"connections": [90, 132, 111]
+			},
+			{
+				"id": 111,
+				"number": 93,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 7,
+				"connections": [90, 91, 132, 133, 110, 112]
+			},
+			{
+				"id": 112,
+				"number": 94,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 8,
+				"connections": [91, 92, 133, 134, 111, 113]
+			},
+			{
+				"id": 113,
+				"number": 95,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 9,
+				"connections": [92, 134, 112]
+			},
+			{
+				"id": 115,
+				"number": 96,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 11,
+				"connections": [94, 95, 137]
+			},
+			{
+				"id": 117,
+				"number": 97,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 13,
+				"connections": [96, 97, 138, 139, 118]
+			},
+			{
+				"id": 118,
+				"number": 98,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 14,
+				"connections": [97, 98, 139, 140, 117, 119]
+			},
+			{
+				"id": 119,
+				"number": 99,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 15,
+				"connections": [98, 99, 140, 141, 118, 120]
+			},
+			{
+				"id": 120,
+				"number": 100,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 16,
+				"connections": [99, 100, 141, 119, 121]
+			},
+			{
+				"id": 121,
+				"number": 101,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 17,
+				"connections": [100, 101, 143, 120, 122]
+			},
+			{
+				"id": 122,
+				"number": 102,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 18,
+				"connections": [101, 143, 144, 121, 123]
+			},
+			{
+				"id": 123,
+				"number": 103,
+				"type": "ADVERSARY",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 19,
+				"connections": [103, 122, 124, 144, 145]
+			},
+			{
+				"id": 124,
+				"number": 104,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 20,
+				"connections": [103, 104, 145, 146, 123, 125]
+			},
+			{
+				"id": 125,
+				"number": 105,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 6,
+				"col": 21,
+				"connections": [104, 146, 124]
+			},
+			{
+				"id": 126,
+				"number": 106,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 1,
+				"connections": [105, 147, 127]
+			},
+			{
+				"id": 127,
+				"number": 107,
+				"type": "ADVERSARY",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 2,
+				"connections": [105, 106, 126, 128, 147]
+			},
+			{
+				"id": 128,
+				"number": 108,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 3,
+				"connections": [106, 107, 149, 127, 129]
+			},
+			{
+				"id": 129,
+				"number": 109,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 4,
+				"connections": [107, 149, 150, 128, 130]
+			},
+			{
+				"id": 130,
+				"number": 110,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 5,
+				"connections": [150, 151, 129]
+			},
+			{
+				"id": 132,
+				"number": 111,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 7,
+				"connections": [110, 111, 152, 153, 133]
+			},
+			{
+				"id": 133,
+				"number": 112,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 8,
+				"connections": [111, 112, 153, 154, 132, 134]
+			},
+			{
+				"id": 134,
+				"number": 113,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 9,
+				"connections": [112, 113, 154, 155, 133]
+			},
+			{
+				"id": 135,
+				"number": 114,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 10,
+				"connections": [155, 156]
+			},
+			{
+				"id": 137,
+				"number": 115,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 12,
+				"connections": [115, 157, 158, 138]
+			},
+			{
+				"id": 138,
+				"number": 116,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 13,
+				"connections": [117, 137, 158]
+			},
+			{
+				"id": 139,
+				"number": 117,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 14,
+				"connections": [117, 118, 160, 140]
+			},
+			{
+				"id": 140,
+				"number": 118,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 15,
+				"connections": [118, 119, 160, 161, 139, 141]
+			},
+			{
+				"id": 141,
+				"number": 119,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 16,
+				"connections": [119, 120, 161, 162, 140]
+			},
+			{
+				"id": 143,
+				"number": 120,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 18,
+				"connections": [121, 122, 163, 164, 144]
+			},
+			{
+				"id": 144,
+				"number": 121,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 19,
+				"connections": [122, 123, 164, 165, 143, 145]
+			},
+			{
+				"id": 145,
+				"number": 122,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 20,
+				"connections": [123, 124, 144, 165, 166]
+			},
+			{
+				"id": 146,
+				"number": 123,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 7,
+				"col": 21,
+				"connections": [124, 125, 166, 167]
+			},
+			{
+				"id": 147,
+				"number": 124,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 1,
+				"connections": [126, 127, 168, 169]
+			},
+			{
+				"id": 149,
+				"number": 125,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 3,
+				"connections": [128, 129, 150]
+			},
+			{
+				"id": 150,
+				"number": 126,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 4,
+				"connections": [129, 130, 149, 151]
+			},
+			{
+				"id": 151,
+				"number": 127,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 5,
+				"connections": [130, 150, 152]
+			},
+			{
+				"id": 152,
+				"number": 128,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 6,
+				"connections": [132, 151, 153, 173, 174]
+			},
+			{
+				"id": 153,
+				"number": 129,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 7,
+				"connections": [132, 133, 174, 175, 152, 154]
+			},
+			{
+				"id": 154,
+				"number": 130,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 8,
+				"connections": [133, 134, 175, 176, 153, 155]
+			},
+			{
+				"id": 155,
+				"number": 131,
+				"type": "DOOR",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 9,
+				"connections": [134, 135, 154, 156, 176, 177]
+			},
+			{
+				"id": 156,
+				"number": 132,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 10,
+				"connections": [135, 155, 177]
+			},
+			{
+				"id": 157,
+				"number": 133,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 11,
+				"connections": [137, 179, 158]
+			},
+			{
+				"id": 158,
+				"number": 134,
+				"type": "ADVERSARY",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 12,
+				"connections": [137, 138, 157, 179, 180]
+			},
+			{
+				"id": 160,
+				"number": 135,
+				"type": "DOOR",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 14,
+				"connections": [139, 140, 161, 181]
+			},
+			{
+				"id": 161,
+				"number": 136,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 15,
+				"connections": [140, 141, 183, 160, 162]
+			},
+			{
+				"id": 162,
+				"number": 137,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 16,
+				"connections": [141, 183, 161]
+			},
+			{
+				"id": 163,
+				"number": 138,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 17,
+				"connections": [143, 164, 185]
+			},
+			{
+				"id": 164,
+				"number": 139,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 18,
+				"connections": [143, 144, 185, 163, 165]
+			},
+			{
+				"id": 165,
+				"number": 140,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 19,
+				"connections": [144, 145, 187, 164, 166]
+			},
+			{
+				"id": 166,
+				"number": 141,
+				"type": "DOOR",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 20,
+				"connections": [145, 146, 165, 167, 187, 188]
+			},
+			{
+				"id": 167,
+				"number": 142,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 8,
+				"col": 21,
+				"connections": [146, 188, 166]
+			},
+			{
+				"id": 168,
+				"number": 143,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 1,
+				"connections": [147, 189, 169]
+			},
+			{
+				"id": 169,
+				"number": 144,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 2,
+				"connections": [147, 189, 168, 170]
+			},
+			{
+				"id": 170,
+				"number": 145,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 3,
+				"connections": [191, 169, 171]
+			},
+			{
+				"id": 171,
+				"number": 146,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 4,
+				"connections": [191, 192, 170, 172]
+			},
+			{
+				"id": 172,
+				"number": 147,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 5,
+				"connections": [192, 193, 171, 173]
+			},
+			{
+				"id": 173,
+				"number": 148,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 6,
+				"connections": [152, 193, 194, 172, 174]
+			},
+			{
+				"id": 174,
+				"number": 149,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 7,
+				"connections": [152, 153, 194, 195, 173, 175]
+			},
+			{
+				"id": 175,
+				"number": 150,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 8,
+				"connections": [153, 154, 195, 196, 174, 176]
+			},
+			{
+				"id": 176,
+				"number": 151,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 9,
+				"connections": [154, 155, 196, 175]
+			},
+			{
+				"id": 177,
+				"number": 152,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 10,
+				"connections": [155, 156, 178]
+			},
+			{
+				"id": 178,
+				"number": 153,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 11,
+				"connections": [177, 179]
+			},
+			{
+				"id": 179,
+				"number": 154,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 12,
+				"connections": [157, 158, 199, 200, 178, 180]
+			},
+			{
+				"id": 180,
+				"number": 155,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 13,
+				"connections": [158, 200, 179]
+			},
+			{
+				"id": 181,
+				"number": 156,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 14,
+				"connections": [160, 202]
+			},
+			{
+				"id": 183,
+				"number": 157,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 16,
+				"connections": [161, 162, 203, 204]
+			},
+			{
+				"id": 185,
+				"number": 158,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 18,
+				"connections": [163, 164, 205]
+			},
+			{
+				"id": 187,
+				"number": 159,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 20,
+				"connections": [165, 166, 207]
+			},
+			{
+				"id": 188,
+				"number": 160,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 9,
+				"col": 21,
+				"connections": [166, 167, 209]
+			},
+			{
+				"id": 189,
+				"number": 161,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 1,
+				"connections": [168, 169, 210]
+			},
+			{
+				"id": 191,
+				"number": 162,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 3,
+				"connections": [170, 171, 192, 213]
+			},
+			{
+				"id": 192,
+				"number": 163,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 4,
+				"connections": [171, 172, 213, 191, 193]
+			},
+			{
+				"id": 193,
+				"number": 164,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 5,
+				"connections": [172, 173, 215, 192, 194]
+			},
+			{
+				"id": 194,
+				"number": 165,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 6,
+				"connections": [173, 174, 215, 216, 193, 195]
+			},
+			{
+				"id": 195,
+				"number": 166,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 7,
+				"connections": [174, 175, 216, 217, 194, 196]
+			},
+			{
+				"id": 196,
+				"number": 167,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 8,
+				"connections": [175, 176, 217, 218, 195]
+			},
+			{
+				"id": 199,
+				"number": 168,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 11,
+				"connections": [179, 220, 221, 200]
+			},
+			{
+				"id": 200,
+				"number": 169,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 12,
+				"connections": [179, 180, 221, 222, 199]
+			},
+			{
+				"id": 202,
+				"number": 170,
+				"type": "DOOR",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 14,
+				"connections": [181, 203, 223, 224]
+			},
+			{
+				"id": 203,
+				"number": 171,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 15,
+				"connections": [183, 224, 225, 202, 204]
+			},
+			{
+				"id": 204,
+				"number": 172,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 16,
+				"connections": [183, 225, 203, 205]
+			},
+			{
+				"id": 205,
+				"number": 173,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 17,
+				"connections": [185, 227, 204]
+			},
+			{
+				"id": 207,
+				"number": 174,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 19,
+				"connections": [187, 228, 229]
+			},
+			{
+				"id": 209,
+				"number": 175,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 10,
+				"col": 21,
+				"connections": [188, 230]
+			},
+			{
+				"id": 210,
+				"number": 176,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 1,
+				"connections": [189, 231]
+			},
+			{
+				"id": 212,
+				"number": 177,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 3,
+				"connections": [213, 232, 233]
+			},
+			{
+				"id": 213,
+				"number": 178,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 4,
+				"connections": [191, 192, 212]
+			},
+			{
+				"id": 215,
+				"number": 179,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 6,
+				"connections": [193, 194, 235, 236, 216]
+			},
+			{
+				"id": 216,
+				"number": 180,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 7,
+				"connections": [194, 195, 236, 237, 215, 217]
+			},
+			{
+				"id": 217,
+				"number": 181,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 8,
+				"connections": [195, 196, 237, 238, 216, 218]
+			},
+			{
+				"id": 218,
+				"number": 182,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 9,
+				"connections": [196, 238, 217, 219]
+			},
+			{
+				"id": 219,
+				"number": 183,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 10,
+				"connections": [240, 218, 220]
+			},
+			{
+				"id": 220,
+				"number": 184,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 11,
+				"connections": [199, 240, 219, 221]
+			},
+			{
+				"id": 221,
+				"number": 185,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 12,
+				"connections": [199, 200, 242, 220, 222]
+			},
+			{
+				"id": 222,
+				"number": 186,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 13,
+				"connections": [200, 221, 242, 243]
+			},
+			{
+				"id": 223,
+				"number": 187,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 14,
+				"connections": [202, 243, 244, 224]
+			},
+			{
+				"id": 224,
+				"number": 188,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 15,
+				"connections": [202, 203, 244, 245, 223, 225]
+			},
+			{
+				"id": 225,
+				"number": 189,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 16,
+				"connections": [203, 204, 245, 246, 224]
+			},
+			{
+				"id": 227,
+				"number": 190,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 18,
+				"connections": [205, 228, 247, 248]
+			},
+			{
+				"id": 228,
+				"number": 191,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 19,
+				"connections": [207, 248, 227, 229]
+			},
+			{
+				"id": 229,
+				"number": 192,
+				"type": "INTERACTION",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 20,
+				"connections": [207, 228]
+			},
+			{
+				"id": 230,
+				"number": 193,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 11,
+				"col": 21,
+				"connections": [209, 251]
+			},
+			{
+				"id": 231,
+				"number": 194,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 1,
+				"connections": [210, 252]
+			},
+			{
+				"id": 232,
+				"number": 195,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 2,
+				"connections": [212, 233, 254]
+			},
+			{
+				"id": 233,
+				"number": 196,
+				"type": "DOOR",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 3,
+				"connections": [212, 232, 234, 254, 255]
+			},
+			{
+				"id": 234,
+				"number": 197,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 4,
+				"connections": [255, 256, 233, 235]
+			},
+			{
+				"id": 235,
+				"number": 198,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 5,
+				"connections": [215, 256, 257, 234, 236]
+			},
+			{
+				"id": 236,
+				"number": 199,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 6,
+				"connections": [215, 216, 257, 258, 235, 237]
+			},
+			{
+				"id": 237,
+				"number": 200,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 7,
+				"connections": [216, 217, 258, 259, 236, 238]
+			},
+			{
+				"id": 238,
+				"number": 201,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 8,
+				"connections": [217, 218, 259, 260, 237]
+			},
+			{
+				"id": 240,
+				"number": 202,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 10,
+				"connections": [219, 220, 261, 262]
+			},
+			{
+				"id": 242,
+				"number": 203,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 12,
+				"connections": [221, 222, 263, 243]
+			},
+			{
+				"id": 243,
+				"number": 204,
+				"type": "DOOR",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 13,
+				"connections": [222, 223, 242, 244, 265]
+			},
+			{
+				"id": 244,
+				"number": 205,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 14,
+				"connections": [223, 224, 265, 266, 243, 245]
+			},
+			{
+				"id": 245,
+				"number": 206,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 15,
+				"connections": [224, 225, 266, 267, 244, 246]
+			},
+			{
+				"id": 246,
+				"number": 207,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 16,
+				"connections": [225, 267, 245]
+			},
+			{
+				"id": 247,
+				"number": 208,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 17,
+				"connections": [227, 248, 269]
+			},
+			{
+				"id": 248,
+				"number": 209,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 18,
+				"connections": [227, 228, 269, 270, 247]
+			},
+			{
+				"id": 251,
+				"number": 210,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 12,
+				"col": 21,
+				"connections": [230, 272]
+			},
+			{
+				"id": 252,
+				"number": 211,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 1,
+				"connections": [231, 273]
+			},
+			{
+				"id": 254,
+				"number": 212,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 3,
+				"connections": [232, 233, 274, 275, 255]
+			},
+			{
+				"id": 255,
+				"number": 213,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 4,
+				"connections": [233, 234, 275, 276, 254, 256]
+			},
+			{
+				"id": 256,
+				"number": 214,
+				"type": "ADVERSARY",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 5,
+				"connections": [234, 235, 255, 257]
+			},
+			{
+				"id": 257,
+				"number": 215,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 6,
+				"connections": [235, 236, 278, 256, 258]
+			},
+			{
+				"id": 258,
+				"number": 216,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 7,
+				"connections": [236, 237, 278, 279, 257, 259]
+			},
+			{
+				"id": 259,
+				"number": 217,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 8,
+				"connections": [237, 238, 279, 280, 258, 260]
+			},
+			{
+				"id": 260,
+				"number": 218,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 9,
+				"connections": [238, 280, 259]
+			},
+			{
+				"id": 261,
+				"number": 219,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 10,
+				"connections": [240, 262, 282]
+			},
+			{
+				"id": 262,
+				"number": 220,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 11,
+				"connections": [240, 282, 261, 263]
+			},
+			{
+				"id": 263,
+				"number": 221,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 12,
+				"connections": [242, 284, 262]
+			},
+			{
+				"id": 265,
+				"number": 222,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 14,
+				"connections": [243, 244, 266]
+			},
+			{
+				"id": 266,
+				"number": 223,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 15,
+				"connections": [244, 245, 287, 265, 267]
+			},
+			{
+				"id": 267,
+				"number": 224,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 16,
+				"connections": [245, 246, 287, 288, 266]
+			},
+			{
+				"id": 269,
+				"number": 225,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 18,
+				"connections": [247, 248, 289, 290, 270]
+			},
+			{
+				"id": 270,
+				"number": 226,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 19,
+				"connections": [248, 269, 271]
+			},
+			{
+				"id": 271,
+				"number": 227,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 20,
+				"connections": [270, 272]
+			},
+			{
+				"id": 272,
+				"number": 228,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 13,
+				"col": 21,
+				"connections": [251, 292, 293, 271]
+			},
+			{
+				"id": 273,
+				"number": 229,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 1,
+				"connections": [252, 294]
+			},
+			{
+				"id": 274,
+				"number": 230,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 2,
+				"connections": [254, 275, 296]
+			},
+			{
+				"id": 275,
+				"number": 231,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 3,
+				"connections": [254, 255, 296, 297, 274, 276]
+			},
+			{
+				"id": 276,
+				"number": 232,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 4,
+				"connections": [255, 275, 277, 297, 298]
+			},
+			{
+				"id": 277,
+				"number": 233,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 5,
+				"connections": [276, 298, 299]
+			},
+			{
+				"id": 278,
+				"number": 234,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 6,
+				"connections": [257, 258, 299, 300, 279]
+			},
+			{
+				"id": 279,
+				"number": 235,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 7,
+				"connections": [258, 259, 300, 301, 278, 280]
+			},
+			{
+				"id": 280,
+				"number": 236,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 8,
+				"connections": [259, 260, 301, 302, 279]
+			},
+			{
+				"id": 282,
+				"number": 237,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 10,
+				"connections": [261, 262, 303, 304]
+			},
+			{
+				"id": 284,
+				"number": 238,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 12,
+				"connections": [263, 306]
+			},
+			{
+				"id": 286,
+				"number": 239,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 14,
+				"connections": [307, 308]
+			},
+			{
+				"id": 287,
+				"number": 240,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 15,
+				"connections": [266, 267, 308, 309, 288]
+			},
+			{
+				"id": 288,
+				"number": 241,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 16,
+				"connections": [267, 309, 310, 287, 289]
+			},
+			{
+				"id": 289,
+				"number": 242,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 17,
+				"connections": [269, 310, 311, 288, 290]
+			},
+			{
+				"id": 290,
+				"number": 243,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 18,
+				"connections": [269, 311, 312, 289, 291]
+			},
+			{
+				"id": 291,
+				"number": 244,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 19,
+				"connections": [312, 313, 290, 292]
+			},
+			{
+				"id": 292,
+				"number": 245,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 20,
+				"connections": [272, 313, 314, 291, 293]
+			},
+			{
+				"id": 293,
+				"number": 246,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 14,
+				"col": 21,
+				"connections": [272, 314, 292]
+			},
+			{
+				"id": 294,
+				"number": 247,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 1,
+				"connections": [273, 315]
+			},
+			{
+				"id": 296,
+				"number": 248,
+				"type": "INTERACTION",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 3,
+				"connections": [274, 275]
+			},
+			{
+				"id": 297,
+				"number": 249,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 4,
+				"connections": [275, 276, 317, 318, 298]
+			},
+			{
+				"id": 298,
+				"number": 250,
+				"type": "DOOR",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 5,
+				"connections": [276, 277, 297, 299, 319]
+			},
+			{
+				"id": 299,
+				"number": 251,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 6,
+				"connections": [277, 278, 319, 320, 298, 300]
+			},
+			{
+				"id": 300,
+				"number": 252,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 7,
+				"connections": [278, 279, 320, 321, 299, 301]
+			},
+			{
+				"id": 301,
+				"number": 253,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 8,
+				"connections": [279, 280, 321, 300, 302]
+			},
+			{
+				"id": 302,
+				"number": 254,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 9,
+				"connections": [280, 301]
+			},
+			{
+				"id": 303,
+				"number": 255,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 10,
+				"connections": [282, 304, 324]
+			},
+			{
+				"id": 304,
+				"number": 256,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 11,
+				"connections": [282, 324, 325, 303]
+			},
+			{
+				"id": 306,
+				"number": 257,
+				"type": "INTERACTION",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 13,
+				"connections": [284, 326]
+			},
+			{
+				"id": 307,
+				"number": 258,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 14,
+				"connections": [286, 328, 308]
+			},
+			{
+				"id": 308,
+				"number": 259,
+				"type": "DOOR",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 15,
+				"connections": [286, 287, 307, 309, 328, 329]
+			},
+			{
+				"id": 309,
+				"number": 260,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 16,
+				"connections": [287, 288, 329, 330, 308, 310]
+			},
+			{
+				"id": 310,
+				"number": 261,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 17,
+				"connections": [288, 289, 330, 331, 309, 311]
+			},
+			{
+				"id": 311,
+				"number": 262,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 18,
+				"connections": [289, 290, 331, 332, 310, 312]
+			},
+			{
+				"id": 312,
+				"number": 263,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 19,
+				"connections": [290, 291, 332, 333, 311, 313]
+			},
+			{
+				"id": 313,
+				"number": 264,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 20,
+				"connections": [291, 292, 333, 334, 312, 314]
+			},
+			{
+				"id": 314,
+				"number": 265,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 15,
+				"col": 21,
+				"connections": [292, 293, 334, 335, 313]
+			},
+			{
+				"id": 315,
+				"number": 266,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 1,
+				"connections": [294, 337, 316]
+			},
+			{
+				"id": 316,
+				"number": 267,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 2,
+				"connections": [337, 338, 315, 317]
+			},
+			{
+				"id": 317,
+				"number": 268,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 3,
+				"connections": [297, 338, 339, 316, 318]
+			},
+			{
+				"id": 318,
+				"number": 269,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 4,
+				"connections": [297, 339, 340, 317, 319]
+			},
+			{
+				"id": 319,
+				"number": 270,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 5,
+				"connections": [298, 299, 340, 341, 318, 320]
+			},
+			{
+				"id": 320,
+				"number": 271,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 6,
+				"connections": [299, 300, 341, 342, 319, 321]
+			},
+			{
+				"id": 321,
+				"number": 272,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 7,
+				"connections": [300, 301, 342, 343, 320]
+			},
+			{
+				"id": 324,
+				"number": 273,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 10,
+				"connections": [303, 304, 325, 345]
+			},
+			{
+				"id": 325,
+				"number": 274,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 11,
+				"connections": [304, 346, 347, 324, 326]
+			},
+			{
+				"id": 326,
+				"number": 275,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 12,
+				"connections": [306, 325, 348]
+			},
+			{
+				"id": 328,
+				"number": 276,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 14,
+				"connections": [307, 308, 349, 350]
+			},
+			{
+				"id": 329,
+				"number": 277,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 15,
+				"connections": [308, 309, 350, 351, 330]
+			},
+			{
+				"id": 330,
+				"number": 278,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 16,
+				"connections": [309, 310, 351, 329, 331]
+			},
+			{
+				"id": 331,
+				"number": 279,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 17,
+				"connections": [310, 311, 330, 332]
+			},
+			{
+				"id": 332,
+				"number": 280,
+				"type": "ADVERSARY",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 18,
+				"connections": [311, 312, 331, 333]
+			},
+			{
+				"id": 333,
+				"number": 281,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 19,
+				"connections": [312, 313, 332, 334]
+			},
+			{
+				"id": 334,
+				"number": 282,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 20,
+				"connections": [313, 314, 355, 356, 333, 335]
+			},
+			{
+				"id": 335,
+				"number": 283,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 16,
+				"col": 21,
+				"connections": [314, 356, 334]
+			},
+			{
+				"id": 337,
+				"number": 284,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 2,
+				"connections": [315, 316, 357, 338]
+			},
+			{
+				"id": 338,
+				"number": 285,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 3,
+				"connections": [316, 317, 359, 337, 339]
+			},
+			{
+				"id": 339,
+				"number": 286,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 4,
+				"connections": [317, 318, 359, 360, 338, 340]
+			},
+			{
+				"id": 340,
+				"number": 287,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 5,
+				"connections": [318, 319, 360, 339, 341]
+			},
+			{
+				"id": 341,
+				"number": 288,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 6,
+				"connections": [319, 320, 362, 340, 342]
+			},
+			{
+				"id": 342,
+				"number": 289,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 7,
+				"connections": [320, 321, 362, 363, 341, 343]
+			},
+			{
+				"id": 343,
+				"number": 290,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 8,
+				"connections": [321, 363, 364, 342, 344]
+			},
+			{
+				"id": 344,
+				"number": 291,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 9,
+				"connections": [364, 365, 343]
+			},
+			{
+				"id": 345,
+				"number": 292,
+				"type": "ADVERSARY",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 10,
+				"connections": [324, 365]
+			},
+			{
+				"id": 346,
+				"number": 293,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 11,
+				"connections": [325, 347]
+			},
+			{
+				"id": 347,
+				"number": 294,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 12,
+				"connections": [325, 346, 348]
+			},
+			{
+				"id": 348,
+				"number": 295,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 13,
+				"connections": [326, 347, 369]
+			},
+			{
+				"id": 349,
+				"number": 296,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 14,
+				"connections": [328, 369, 370, 350]
+			},
+			{
+				"id": 350,
+				"number": 297,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 15,
+				"connections": [328, 329, 370, 371, 349, 351]
+			},
+			{
+				"id": 351,
+				"number": 298,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 16,
+				"connections": [329, 330, 371, 372, 350]
+			},
+			{
+				"id": 352,
+				"number": 299,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 17,
+				"connections": [353]
+			},
+			{
+				"id": 353,
+				"number": 300,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 18,
+				"connections": [352, 354]
+			},
+			{
+				"id": 354,
+				"number": 301,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 19,
+				"connections": [353, 355, 374, 375]
+			},
+			{
+				"id": 355,
+				"number": 302,
+				"type": "DOOR",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 20,
+				"connections": [334, 354, 356, 376]
+			},
+			{
+				"id": 356,
+				"number": 303,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 17,
+				"col": 21,
+				"connections": [334, 335, 376, 377, 355]
+			},
+			{
+				"id": 357,
+				"number": 304,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 1,
+				"connections": [337, 378, 379]
+			},
+			{
+				"id": 359,
+				"number": 305,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 3,
+				"connections": [338, 339, 380, 381, 360]
+			},
+			{
+				"id": 360,
+				"number": 306,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 4,
+				"connections": [339, 340, 381, 382, 359]
+			},
+			{
+				"id": 362,
+				"number": 307,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 6,
+				"connections": [341, 342, 384, 363]
+			},
+			{
+				"id": 363,
+				"number": 308,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 7,
+				"connections": [342, 343, 384, 385, 362, 364]
+			},
+			{
+				"id": 364,
+				"number": 309,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 8,
+				"connections": [343, 344, 385, 386, 363, 365]
+			},
+			{
+				"id": 365,
+				"number": 310,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 9,
+				"connections": [344, 345, 386, 387, 364]
+			},
+			{
+				"id": 369,
+				"number": 311,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 13,
+				"connections": [348, 349, 390, 391, 370]
+			},
+			{
+				"id": 370,
+				"number": 312,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 14,
+				"connections": [349, 350, 391, 392, 369, 371]
+			},
+			{
+				"id": 371,
+				"number": 313,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 15,
+				"connections": [350, 351, 392, 393, 370, 372]
+			},
+			{
+				"id": 372,
+				"number": 314,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 16,
+				"connections": [351, 371, 373, 393, 394]
+			},
+			{
+				"id": 373,
+				"number": 315,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 17,
+				"connections": [372, 374, 394]
+			},
+			{
+				"id": 374,
+				"number": 316,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 18,
+				"connections": [354, 373, 375]
+			},
+			{
+				"id": 375,
+				"number": 317,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 19,
+				"connections": [354, 374, 376]
+			},
+			{
+				"id": 376,
+				"number": 318,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 20,
+				"connections": [355, 356, 398, 375, 377]
+			},
+			{
+				"id": 377,
+				"number": 319,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 18,
+				"col": 21,
+				"connections": [356, 398, 376]
+			},
+			{
+				"id": 378,
+				"number": 320,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 1,
+				"connections": [357, 399, 379]
+			},
+			{
+				"id": 379,
+				"number": 321,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 2,
+				"connections": [357, 399, 400, 378, 380]
+			},
+			{
+				"id": 380,
+				"number": 322,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 3,
+				"connections": [359, 400, 401, 379, 381]
+			},
+			{
+				"id": 381,
+				"number": 323,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 4,
+				"connections": [359, 360, 401, 402, 380, 382]
+			},
+			{
+				"id": 382,
+				"number": 324,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 5,
+				"connections": [360, 402, 403, 381]
+			},
+			{
+				"id": 384,
+				"number": 325,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 7,
+				"connections": [362, 363, 405, 385]
+			},
+			{
+				"id": 385,
+				"number": 326,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 8,
+				"connections": [363, 364, 405, 406, 384, 386]
+			},
+			{
+				"id": 386,
+				"number": 327,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 9,
+				"connections": [364, 365, 406, 407, 385, 387]
+			},
+			{
+				"id": 387,
+				"number": 328,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 10,
+				"connections": [365, 407, 386, 388]
+			},
+			{
+				"id": 388,
+				"number": 329,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 11,
+				"connections": [409, 387, 389]
+			},
+			{
+				"id": 389,
+				"number": 330,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 12,
+				"connections": [409, 410, 388, 390]
+			},
+			{
+				"id": 390,
+				"number": 331,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 13,
+				"connections": [369, 410, 411, 389, 391]
+			},
+			{
+				"id": 391,
+				"number": 332,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 14,
+				"connections": [369, 370, 411, 412, 390, 392]
+			},
+			{
+				"id": 392,
+				"number": 333,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 15,
+				"connections": [370, 371, 412, 413, 391, 393]
+			},
+			{
+				"id": 393,
+				"number": 334,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 16,
+				"connections": [371, 372, 413, 414, 392, 394]
+			},
+			{
+				"id": 394,
+				"number": 335,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 17,
+				"connections": [372, 373, 414, 415, 393]
+			},
+			{
+				"id": 398,
+				"number": 336,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 19,
+				"col": 21,
+				"connections": [376, 377, 418, 419]
+			},
+			{
+				"id": 399,
+				"number": 337,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 1,
+				"connections": [378, 379, 420, 400]
+			},
+			{
+				"id": 400,
+				"number": 338,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 2,
+				"connections": [379, 380, 422, 399, 401]
+			},
+			{
+				"id": 401,
+				"number": 339,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 3,
+				"connections": [380, 381, 422, 423, 400, 402]
+			},
+			{
+				"id": 402,
+				"number": 340,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 4,
+				"connections": [381, 382, 423, 424, 401, 403]
+			},
+			{
+				"id": 403,
+				"number": 341,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 5,
+				"connections": [382, 424, 425, 402]
+			},
+			{
+				"id": 405,
+				"number": 342,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 7,
+				"connections": [384, 385, 427, 406]
+			},
+			{
+				"id": 406,
+				"number": 343,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 8,
+				"connections": [385, 386, 427, 428, 405, 407]
+			},
+			{
+				"id": 407,
+				"number": 344,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 9,
+				"connections": [386, 387, 428, 429, 406]
+			},
+			{
+				"id": 409,
+				"number": 345,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 11,
+				"connections": [388, 389, 431, 410]
+			},
+			{
+				"id": 410,
+				"number": 346,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 12,
+				"connections": [389, 390, 431, 432, 409, 411]
+			},
+			{
+				"id": 411,
+				"number": 347,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 13,
+				"connections": [390, 391, 432, 433, 410, 412]
+			},
+			{
+				"id": 412,
+				"number": 348,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 14,
+				"connections": [391, 392, 433, 411, 413]
+			},
+			{
+				"id": 413,
+				"number": 349,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 15,
+				"connections": [392, 393, 435, 412, 414]
+			},
+			{
+				"id": 414,
+				"number": 350,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 16,
+				"connections": [393, 394, 435, 413, 415]
+			},
+			{
+				"id": 415,
+				"number": 351,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 17,
+				"connections": [394, 437, 414, 416]
+			},
+			{
+				"id": 416,
+				"number": 352,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 18,
+				"connections": [437, 438, 415, 417]
+			},
+			{
+				"id": 417,
+				"number": 353,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 19,
+				"connections": [438, 439, 416, 418]
+			},
+			{
+				"id": 418,
+				"number": 354,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 20,
+				"connections": [398, 439, 440, 417, 419]
+			},
+			{
+				"id": 419,
+				"number": 355,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 20,
+				"col": 21,
+				"connections": [398, 440, 418]
+			},
+			{
+				"id": 420,
+				"number": 356,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 1,
+				"connections": [399, 441]
+			},
+			{
+				"id": 422,
+				"number": 357,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 3,
+				"connections": [400, 401, 442, 443, 423]
+			},
+			{
+				"id": 423,
+				"number": 358,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 4,
+				"connections": [401, 402, 443, 444, 422, 424]
+			},
+			{
+				"id": 424,
+				"number": 359,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 5,
+				"connections": [402, 403, 444, 445, 423, 425]
+			},
+			{
+				"id": 425,
+				"number": 360,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 6,
+				"connections": [403, 445, 446, 424]
+			},
+			{
+				"id": 427,
+				"number": 361,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 8,
+				"connections": [405, 406, 448, 428]
+			},
+			{
+				"id": 428,
+				"number": 362,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 9,
+				"connections": [406, 407, 448, 449, 427, 429]
+			},
+			{
+				"id": 429,
+				"number": 363,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 10,
+				"connections": [407, 449, 450, 428]
+			},
+			{
+				"id": 431,
+				"number": 364,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 12,
+				"connections": [409, 410, 451, 452, 432]
+			},
+			{
+				"id": 432,
+				"number": 365,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 13,
+				"connections": [410, 411, 452, 453, 431, 433]
+			},
+			{
+				"id": 433,
+				"number": 366,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 14,
+				"connections": [411, 412, 432, 453]
+			},
+			{
+				"id": 434,
+				"number": 367,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 15,
+				"connections": [435, 455]
+			},
+			{
+				"id": 435,
+				"number": 368,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 16,
+				"connections": [413, 414, 455, 434]
+			},
+			{
+				"id": 437,
+				"number": 369,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 18,
+				"connections": [415, 416, 458, 438]
+			},
+			{
+				"id": 438,
+				"number": 370,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 19,
+				"connections": [416, 417, 458, 437, 439]
+			},
+			{
+				"id": 439,
+				"number": 371,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 20,
+				"connections": [417, 418, 438, 440]
+			},
+			{
+				"id": 440,
+				"number": 372,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 21,
+				"col": 21,
+				"connections": [418, 419, 439]
+			},
+			{
+				"id": 441,
+				"number": 373,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 1,
+				"connections": [420, 462, 463, 442]
+			},
+			{
+				"id": 442,
+				"number": 374,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 2,
+				"connections": [422, 463, 441, 443]
+			},
+			{
+				"id": 443,
+				"number": 375,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 3,
+				"connections": [422, 423, 465, 442, 444]
+			},
+			{
+				"id": 444,
+				"number": 376,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 4,
+				"connections": [423, 424, 465, 443, 445]
+			},
+			{
+				"id": 445,
+				"number": 377,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 5,
+				"connections": [424, 425, 467, 444, 446]
+			},
+			{
+				"id": 446,
+				"number": 378,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 6,
+				"connections": [425, 467, 468, 445]
+			},
+			{
+				"id": 448,
+				"number": 379,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 8,
+				"connections": [427, 428, 469, 470, 449]
+			},
+			{
+				"id": 449,
+				"number": 380,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 9,
+				"connections": [428, 429, 470, 471, 448, 450]
+			},
+			{
+				"id": 450,
+				"number": 381,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 10,
+				"connections": [429, 471, 472, 449, 451]
+			},
+			{
+				"id": 451,
+				"number": 382,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 11,
+				"connections": [431, 472, 473, 450, 452]
+			},
+			{
+				"id": 452,
+				"number": 383,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 12,
+				"connections": [431, 432, 473, 474, 451, 453]
+			},
+			{
+				"id": 453,
+				"number": 384,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 13,
+				"connections": [432, 433, 474, 475, 452]
+			},
+			{
+				"id": 455,
+				"number": 385,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 15,
+				"connections": [434, 435]
+			},
+			{
+				"id": 458,
+				"number": 386,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 22,
+				"col": 18,
+				"connections": [437, 438, 479, 480]
+			},
+			{
+				"id": 462,
+				"number": 387,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 1,
+				"connections": [441, 483, 463]
+			},
+			{
+				"id": 463,
+				"number": 388,
+				"type": "ADVERSARY",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 2,
+				"connections": [441, 442, 462, 483, 484]
+			},
+			{
+				"id": 465,
+				"number": 389,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 4,
+				"connections": [443, 444, 485, 486]
+			},
+			{
+				"id": 467,
+				"number": 390,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 6,
+				"connections": [445, 446, 487, 488, 468]
+			},
+			{
+				"id": 468,
+				"number": 391,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 7,
+				"connections": [446, 488, 489, 467, 469]
+			},
+			{
+				"id": 469,
+				"number": 392,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 8,
+				"connections": [448, 489, 490, 468, 470]
+			},
+			{
+				"id": 470,
+				"number": 393,
+				"type": "STARTING",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 9,
+				"connections": [448, 449, 469, 471, 490, 491]
+			},
+			{
+				"id": 471,
+				"number": 394,
+				"type": "STARTING",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 10,
+				"connections": [449, 450, 470, 472, 491, 492]
+			},
+			{
+				"id": 472,
+				"number": 395,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 11,
+				"connections": [450, 451, 492, 471, 473]
+			},
+			{
+				"id": 473,
+				"number": 396,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 12,
+				"connections": [451, 452, 494, 472, 474]
+			},
+			{
+				"id": 474,
+				"number": 397,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 13,
+				"connections": [452, 453, 494, 495, 473, 475]
+			},
+			{
+				"id": 475,
+				"number": 398,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 14,
+				"connections": [453, 495, 496, 474, 476]
+			},
+			{
+				"id": 476,
+				"number": 399,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 15,
+				"connections": [496, 497, 475, 477]
+			},
+			{
+				"id": 477,
+				"number": 400,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 16,
+				"connections": [497, 498, 476, 478]
+			},
+			{
+				"id": 478,
+				"number": 401,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 17,
+				"connections": [498, 499, 477, 479]
+			},
+			{
+				"id": 479,
+				"number": 402,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 18,
+				"connections": [458, 499, 500, 478, 480]
+			},
+			{
+				"id": 480,
+				"number": 403,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 19,
+				"connections": [458, 500, 501, 479, 481]
+			},
+			{
+				"id": 481,
+				"number": 404,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 20,
+				"connections": [501, 502, 480, 482]
+			},
+			{
+				"id": 482,
+				"number": 405,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 23,
+				"col": 21,
+				"connections": [502, 503, 481]
+			},
+			{
+				"id": 483,
+				"number": 406,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 1,
+				"connections": [462, 463, 484]
+			},
+			{
+				"id": 484,
+				"number": 407,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 2,
+				"connections": [463, 483, 485]
+			},
+			{
+				"id": 485,
+				"number": 408,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 3,
+				"connections": [465, 484, 486]
+			},
+			{
+				"id": 486,
+				"number": 409,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 4,
+				"connections": [465, 485, 487]
+			},
+			{
+				"id": 487,
+				"number": 410,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 5,
+				"connections": [467, 486, 488]
+			},
+			{
+				"id": 488,
+				"number": 411,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 6,
+				"connections": [467, 468, 487, 489]
+			},
+			{
+				"id": 489,
+				"number": 412,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 7,
+				"connections": [468, 469, 488, 490]
+			},
+			{
+				"id": 490,
+				"number": 413,
+				"type": "STARTING",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 8,
+				"connections": [469, 470, 489, 491]
+			},
+			{
+				"id": 491,
+				"number": 414,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 9,
+				"connections": [470, 471, 490, 492]
+			},
+			{
+				"id": 492,
+				"number": 415,
+				"type": "STARTING",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 10,
+				"connections": [471, 472, 491]
+			},
+			{
+				"id": 494,
+				"number": 416,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 12,
+				"connections": [473, 474, 495]
+			},
+			{
+				"id": 495,
+				"number": 417,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 13,
+				"connections": [474, 475, 494, 496]
+			},
+			{
+				"id": 496,
+				"number": 418,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 14,
+				"connections": [475, 476, 495, 497]
+			},
+			{
+				"id": 497,
+				"number": 419,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 15,
+				"connections": [476, 477, 496, 498]
+			},
+			{
+				"id": 498,
+				"number": 420,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 16,
+				"connections": [477, 478, 497, 499]
+			},
+			{
+				"id": 499,
+				"number": 421,
+				"type": "ADVERSARY",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 17,
+				"connections": [478, 479, 498, 500]
+			},
+			{
+				"id": 500,
+				"number": 422,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 18,
+				"connections": [479, 480, 499, 501]
+			},
+			{
+				"id": 501,
+				"number": 423,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 19,
+				"connections": [480, 481, 500, 502]
+			},
+			{
+				"id": 502,
+				"number": 424,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 20,
+				"connections": [481, 482, 501, 503]
+			},
+			{
+				"id": 503,
+				"number": 425,
+				"type": "BASIC",
+				"lightLevel": "DIM",
+				"row": 24,
+				"col": 21,
+				"connections": [482, 502]
+			}
+		]
+	}
+]
