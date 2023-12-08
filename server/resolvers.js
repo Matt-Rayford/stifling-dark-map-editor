@@ -1,8 +1,12 @@
 const db = require('./db');
 
 const Query = {
-	map: (root, { id }) => db.maps.get(id),
-	maps: () => db.maps.list(),
+	map: (root, { id }) => {
+		return db.maps.get(id);
+	},
+	maps: () => {
+		return db.maps.list();
+	},
 	spaceSetting: (root, { id }) => db.spaceSettings.get(id),
 	spaceSettings: () => db.spaceSettings.list(),
 };

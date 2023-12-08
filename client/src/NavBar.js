@@ -1,9 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const NavBar = () => {
+	const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
+	const logoutWithRedirect = () =>
+		logout({
+			logoutParams: {
+				returnTo: window.location.origin,
+			},
+		});
+
+	console.log('User: ', user);
+
 	return (
-		<nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
+		<nav className='navbar navbar-expand-lg navbar-dark bg-dark px-2'>
 			<Link className='navbar-brand' to='/'>
 				Map Editor
 			</Link>
@@ -28,6 +40,26 @@ const NavBar = () => {
 					</Link>
 				</div>
 			</div>
+			{!isAuthenticated && (
+				<div className='navbar-nav float-right'>
+					<button
+						className='btn btn-primary'
+						onClick={() => loginWithRedirect()}
+					>
+						Log in
+					</button>
+				</div>
+			)}
+			{isAuthenticated && (
+				<div className='navbar-nav float-right'>
+					<button
+						className='btn btn-primary'
+						onClick={() => logoutWithRedirect()}
+					>
+						Log Out
+					</button>
+				</div>
+			)}
 		</nav>
 	);
 };

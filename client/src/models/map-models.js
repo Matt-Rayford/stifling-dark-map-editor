@@ -144,6 +144,7 @@ export class Space {
 		} else this.select();
 	}
 	select() {
+		//console.log('SELECT: ', this.number);
 		this.drawOptions.color = '#D66860';
 		this.drawOptions.width = 3;
 		this.selected = true;

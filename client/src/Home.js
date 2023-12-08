@@ -16,7 +16,7 @@ export const Home = () => {
 
 	return (
 		<div>
-			<h1>Maps</h1>
+			<h1>Your Maps</h1>
 			{maps.map((mapData) => {
 				return (
 					<button

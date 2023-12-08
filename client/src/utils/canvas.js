@@ -365,6 +365,7 @@ const drawCircle = (ctx, x, y, radius) => {
 	ctx.closePath();
 	ctx.restore();
 };
+
 const drawFilledCircle = (ctx, x, y, radius, color) => {
 	ctx.save();
 	ctx.arc(x, y, radius, 0, 2 * Math.PI);
@@ -373,6 +374,7 @@ const drawFilledCircle = (ctx, x, y, radius, color) => {
 	ctx.fill();
 	ctx.restore();
 };
+
 const drawText = (
 	ctx,
 	x,
@@ -388,6 +390,7 @@ const drawText = (
 	ctx.fillText(text, x, y);
 	ctx.restore();
 };
+
 const drawLine = (
 	ctx,
 	color,
