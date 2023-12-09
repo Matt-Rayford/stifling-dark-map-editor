@@ -1,30 +1,40 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import MapSettings from './MapSettings';
-import SpaceGroup from './SpaceGroup';
+import Settings from './Settings';
+import SpaceGroupSettings from './SpaceGroupSettings';
 import SpaceSettings from './SpaceSettings';
 import { renumberSpaces, updateSpaceColor } from './utils/canvas';
+import { Space } from './models/space';
 
 let isDragging = false;
 const mousePos = { x: 0, y: 0 };
+
+interface Props {
+	map: any;
+	spaceMap: Map<number, Space>;
+	settings: any;
+	selectedObject: any;
+	onUpdateBackgroundImage: (imageUrl: string) => void;
+	onGenerateDistances: (distanceMap: Map<number, number>) => void;
+	onDisableDistances: () => void;
+}
 
 const ToolMenu = ({
 	map,
 	spaceMap,
 	settings,
 	onUpdateBackgroundImage,
-	onUpdateSpacingSettings,
 	selectedObject,
 	onGenerateDistances,
 	onDisableDistances,
-}) => {
+}: Props) => {
 	const [spaceGroups, setSpaceGroups] = useState([]);
 
 	useEffect(() => {
-		const optionsBanner = document.getElementById('options-banner');
-		const options = document.getElementById('options');
+		const optionsBanner = document.getElementById('options-banner')!;
+		const options = document.getElementById('options')!;
 
-		const handleMouseDown = (event) => {
+		const handleMouseDown = (event: any) => {
 			const { clientX, clientY } = event;
 			mousePos.x = clientX;
 			mousePos.y = clientY;
@@ -33,7 +43,7 @@ const ToolMenu = ({
 		const handleMouseUp = () => {
 			isDragging = false;
 		};
-		const handleMouseMove = (event) => {
+		const handleMouseMove = (event: any) => {
 			if (isDragging) {
 				const { clientX, clientY } = event;
 				const dX = mousePos.x - event.clientX;
@@ -62,21 +72,18 @@ const ToolMenu = ({
 		}
 	}, [map]);
 
-	const updateMapSettings = (settingName, value) => {
-		map.drawOptions[settingName] = value;
+	const updateMapSettings = (settingName: string, value: any) => {
+		map.mapSettings[settingName] = value;
 		if (settingName === 'spaceColor') {
 			updateSpaceColor(spaceMap, value);
 		}
-
-		//this.drawMap(newMap.drawOptions.backgroundImageUrl);
-		//this.setState({ map: newMap, spaceMap, timer: newTimer });
 	};
 
 	const updateGroup = () => {
 		renumberSpaces(spaceMap, settings);
 	};
 
-	const getSpaceLabel = (space) => {
+	const getSpaceLabel = (space: Space) => {
 		const spaceGroupMap = settings.get('spaceGroups');
 		if (space.group !== null) {
 			return `Space ${spaceGroupMap.get(space.group).prefix}-${
@@ -118,7 +125,6 @@ const ToolMenu = ({
 					<Tab eventKey='space' title={getSpaceLabel(selectedObject)}>
 						<SpaceSettings
 							space={selectedObject}
-							spaceMap={spaceMap}
 							spaceGroups={spaceGroups}
 							onGenerateDistances={onGenerateDistances}
 							onUpdateGroup={() => updateGroup()}
@@ -128,7 +134,7 @@ const ToolMenu = ({
 				)}
 				<Tab eventKey='tools' title='Tools'>
 					<div style={{ padding: '12px' }}>
-						<SpaceGroup
+						<SpaceGroupSettings
 							mapId={map.id}
 							existingGroups={spaceGroups}
 							settings={settings}
@@ -137,10 +143,9 @@ const ToolMenu = ({
 					</div>
 				</Tab>
 				<Tab eventKey='map' title='Map'>
-					<MapSettings
+					<Settings
 						mapId={map.id}
-						mapSettings={map.drawOptions}
-						onUpdate={updateMapSettings}
+						mapSettings={map.mapSettings}
 						spaceMap={spaceMap}
 						onUpdateBackgroundImage={onUpdateBackgroundImage}
 					/>

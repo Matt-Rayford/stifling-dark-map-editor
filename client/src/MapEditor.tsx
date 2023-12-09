@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { ObjectType } from './models/map-models';
+import { ObjectType } from './models/object';
 import ToolMenu from './ToolMenu';
 import {
 	getMousePos,
@@ -13,25 +13,26 @@ import {
 	renumberSpaces,
 } from './utils/canvas';
 import { loadMap } from './utils/requests';
+import { Space } from './models/space';
+import { MousePos } from './models/mouse-pos';
+import { NewConnection } from './models/connection';
+import { SDMap } from './models/map';
 
 export const MapEditor = () => {
-	const [map, setMap] = useState();
-	const [spaceMap, setSpaceMap] = useState();
-	//const [distanceMap, setDistanceMap] = useState();
-	const [timer, setTimer] = useState();
-	const [settings, setSettigns] = useState();
-	const [selectedObject, setSelectedObject] = useState();
-	const [canvas, setCanvas] = useState();
-	const [objects, setObjects] = useState();
+	const [map, setMap] = useState<SDMap>();
+	const [spaceMap, setSpaceMap] = useState<Map<number, Space>>();
+	const [timer, setTimer] = useState<NodeJS.Timeout>();
+	const [settings, setSettings] = useState<any>();
+	const [selectedObject, setSelectedObject] = useState<Space>();
+	const [canvas, setCanvas] = useState<HTMLCanvasElement>();
+	const [objects, setObjects] = useState<any[]>([]);
 
-	const distanceMap = useRef();
-	const newConnection = useRef();
-	const mousePos = useRef();
-	const highlightedObject = useRef();
+	const distanceMap = useRef<Map<number, number>>();
+	const newConnection = useRef<NewConnection>();
+	const mousePos = useRef<MousePos>();
+	const highlightedObject = useRef<Space>();
 
 	const { mapId } = useParams();
-
-	console.log('Rerender');
 
 	useEffect(() => {
 		return () => {
@@ -41,10 +42,9 @@ export const MapEditor = () => {
 
 	useEffect(() => {
 		if (mapId) {
-			const handleMapLoad = async () => {
-				setMap(await loadMap(mapId));
-			};
-			handleMapLoad();
+			loadMap(mapId).then((sdMap) => {
+				setMap(sdMap);
+			});
 		}
 	}, [mapId]);
 
@@ -53,8 +53,7 @@ export const MapEditor = () => {
 			const hasSpaces = map.spaces && map.spaces.length > 0;
 			const { spaceMap, objects } = setupSpaces(
 				hasSpaces ? map.spaces : undefined,
-				[],
-				map.drawOptions
+				map.mapSettings
 			);
 			const settings = setupSettings(
 				map.spaceGroups ? map.spaceGroups : []
@@ -62,17 +61,19 @@ export const MapEditor = () => {
 
 			setObjects(objects);
 
-			const canvas = document.getElementById('canvasEditor');
-			const ctx = canvas.getContext('2d');
+			//@ts-ignore
+			const canvas: HTMLCanvasElement =
+				document.getElementById('canvasEditor')!;
+			const ctx = canvas.getContext('2d')!;
 
-			drawMap(map.drawOptions.backgroundImageUrl);
+			drawMap(map.mapSettings.backgroundImageUrl);
 			const animationTimer = setInterval(() => {
 				redraw(
 					canvas,
 					ctx,
 					spaceMap,
-					map.drawOptions.spaceColor,
-					mousePos.current,
+					map.mapSettings.spaceColor,
+					mousePos.current ?? { x: 0, y: 0 },
 					newConnection.current,
 					distanceMap.current,
 					settings
@@ -80,7 +81,7 @@ export const MapEditor = () => {
 			}, 30);
 
 			setTimer(animationTimer);
-			setSettigns(settings);
+			setSettings(settings);
 			setMap(map);
 			setSpaceMap(spaceMap);
 			setCanvas(canvas);
@@ -89,16 +90,18 @@ export const MapEditor = () => {
 				var key = event.key.toLowerCase();
 				if (key == 'delete') {
 					const obj = selectedObject || highlightedObject.current;
-					const connections = obj.connections;
-					obj.delete();
-					for (let space of connections) {
-						space.connections = space.connections.filter(
-							(space2) => space2.id != obj.id
-						);
+					if (obj) {
+						const connections = obj.connections;
+						obj.delete();
+						for (let space of connections) {
+							space.connections = space.connections.filter(
+								(space2) => space2.id != obj.id
+							);
+						}
+						setSelectedObject(undefined);
+						highlightedObject.current = undefined;
+						renumberSpaces(spaceMap, settings);
 					}
-					setSelectedObject(null);
-					highlightedObject.current = null;
-					renumberSpaces(spaceMap, settings);
 				}
 				if (key == 'a') {
 					//selectPoints();
@@ -108,7 +111,7 @@ export const MapEditor = () => {
 						newConnection.current = {
 							isTwoWay: false,
 							fromSpace:
-								selectedObject || highlightedObject.current,
+								selectedObject ?? highlightedObject.current!,
 						};
 					}
 				} else if (key == '2') {
@@ -116,14 +119,14 @@ export const MapEditor = () => {
 						newConnection.current = {
 							isTwoWay: true,
 							fromSpace:
-								selectedObject || highlightedObject.current,
+								selectedObject ?? highlightedObject.current!,
 						};
 					}
 				} else {
-					newConnection.current = null;
+					newConnection.current = undefined;
 				}
 				if (key == 'escape') {
-					newConnection.current = null;
+					newConnection.current = undefined;
 				}
 			});
 		}
@@ -137,7 +140,7 @@ export const MapEditor = () => {
 			for (let curObject of objects) {
 				if (!curObject.isDeleted) {
 					curObject.unHighlight();
-					if (curObject.objectType == ObjectType.Space) {
+					if (curObject.objectType == ObjectType.SPACE) {
 						if (isMouseInObject(newMousePos, curObject)) {
 							if (
 								highlightedObject.current?.id !== curObject.id
@@ -148,7 +151,7 @@ export const MapEditor = () => {
 							}
 						} else {
 							if (highlightedObject.current) {
-								highlightedObject.current = null;
+								highlightedObject.current = undefined;
 							}
 						}
 					}
@@ -163,8 +166,9 @@ export const MapEditor = () => {
 			if (isMouseInObject(newMousePos, highlightedObject.current)) {
 				if (newConnection.current) {
 					if (
+						highlightedObject.current &&
 						newConnection.current.fromSpace.id !==
-						highlightedObject.current.id
+							highlightedObject.current.id
 					) {
 						newConnection.current.fromSpace.connections.push(
 							highlightedObject.current
@@ -174,13 +178,15 @@ export const MapEditor = () => {
 								newConnection.current.fromSpace
 							);
 						}
-						newConnection.current = null;
+						newConnection.current = undefined;
 					}
 				} else {
 					if (selectedObject) {
 						selectedObject.deselect();
 					}
-					highlightedObject.current.select();
+					if (highlightedObject.current) {
+						highlightedObject.current.select();
+					}
 
 					setSelectedObject(highlightedObject.current);
 				}
@@ -188,12 +194,12 @@ export const MapEditor = () => {
 				if (selectedObject) {
 					selectedObject.deselect();
 				}
-				setSelectedObject(null);
+				setSelectedObject(undefined);
 			}
 		});
 	}
 
-	const isMouseInObject = (mousePos, obj) => {
+	const isMouseInObject = (mousePos: MousePos, obj: any) => {
 		if (!obj) {
 			return false;
 		}
@@ -206,9 +212,9 @@ export const MapEditor = () => {
 		);
 	};
 
-	const loadImage = (imageUrl, width, height) =>
+	const loadImage = (imageUrl: string, width: number, height: number) =>
 		new Promise((resolve, reject) => {
-			let image;
+			let image: HTMLImageElement;
 			if (imageUrl) {
 				image = new Image(width, height);
 				image.src = `${process.env.PUBLIC_URL}${imageUrl}`;
@@ -221,12 +227,13 @@ export const MapEditor = () => {
 			}
 		});
 
-	const drawMap = (backgroundImageUrl) => {
-		const canvas = document.getElementById('mapLayer');
-		const ctx = canvas.getContext('2d');
+	const drawMap = (backgroundImageUrl: string) => {
+		//@ts-ignore
+		const canvas: HTMLCanvasElement = document.getElementById('mapLayer')!;
+		const ctx = canvas.getContext('2d')!;
 		loadImage(backgroundImageUrl, canvas.width, canvas.height)
 			.then((image) => {
-				redrawMap(canvas, ctx, image);
+				redrawMap(canvas, ctx, image as CanvasImageSource);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -234,28 +241,25 @@ export const MapEditor = () => {
 			});
 	};
 
-	const updateDistances = (newDistances) => {
-		//setDistanceMap(distanceMap);
-		console.log('Update distances: ', newDistances);
+	const updateDistances = (newDistances: Map<number, number>) => {
 		distanceMap.current = newDistances;
 	};
 
 	const disableDistances = () => {
-		//setDistanceMap(null);
-		distanceMap.current = null;
+		distanceMap.current = undefined;
 	};
 
 	return map ? (
 		<div>
 			<ToolMenu
 				map={map}
-				spaceMap={spaceMap}
+				spaceMap={spaceMap!}
 				settings={settings}
-				onUpdateBackgroundImage={(backgroundImageUrl) =>
+				onUpdateBackgroundImage={(backgroundImageUrl: string) =>
 					drawMap(backgroundImageUrl)
 				}
 				selectedObject={selectedObject}
-				onGenerateDistances={(newDistances) =>
+				onGenerateDistances={(newDistances: Map<number, number>) =>
 					updateDistances(newDistances)
 				}
 				onDisableDistances={() => disableDistances()}

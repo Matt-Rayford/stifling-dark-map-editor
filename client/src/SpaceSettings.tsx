@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { LightLevels, SpaceTypes } from './models/map-models';
+import { Space, SpaceType, getSpaceTypeDetails } from './models/space';
 import { calculateAllPaths } from './utils/canvas';
+import { LightLevel, getLightLevelDetails } from './models/light-level';
+
+interface Props {
+	space: Space;
+	spaceGroups: SpaceGroup[];
+	onGenerateDistances: (distanceMap: Map<number, number>) => void;
+	onUpdateGroup: () => void;
+	onDisableDistances: () => void;
+}
 
 const SpaceSettings = ({
 	space,
@@ -8,39 +17,40 @@ const SpaceSettings = ({
 	onGenerateDistances,
 	onUpdateGroup,
 	onDisableDistances,
-}) => {
-	const [lightLevel, setLightLevel] = useState('');
-	const [spaceGroup, setSpaceGroup] = useState('');
+}: Props) => {
+	const [lightLevel, setLightLevel] = useState<LightLevel>();
+	const [spaceType, setSpaceType] = useState<SpaceType>(space.type);
+	const [spaceGroup, setSpaceGroup] = useState<number>(-1);
 
 	useEffect(() => {
 		if (space) {
-			setSpaceGroup(space.group !== null ? space.group : '');
-			setLightLevel(space.lightLevel.enumVal);
+			setSpaceGroup(space.group ?? -1);
+			setLightLevel(space.lightLevel);
 		}
 	}, [space]);
 
-	const updateLightLevel = (value) => {
-		space.updateLightLevel(value);
-		setLightLevel(value);
+	const updateLightLevel = (lightLevel: LightLevel) => {
+		space.updateLightLevel(lightLevel);
+		setLightLevel(lightLevel);
 	};
 
-	const updateSpaceType = (value) => {
-		space.updateType(value);
-		setSpaceType(value);
+	const updateSpaceType = (spaceType: SpaceType) => {
+		space.updateType(spaceType);
+		setSpaceType(spaceType);
 	};
 
-	const updateGroup = (value) => {
-		if (!value || value === '') {
+	const updateGroup = (spaceGroup?: number) => {
+		if (!spaceGroup) {
 			space.removeGroup();
-			setSpaceGroup('');
+			setSpaceGroup(-1);
 		} else {
-			space.updateGroup(value);
-			setSpaceGroup(value);
+			space.updateGroup(spaceGroup);
+			setSpaceGroup(spaceGroup);
 		}
 		onUpdateGroup();
 	};
 
-	const removeConnection = (space, connection) => {
+	const removeConnection = (space: Space, connection: Space) => {
 		space.connections = space.connections.filter(
 			(space2) => space2.id !== connection.id
 		);
@@ -50,7 +60,7 @@ const SpaceSettings = ({
 	};
 
 	const generateDistances = () => {
-		const distanceMap = calculateAllPaths(space);
+		const distanceMap = calculateAllPaths(space)!;
 		onGenerateDistances(distanceMap);
 	};
 
@@ -62,9 +72,15 @@ const SpaceSettings = ({
 				<select
 					className='form-select'
 					value={spaceGroup}
-					onChange={(e) => updateGroup(e.target.value)}
+					onChange={(e) =>
+						updateGroup(
+							e.target.value
+								? parseInt(e.target.value)
+								: undefined
+						)
+					}
 				>
-					<option value=''>None...</option>
+					<option value={-1}>None...</option>
 					{spaceGroups.map((g) => (
 						<option key={g.id} value={g.id}>
 							{g.name} ({g.prefix})
@@ -81,17 +97,20 @@ const SpaceSettings = ({
 					<label className='input-group-text'>Space Type</label>
 				</div>
 				<select
-					value={space.spaceType ? space.spaceType.enumVal : ''}
+					value={spaceType ?? SpaceType.BASIC}
 					className='form-select'
-					onChange={(e) => updateSpaceType(e.target.value)}
+					onChange={(e) =>
+						updateSpaceType(e.target.value as SpaceType)
+					}
 				>
 					<option value='' disabled>
 						Select Type...
 					</option>
-					{Object.keys(SpaceTypes).map((key) => {
+					{Object.keys(SpaceType).map((key) => {
+						const details = getSpaceTypeDetails(key as SpaceType);
 						return (
-							<option key={key} value={SpaceTypes[key].enumVal}>
-								{SpaceTypes[key].name}
+							<option key={key} value={details.name}>
+								{details.name}
 							</option>
 						);
 					})}
@@ -105,15 +124,17 @@ const SpaceSettings = ({
 				<select
 					value={lightLevel}
 					className='form-select'
-					onChange={(e) => updateLightLevel(e.target.value)}
+					onChange={(e) =>
+						updateLightLevel(e.target.value as LightLevel)
+					}
 				>
 					<option value='' disabled>
 						Select Level...
 					</option>
-					{Object.keys(LightLevels).map((key) => {
+					{Object.keys(LightLevel).map((key) => {
 						return (
-							<option key={key} value={LightLevels[key].enumVal}>
-								{LightLevels[key].name}
+							<option key={key} value={key}>
+								{getLightLevelDetails(key as LightLevel).name}
 							</option>
 						);
 					})}
@@ -146,7 +167,6 @@ const SpaceSettings = ({
 
 			<h5>Connections</h5>
 			{space.connections.map((connection) => {
-				console.log('Connection: ', connection);
 				const connectionLabel = connection.group
 					? `${spaceGroups[connection.group]?.prefix}-${
 							connection.number

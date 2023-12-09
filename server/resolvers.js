@@ -16,7 +16,7 @@ const Mutation = {
 		const id = db.maps.create({
 			title,
 			spaces: [],
-			drawOptions: {
+			mapSettings: {
 				backgroundImageUrl: '',
 				spaceColor: '#cfcfcf',
 				horizontalSpacing: 61.0,
@@ -29,18 +29,18 @@ const Mutation = {
 		});
 		return db.maps.get(id);
 	},
-	updateMap: (root, { mapId, spaceData, drawOptions }) => {
+	updateMap: (root, { mapId, spaceData, mapSettings }) => {
 		const { title, spaceGroups } = db.maps.get(mapId);
 		db.maps.update({
 			id: mapId,
 			title: title,
-			drawOptions,
+			mapSettings,
 			spaces: spaceData,
 			spaceGroups,
 		});
 		return db.maps.get(mapId);
 	},
-	updateMapSettings: (root, { mapId, drawOptions }) => {
+	updateMapSettings: (root, { mapId, mapSettings }) => {
 		const map = db.maps.get(mapId);
 		if (!map)
 			throw new Error(
@@ -50,7 +50,7 @@ const Mutation = {
 		db.maps.update({
 			id: mapId,
 			title,
-			drawOptions,
+			mapSettings,
 			spaces,
 			spaceGroups,
 		});
@@ -73,7 +73,7 @@ const Mutation = {
 			db.maps.update({
 				id: mapId,
 				title: map.title,
-				drawOptions: map.drawOptions,
+				mapSettings: map.mapSettings,
 				spaces: map.spaces,
 				spaceGroups,
 			});
@@ -107,7 +107,7 @@ const Mutation = {
 		db.maps.update({
 			id: mapId,
 			title: map.title,
-			drawOptions: map.drawOptions,
+			mapSettings: map.mapSettings,
 			spaces: map.spaces,
 			spaceGroups,
 		});
@@ -128,7 +128,7 @@ const Mutation = {
 		db.maps.update({
 			id: mapId,
 			title: map.title,
-			drawOptions: map.drawOptions,
+			mapSettings: map.mapSettings,
 			spaces: map.spaces,
 			spaceGroups,
 		});

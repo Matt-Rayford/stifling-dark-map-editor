@@ -1,22 +1,19 @@
-import { Space, LightLevels, SpaceTypes } from '../models/map-models';
+import { NewConnection } from '../models/connection';
+import { LightLevel } from '../models/light-level';
+import { SDSpace } from '../models/map';
+import { MapSettings } from '../models/map-settings';
+import { MousePos } from '../models/mouse-pos';
+import { Space, SpaceType, getSpaceTypeDetails } from '../models/space';
 import { MAP_CONSTANTS } from './constants';
 
 export const setupSpaces = (
-	existingSpaces = undefined,
-	objects = [],
-	mapDrawOptions
+	existingSpaces: SDSpace[] = [],
+	mapSettings: MapSettings
 ) => {
-	const {
-		ROWS,
-		COLS,
-		SPACER_X,
-		SPACER_Y,
-		INDENT,
-		SPACE_RADIUS,
-		PADDING_X,
-		PADDING_Y,
-	} = MAP_CONSTANTS;
-	const spaceMap = new Map();
+	const objects: Space[] = [];
+	const { ROWS, COLS, SPACER_X, SPACER_Y, INDENT, PADDING_X, PADDING_Y } =
+		MAP_CONSTANTS;
+	const spaceMap = new Map<number, Space>();
 	if (!existingSpaces) {
 		let curSpace = 1;
 		for (let i = 0; i < ROWS; i++) {
@@ -25,12 +22,12 @@ export const setupSpaces = (
 					curSpace - 1,
 					PADDING_X + j * SPACER_X + (i % 2 === 0 ? 0 : INDENT),
 					PADDING_Y + i * SPACER_Y,
-					SpaceTypes.BASIC,
-					LightLevels.DIM,
+					SpaceType.BASIC,
+					LightLevel.DIM,
 					curSpace,
 					i + 1,
 					j + 1,
-					mapDrawOptions
+					mapSettings
 				);
 				objects.push(space);
 				curSpace++;
@@ -39,6 +36,7 @@ export const setupSpaces = (
 		}
 		setupConnections(spaceMap);
 	} else {
+		const connectionMap = new Map<number, number[]>();
 		for (let loadedSpace of existingSpaces) {
 			const { id, row, col, type, lightLevel, number, isDeleted, group } =
 				loadedSpace;
@@ -46,50 +44,55 @@ export const setupSpaces = (
 				j = col - 1;
 			const space = new Space(
 				id,
-				mapDrawOptions.paddingX +
-					j * mapDrawOptions.horizontalSpacing +
-					(i % 2 === 0 ? 0 : mapDrawOptions.indent),
-				mapDrawOptions.paddingY + i * mapDrawOptions.verticalSpacing,
+				mapSettings.paddingX +
+					j * mapSettings.horizontalSpacing +
+					(i % 2 === 0 ? 0 : mapSettings.indent),
+				mapSettings.paddingY + i * mapSettings.verticalSpacing,
 				type,
 				lightLevel,
 				number,
 				row,
 				col,
-				mapDrawOptions,
-				mapDrawOptions.spaceRadius,
+				mapSettings,
+				mapSettings.spaceRadius,
 				isDeleted,
 				group
 			);
+
 			objects.push(space);
 			spaceMap.set(space.id, space);
+			connectionMap.set(loadedSpace.id, loadedSpace.connections);
 		}
-		setupConnections(spaceMap, existingSpaces);
+		setupConnections(spaceMap, objects, connectionMap);
 	}
 	return { spaceMap, objects };
 };
 
-export const calculateAllPaths = (fromSpace) => {
+export const calculateAllPaths = (fromSpace: Space) => {
 	if (fromSpace) {
-		const visitedMap = new Map();
+		const visitedMap = new Map<number, number>();
 		const visitList = [{ space: fromSpace, distance: 0 }];
 
 		while (visitList.length > 0) {
-			var visitData = visitList.shift();
-			var curSpace = visitData.space;
-			var curDistance = visitData.distance;
-			if (!visitedMap.has(curSpace.id)) {
-				visitedMap.set(curSpace.id, curDistance);
-				for (var j = 0; j < curSpace.connections.length; j++) {
-					var conSpace = curSpace.connections[j];
-					if (!visitedMap.has(conSpace.id))
-						visitList.push({
-							space: conSpace,
-							distance:
-								curDistance +
-								(conSpace.lightLevel === LightLevels.PITCH_BLACK
-									? 2
-									: 1),
-						});
+			var visitData = visitList?.shift();
+			var curSpace = visitData?.space;
+			var curDistance = visitData?.distance;
+			if (curSpace && curDistance) {
+				if (!visitedMap.has(curSpace.id)) {
+					visitedMap.set(curSpace.id, curDistance);
+					for (var j = 0; j < curSpace.connections.length; j++) {
+						var conSpace = curSpace.connections[j];
+						if (!visitedMap.has(conSpace.id))
+							visitList.push({
+								space: conSpace,
+								distance:
+									curDistance +
+									(conSpace.lightLevel ===
+									LightLevel.PITCH_BLACK
+										? 2
+										: 1),
+							});
+					}
 				}
 			}
 		}
@@ -98,13 +101,20 @@ export const calculateAllPaths = (fromSpace) => {
 	}
 };
 
-export const updateSpaceColor = (spaceMap, color) => {
+export const updateSpaceColor = (
+	spaceMap: Map<number, Space>,
+	color: string
+) => {
 	for (let space of spaceMap.values()) {
 		space.updateColor(color);
 	}
 };
 
-const setupConnections = (spaceMap, existingSpaces = undefined) => {
+const setupConnections = (
+	spaceMap: Map<number, Space>,
+	existingSpaces: Space[] = [],
+	connectionMap?: Map<number, number[]>
+) => {
 	const { ROWS, COLS } = MAP_CONSTANTS;
 	if (!existingSpaces) {
 		for (let space of spaceMap.values()) {
@@ -118,11 +128,11 @@ const setupConnections = (spaceMap, existingSpaces = undefined) => {
 			if (space.row != 1) {
 				if (space.row % 2 == 0 || space.col != 1)
 					space.connections.push(
-						spaceMap.get(space.id + topLeftMod - offset)
+						spaceMap.get(space.id + topLeftMod - offset)!
 					);
 				if (space.row % 2 == 1 || space.col != COLS)
 					space.connections.push(
-						spaceMap.get(space.id + topRightMod - offset)
+						spaceMap.get(space.id + topRightMod - offset)!
 					);
 			}
 
@@ -130,55 +140,62 @@ const setupConnections = (spaceMap, existingSpaces = undefined) => {
 			if (space.row != ROWS) {
 				if (space.row % 2 == 0 || space.col != 1)
 					space.connections.push(
-						spaceMap.get(space.id + bottomLeftMod - offset)
+						spaceMap.get(space.id + bottomLeftMod - offset)!
 					);
 				if (space.row % 2 == 1 || space.col != COLS)
 					space.connections.push(
-						spaceMap.get(space.id + bottomRightMod - offset)
+						spaceMap.get(space.id + bottomRightMod - offset)!
 					);
 			}
 
 			// Check left
 			if (space.col != 1) {
-				space.connections.push(spaceMap.get(space.id - 1));
+				space.connections.push(spaceMap.get(space.id - 1)!);
 			}
 
 			// Check right
 			if (space.col != COLS) {
-				space.connections.push(spaceMap.get(space.id + 1));
+				space.connections.push(spaceMap.get(space.id + 1)!);
 			}
 		}
 	} else {
-		for (let loadedSpace of existingSpaces) {
-			let space = spaceMap.get(loadedSpace.id);
-			let connections = [];
-			for (let connectionId of loadedSpace.connections)
-				connections.push(spaceMap.get(connectionId));
-			space.connections = connections;
+		for (const loadedSpace of existingSpaces) {
+			const space = spaceMap.get(loadedSpace.id)!;
+			const connectionIds = connectionMap!.get(space.id)!;
+			for (const spaceId of connectionIds) {
+				space.connections.push(spaceMap.get(spaceId)!);
+			}
 		}
 	}
 };
 
-export const clearCanvas = (canvas, ctx) => {
+export const clearCanvas = (
+	canvas: HTMLCanvasElement,
+	ctx: CanvasRenderingContext2D
+) => {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
-export const redrawMap = (canvas, ctx, backgroundImage) => {
+export const redrawMap = (
+	canvas: HTMLCanvasElement,
+	ctx: CanvasRenderingContext2D,
+	backgroundImage: CanvasImageSource
+) => {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawImage(ctx, 0, 0, canvas.width, canvas.height, backgroundImage);
 };
 
 export const redraw = (
-	canvas,
-	ctx,
-	spaceMap,
-	baseColor,
-	mousePos,
-	newConnection,
-	distanceMap = null,
-	settings = null
+	canvas: HTMLCanvasElement,
+	ctx: CanvasRenderingContext2D,
+	spaceMap: Map<number, Space>,
+	baseColor: string,
+	mousePos: MousePos,
+	newConnection?: NewConnection,
+	distanceMap?: Map<number, number>,
+	settings?: any
 ) => {
-	const spaceGroupMap = settings.get('spaceGroups');
+	const spaceGroupMap = settings?.get('spaceGroups');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawSpaces(ctx, spaceMap, distanceMap, spaceGroupMap);
 
@@ -202,10 +219,10 @@ export const redraw = (
 };
 
 export const drawSpaces = (
-	ctx,
-	spaceMap,
-	distanceMap = null,
-	spaceGroupMap = null
+	ctx: CanvasRenderingContext2D,
+	spaceMap: Map<number, Space>,
+	distanceMap?: Map<number, number>,
+	spaceGroupMap?: Map<number, SpaceGroup>
 ) => {
 	let highlightedSpaces = [];
 	ctx.moveTo(0, 0);
@@ -216,8 +233,10 @@ export const drawSpaces = (
 			ctx.save();
 			ctx.lineWidth = space.drawOptions.width;
 			ctx.strokeStyle = space.drawOptions.color;
-			let pattern = [];
-			if (space.lightLevel === LightLevels.PITCH_BLACK) pattern = [5, 5];
+			let pattern: number[] = [];
+			if (space.lightLevel === LightLevel.PITCH_BLACK) {
+				pattern = [5, 5];
+			}
 			ctx.setLineDash(pattern);
 
 			/*if (pointA && pointA.id === space.id) {
@@ -229,18 +248,21 @@ export const drawSpaces = (
 				ctx.strokeStyle = '#1600BA';
 			}*/
 
-			if (space.spaceType.image) {
-				/*drawImage(
+			/*
+			if (space.type.image) {
+				drawImage(
 				ctx,
 				space.center.x - space.radius,
 				space.center.y - space.radius,
 				imageMap.get(space.spaceType.image)
-			);*/
+			);
 			}
+			*/
+
 			drawCircle(ctx, space.center.x, space.center.y, space.radius);
 
-			let spaceText = space.number;
-			if (space.group !== null) {
+			let spaceText = `${space.number}`;
+			if (typeof space.group === 'number' && spaceGroupMap) {
 				const spaceGroup = spaceGroupMap.get(space.group);
 				if (spaceGroup) {
 					spaceText = `${spaceGroup.prefix}-${space.number}`;
@@ -252,7 +274,7 @@ export const drawSpaces = (
 				space.center.y + 5,
 				spaceText,
 				'bold 10pt Arial',
-				space.spaceType.fontColor
+				getSpaceTypeDetails(space.type).fontColor
 			);
 
 			ctx.lineWidth = 1;
@@ -299,7 +321,7 @@ export const drawSpaces = (
 					ctx,
 					space.center.x,
 					space.center.y - space.radius + 4,
-					distance,
+					`${distance}`,
 					'bold 7pt Arial'
 				);
 				ctx.restore();
@@ -340,10 +362,10 @@ export const drawSpaces = (
 };
 
 export const drawNewConnection = (
-	ctx,
-	color,
-	fromSpace,
-	mousePos,
+	ctx: CanvasRenderingContext2D,
+	color: string,
+	fromSpace: Space,
+	mousePos: MousePos,
 	isTwoWay = true
 ) => {
 	var dX = fromSpace.center.x - mousePos.x;
@@ -357,7 +379,12 @@ export const drawNewConnection = (
 	if (isTwoWay) drawLine(ctx, color, mousePos.x, mousePos.y, startX, startY);
 };
 
-const drawCircle = (ctx, x, y, radius) => {
+const drawCircle = (
+	ctx: CanvasRenderingContext2D,
+	x: number,
+	y: number,
+	radius: number
+) => {
 	ctx.save();
 	ctx.beginPath();
 	ctx.arc(x, y, radius, 0, 2 * Math.PI);
@@ -366,7 +393,13 @@ const drawCircle = (ctx, x, y, radius) => {
 	ctx.restore();
 };
 
-const drawFilledCircle = (ctx, x, y, radius, color) => {
+const drawFilledCircle = (
+	ctx: CanvasRenderingContext2D,
+	x: number,
+	y: number,
+	radius: number,
+	color: string
+) => {
 	ctx.save();
 	ctx.arc(x, y, radius, 0, 2 * Math.PI);
 	ctx.lineWidth = 0;
@@ -376,10 +409,10 @@ const drawFilledCircle = (ctx, x, y, radius, color) => {
 };
 
 const drawText = (
-	ctx,
-	x,
-	y,
-	text,
+	ctx: CanvasRenderingContext2D,
+	x: number,
+	y: number,
+	text: string,
 	font = '10Pt Arial',
 	fontColor = '#000000'
 ) => {
@@ -392,12 +425,12 @@ const drawText = (
 };
 
 const drawLine = (
-	ctx,
-	color,
-	startX,
-	startY,
-	endX,
-	endY,
+	ctx: CanvasRenderingContext2D,
+	color: string,
+	startX: number,
+	startY: number,
+	endX: number,
+	endY: number,
 	drawArrow = false
 ) => {
 	var arrowLength = 5;
@@ -426,13 +459,23 @@ const drawLine = (
 	ctx.restore();
 };
 
-const drawImage = (ctx, x, y, width, height, image) => {
+const drawImage = (
+	ctx: CanvasRenderingContext2D,
+	x: number,
+	y: number,
+	width: number,
+	height: number,
+	image: CanvasImageSource
+) => {
 	ctx.save();
 	ctx.drawImage(image, x, y, width, height);
 	ctx.restore();
 };
 
-export const getMousePos = (event, canvas) => {
+export const getMousePos = (
+	event: any,
+	canvas: HTMLCanvasElement
+): MousePos => {
 	var rect = canvas.getBoundingClientRect();
 	return {
 		x: event.clientX - rect.left,
@@ -440,10 +483,10 @@ export const getMousePos = (event, canvas) => {
 	};
 };
 
-export const setupSettings = (spaceGroups) => {
+export const setupSettings = (spaceGroups: SpaceGroup[]) => {
 	const settings = new Map();
 
-	const spaceGroupMap = new Map();
+	const spaceGroupMap = new Map<number, SpaceGroup>();
 	for (let group of spaceGroups) {
 		spaceGroupMap.set(group.id, group);
 	}
@@ -451,7 +494,7 @@ export const setupSettings = (spaceGroups) => {
 	return settings;
 };
 
-export const renumberSpaces = (spaceMap, settings) => {
+export const renumberSpaces = (spaceMap: Map<number, Space>, settings: any) => {
 	const spaceGroupMap = settings.get('spaceGroups');
 	const renumberMap = new Map();
 	renumberMap.set('-', 1);
@@ -460,7 +503,8 @@ export const renumberSpaces = (spaceMap, settings) => {
 	}
 	for (let space of spaceMap.values()) {
 		if (!space.isDeleted) {
-			let renumberKey = space.group !== null ? space.group : '-';
+			let renumberKey =
+				typeof space.group === 'number' ? space.group : '-';
 			const nextNum = renumberMap.get(renumberKey);
 			renumberMap.set(renumberKey, nextNum + 1);
 			space.updateNumber(nextNum);
