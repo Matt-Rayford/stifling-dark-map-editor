@@ -145,26 +145,36 @@ const SpaceSettings = ({
 			{renderGroups()}
 
 			<h5>Connections</h5>
-			{space.connections.map((connection) => (
-				<div key={connection.id} className='input-group'>
-					<input
-						type='text'
-						className='form-control'
-						disabled
-						value={connection.number}
-					/>
+			{space.connections.map((connection) => {
+				console.log('Connection: ', connection);
+				const connectionLabel = connection.group
+					? `${spaceGroups[connection.group]?.prefix}-${
+							connection.number
+					  }`
+					: connection.number;
+				return (
+					<div key={connection.id} className='input-group'>
+						<input
+							type='text'
+							className='form-control'
+							disabled
+							value={connectionLabel}
+						/>
 
-					<div className='input-group-append'>
-						<button
-							className='btn btn-outline-danger'
-							type='button'
-							onClick={() => removeConnection(space, connection)}
-						>
-							{'Delete'}
-						</button>
+						<div className='input-group-append'>
+							<button
+								className='btn btn-outline-danger'
+								type='button'
+								onClick={() =>
+									removeConnection(space, connection)
+								}
+							>
+								{'Delete'}
+							</button>
+						</div>
 					</div>
-				</div>
-			))}
+				);
+			})}
 		</div>
 	);
 };

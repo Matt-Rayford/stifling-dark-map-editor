@@ -30,7 +30,7 @@ const ToolMenu = ({
 			mousePos.y = clientY;
 			isDragging = true;
 		};
-		const handleMouseUp = (event) => {
+		const handleMouseUp = () => {
 			isDragging = false;
 		};
 		const handleMouseMove = (event) => {
@@ -64,7 +64,9 @@ const ToolMenu = ({
 
 	const updateMapSettings = (settingName, value) => {
 		map.drawOptions[settingName] = value;
-		if (settingName === 'spaceColor') updateSpaceColor(spaceMap, value);
+		if (settingName === 'spaceColor') {
+			updateSpaceColor(spaceMap, value);
+		}
 
 		//this.drawMap(newMap.drawOptions.backgroundImageUrl);
 		//this.setState({ map: newMap, spaceMap, timer: newTimer });
