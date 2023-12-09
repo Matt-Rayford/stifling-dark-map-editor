@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { deleteMapSpaceGroup, updateMapSpaceGroup } from './utils/requests';
 
-const SpaceGroupRow = ({ mapId, group, onDelete, settings }) => {
+interface Props {
+	mapId: string;
+	group: any;
+	settings: any;
+	onDelete: (id: number) => void;
+}
+
+const SpaceGroupRow = ({ mapId, group, onDelete, settings }: Props) => {
 	const [name, setName] = useState(group.name);
 	const [prefix, setPrefix] = useState(group.prefix);
 	const [origState, setOrigState] = useState(group);

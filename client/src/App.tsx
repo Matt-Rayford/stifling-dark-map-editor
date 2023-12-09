@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Home } from './Home';
 import { MapEditor } from './MapEditor';
@@ -12,9 +11,9 @@ export const App = () => {
 			<section className='section'>
 				<div className='container'>
 					<Routes>
-						<Route exact path='/' element={<Home />} />
+						<Route path='/' element={<Home />} />
 						<Route path='/map/:mapId' element={<MapEditor />} />
-						<Route exact path='/maps/new' element={<MapForm />} />
+						<Route path='/maps/new' element={<MapForm />} />
 					</Routes>
 				</div>
 			</section>

@@ -47,7 +47,7 @@ export const Home = () => {
 			{user && (
 				<div>
 					<h1>Your Maps</h1>
-					{maps.map((mapData) => {
+					{maps.map((mapData: any) => {
 						return (
 							<button
 								key={mapData.id}

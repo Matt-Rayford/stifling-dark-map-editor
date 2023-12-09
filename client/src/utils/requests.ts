@@ -1,6 +1,6 @@
 const endpointURL = 'http://localhost:9000/graphql';
 
-export async function createMap(title) {
+export async function createMap(title: string) {
 	const mutation = `
     mutation CreateMap($title: String) {
       map: createMap(title: $title){
@@ -13,7 +13,7 @@ export async function createMap(title) {
 	return map;
 }
 
-export async function updateMap(id, spaceData, drawOptions) {
+export async function updateMap(id: string, spaceData: any, drawOptions: any) {
 	const mutation = `
     mutation UpdateMap($id: ID, $spaceData: Object, $drawOptions: Object) {
       map: updateMap(mapId: $id, spaceData: $spaceData, drawOptions: $drawOptions) {
@@ -49,7 +49,7 @@ export async function updateMap(id, spaceData, drawOptions) {
 	return map;
 }
 
-export async function updateMapSettings(id, drawOptions) {
+export async function updateMapSettings(id: string, drawOptions: any) {
 	const mutation = `
     mutation UpdateMapSettings($id: ID, $drawOptions: Object) {
       map: updateMapSettings(mapId: $id, drawOptions: $drawOptions) {
@@ -70,7 +70,7 @@ export async function updateMapSettings(id, drawOptions) {
 	return map;
 }
 
-export async function loadMap(id) {
+export async function loadMap(id: string) {
 	const query = `
 		query LoadMap($id: ID!) {
 			map(id: $id) {
@@ -122,7 +122,7 @@ export async function loadMaps() {
 	return maps;
 }
 
-export async function updateMapSpaceGroup(mapId, group) {
+export async function updateMapSpaceGroup(mapId: string, group: any) {
 	const query = `
     mutation UpdateMapSpaceGroup($mapId: ID!, $group: Object) {
 			updatedGroup: updateMapSpaceGroup(mapId: $mapId, group: $group) {
@@ -139,7 +139,7 @@ export async function updateMapSpaceGroup(mapId, group) {
 	return updatedGroup;
 }
 
-export async function addMapSpaceGroup(mapId, group) {
+export async function addMapSpaceGroup(mapId: string, group: any) {
 	const query = `
     mutation AddMapSpaceGroup($mapId: ID!, $group: Object) {
 			newGroup: addMapSpaceGroup(mapId: $mapId, group: $group) {
@@ -156,7 +156,7 @@ export async function addMapSpaceGroup(mapId, group) {
 	return newGroup;
 }
 
-export async function deleteMapSpaceGroup(mapId, groupId) {
+export async function deleteMapSpaceGroup(mapId: string, groupId: number) {
 	const query = `
     mutation DeleteMapSpaceGroup($mapId: ID!, $groupId: ID!) {
 			wasSuccess: deleteMapSpaceGroup(mapId: $mapId, groupId: $groupId)
@@ -169,7 +169,7 @@ export async function deleteMapSpaceGroup(mapId, groupId) {
 	return wasSuccess;
 }
 
-async function graphqlRequest(query, variables = {}) {
+async function graphqlRequest(query: any, variables: any = {}) {
 	const request = {
 		method: 'POST',
 		headers: { 'content-type': 'application/json' },
@@ -182,7 +182,7 @@ async function graphqlRequest(query, variables = {}) {
 	const responseBody = await response.json();
 	if (responseBody.errors) {
 		const message = responseBody.errors
-			.map((error) => error.message)
+			.map((error: any) => error.message)
 			.join('\n');
 		throw new Error(message);
 	}

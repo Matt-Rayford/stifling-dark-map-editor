@@ -6,8 +6,8 @@ const MapForm = () => {
 	const [title, setMapTitle] = useState('');
 	const navigate = useNavigate();
 	const handleSubmit = useCallback(
-		(title) => {
-			const { data } = createMap(title).then(({ id }) => {
+		(title: string) => {
+			createMap(title).then(({ id }) => {
 				navigate(`/map/${id}`);
 			});
 		},

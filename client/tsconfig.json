@@ -4,11 +4,11 @@
 	"_version": "1.0.0",
 
 	"compilerOptions": {
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"module": "esnext",
-		"moduleResolution": "bundler",
-		"target": "es2015",
-
+		"lib": ["dom", "dom.iterable"],
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"target": "ES2022",
+		"types": ["node"],
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
@@ -19,6 +19,25 @@
 		"noFallthroughCasesInSwitch": true,
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
-		"strict": true
-	}
+		"strict": true,
+		"rootDir": "src",
+		"outDir": "out"
+	},
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.js",
+		"src/Home.tsx",
+		"src/App.tsx",
+		"src/index.tsx",
+		"src/MapForm.tsx",
+		"src/ToolSettings.tsx",
+		"src/NavBar.tsx",
+		"src/SpaceGroupRow.tsx",
+		"src/SpaceGroup.tsx",
+		"src/MapSettings.tsx",
+		"src/SpaceSettings.tsx",
+		"src/ToolMenu.tsx",
+		"src/MapEditor.tsx"
+	],
+	"exclude": ["node_modules", "<node_internals>/**"]
 }

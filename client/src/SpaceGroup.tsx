@@ -2,15 +2,22 @@ import React, { useEffect, useState } from 'react';
 import SpaceGroupRow from './SpaceGroupRow';
 import { addMapSpaceGroup } from './utils/requests';
 
+interface Props {
+	mapId: string;
+	existingGroups: number[];
+	settings: any;
+	onUpdateSpaceGroups: () => void;
+}
+
 const SpaceGroup = ({
 	mapId,
 	existingGroups,
 	settings,
 	onUpdateSpaceGroups,
-}) => {
+}: Props) => {
 	const [name, setName] = useState('');
 	const [prefix, setPrefix] = useState('');
-	const [groups, setGroups] = useState([]);
+	const [groups, setGroups] = useState<any[]>([]);
 
 	useEffect(() => {
 		if (existingGroups) {
@@ -37,7 +44,7 @@ const SpaceGroup = ({
 		setPrefix('');
 	};
 
-	const onDelete = (groupId) => {
+	const onDelete = (groupId: number) => {
 		setGroups([...groups.filter((g) => g.id !== groupId)]);
 		onUpdateSpaceGroups();
 	};

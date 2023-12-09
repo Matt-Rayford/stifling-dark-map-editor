@@ -1,15 +1,23 @@
 import React, { Component, useEffect, useState } from 'react';
 import { updateSpaceColor } from './utils/canvas';
 import { updateMap, updateMapSettings } from './utils/requests';
+import { Space } from './models/space';
+
+interface Props {
+	mapId: string;
+	spaceMap: Map<number, Space>;
+	mapSettings: any;
+	onUpdateBackgroundImage: (imageUrl: string) => void;
+}
 
 const MapSettings = ({
 	mapId,
 	spaceMap,
 	mapSettings,
 	onUpdateBackgroundImage,
-}) => {
-	const [origSettings, setOrigSettings] = useState(null);
-	const [curMapSettings, setCurMapSettings] = useState(null);
+}: Props) => {
+	const [origSettings, setOrigSettings] = useState<any>();
+	const [curMapSettings, setCurMapSettings] = useState<any>();
 
 	useEffect(() => {
 		if (!origSettings) setOrigSettings(mapSettings);
@@ -18,17 +26,19 @@ const MapSettings = ({
 
 	const onSave = () => {
 		let spaceData = Array.from(spaceMap.values()).map((space) => {
-			const s = {
+			const s: any = {
 				id: space.id,
 				number: space.number,
-				type: space.spaceType.enumVal,
-				lightLevel: space.lightLevel.enumVal,
+				type: space.type,
+				lightLevel: space.lightLevel,
 				row: space.row,
 				col: space.col,
-				connections: space.connections.map((c) => c.id),
+				connections: space.connections.map((c) => c),
 				isDeleted: space.isDeleted,
 			};
-			if (space.group !== null) s.group = space.group;
+			if (space.group !== null) {
+				s.group = space.group;
+			}
 
 			return s;
 		});
@@ -43,7 +53,7 @@ const MapSettings = ({
 		handleImageUpdate(origSettings.backgroundImageUrl);
 	};
 
-	const handleImageUpdate = (path) => {
+	const handleImageUpdate = (path: string) => {
 		const pathSplits = path.split('\\');
 		const imageUrl = `/images/boards/${pathSplits[pathSplits.length - 1]}`;
 
@@ -53,14 +63,14 @@ const MapSettings = ({
 		setCurMapSettings(settings);
 	};
 
-	const handleColorUpdate = (color) => {
+	const handleColorUpdate = (color: string) => {
 		updateSpaceColor(spaceMap, color);
 		const settings = { ...curMapSettings };
 		settings.spaceColor = color;
 		setCurMapSettings(settings);
 	};
 
-	const handleOptionsUpdate = (property, value) => {
+	const handleOptionsUpdate = (property: string, value: string) => {
 		const settings = { ...curMapSettings };
 		settings[property] = parseFloat(value);
 		setCurMapSettings(settings);
