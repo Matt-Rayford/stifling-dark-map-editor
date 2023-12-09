@@ -3,7 +3,7 @@ import { deleteMapSpaceGroup, updateMapSpaceGroup } from './utils/requests';
 
 interface Props {
 	mapId: string;
-	group: any;
+	group: SpaceGroup;
 	settings: any;
 	onDelete: (id: number) => void;
 }

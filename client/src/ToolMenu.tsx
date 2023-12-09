@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import MapSettings from './MapSettings';
-import SpaceGroup from './SpaceGroup';
+import Settings from './Settings';
+import SpaceGroupSettings from './SpaceGroupSettings';
 import SpaceSettings from './SpaceSettings';
 import { renumberSpaces, updateSpaceColor } from './utils/canvas';
 import { Space } from './models/space';
@@ -73,7 +73,7 @@ const ToolMenu = ({
 	}, [map]);
 
 	const updateMapSettings = (settingName: string, value: any) => {
-		map.drawOptions[settingName] = value;
+		map.mapSettings[settingName] = value;
 		if (settingName === 'spaceColor') {
 			updateSpaceColor(spaceMap, value);
 		}
@@ -134,7 +134,7 @@ const ToolMenu = ({
 				)}
 				<Tab eventKey='tools' title='Tools'>
 					<div style={{ padding: '12px' }}>
-						<SpaceGroup
+						<SpaceGroupSettings
 							mapId={map.id}
 							existingGroups={spaceGroups}
 							settings={settings}
@@ -143,9 +143,9 @@ const ToolMenu = ({
 					</div>
 				</Tab>
 				<Tab eventKey='map' title='Map'>
-					<MapSettings
+					<Settings
 						mapId={map.id}
-						mapSettings={map.drawOptions}
+						mapSettings={map.mapSettings}
 						spaceMap={spaceMap}
 						onUpdateBackgroundImage={onUpdateBackgroundImage}
 					/>

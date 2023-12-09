@@ -1,26 +1,19 @@
 import { NewConnection } from '../models/connection';
 import { LightLevel } from '../models/light-level';
-import { MapDrawOptions } from '../models/map-draw-options';
+import { SDSpace } from '../models/map';
+import { MapSettings } from '../models/map-settings';
 import { MousePos } from '../models/mouse-pos';
 import { Space, SpaceType, getSpaceTypeDetails } from '../models/space';
 import { MAP_CONSTANTS } from './constants';
 
 export const setupSpaces = (
-	existingSpaces: Space[] = [],
-	objects: Space[] = [],
-	mapDrawOptions: MapDrawOptions
+	existingSpaces: SDSpace[] = [],
+	mapSettings: MapSettings
 ) => {
-	const {
-		ROWS,
-		COLS,
-		SPACER_X,
-		SPACER_Y,
-		INDENT,
-		SPACE_RADIUS,
-		PADDING_X,
-		PADDING_Y,
-	} = MAP_CONSTANTS;
-	const spaceMap = new Map();
+	const objects: Space[] = [];
+	const { ROWS, COLS, SPACER_X, SPACER_Y, INDENT, PADDING_X, PADDING_Y } =
+		MAP_CONSTANTS;
+	const spaceMap = new Map<number, Space>();
 	if (!existingSpaces) {
 		let curSpace = 1;
 		for (let i = 0; i < ROWS; i++) {
@@ -34,7 +27,7 @@ export const setupSpaces = (
 					curSpace,
 					i + 1,
 					j + 1,
-					mapDrawOptions
+					mapSettings
 				);
 				objects.push(space);
 				curSpace++;
@@ -43,6 +36,7 @@ export const setupSpaces = (
 		}
 		setupConnections(spaceMap);
 	} else {
+		const connectionMap = new Map<number, number[]>();
 		for (let loadedSpace of existingSpaces) {
 			const { id, row, col, type, lightLevel, number, isDeleted, group } =
 				loadedSpace;
@@ -50,24 +44,26 @@ export const setupSpaces = (
 				j = col - 1;
 			const space = new Space(
 				id,
-				mapDrawOptions.paddingX +
-					j * mapDrawOptions.horizontalSpacing +
-					(i % 2 === 0 ? 0 : mapDrawOptions.indent),
-				mapDrawOptions.paddingY + i * mapDrawOptions.verticalSpacing,
+				mapSettings.paddingX +
+					j * mapSettings.horizontalSpacing +
+					(i % 2 === 0 ? 0 : mapSettings.indent),
+				mapSettings.paddingY + i * mapSettings.verticalSpacing,
 				type,
 				lightLevel,
 				number,
 				row,
 				col,
-				mapDrawOptions,
-				mapDrawOptions.spaceRadius,
+				mapSettings,
+				mapSettings.spaceRadius,
 				isDeleted,
 				group
 			);
+
 			objects.push(space);
 			spaceMap.set(space.id, space);
+			connectionMap.set(loadedSpace.id, loadedSpace.connections);
 		}
-		setupConnections(spaceMap, existingSpaces);
+		setupConnections(spaceMap, objects, connectionMap);
 	}
 	return { spaceMap, objects };
 };
@@ -116,7 +112,8 @@ export const updateSpaceColor = (
 
 const setupConnections = (
 	spaceMap: Map<number, Space>,
-	existingSpaces: Space[] = []
+	existingSpaces: Space[] = [],
+	connectionMap?: Map<number, number[]>
 ) => {
 	const { ROWS, COLS } = MAP_CONSTANTS;
 	if (!existingSpaces) {
@@ -162,12 +159,12 @@ const setupConnections = (
 			}
 		}
 	} else {
-		for (let loadedSpace of existingSpaces) {
-			let space = spaceMap.get(loadedSpace.id)!;
-			let connections: Space[] = [];
-			for (let connection of loadedSpace.connections)
-				connections.push(connection);
-			space.connections = connections;
+		for (const loadedSpace of existingSpaces) {
+			const space = spaceMap.get(loadedSpace.id)!;
+			const connectionIds = connectionMap!.get(space.id)!;
+			for (const spaceId of connectionIds) {
+				space.connections.push(spaceMap.get(spaceId)!);
+			}
 		}
 	}
 };
@@ -265,7 +262,7 @@ export const drawSpaces = (
 			drawCircle(ctx, space.center.x, space.center.y, space.radius);
 
 			let spaceText = `${space.number}`;
-			if (space.group && spaceGroupMap) {
+			if (typeof space.group === 'number' && spaceGroupMap) {
 				const spaceGroup = spaceGroupMap.get(space.group);
 				if (spaceGroup) {
 					spaceText = `${spaceGroup.prefix}-${space.number}`;
@@ -506,7 +503,8 @@ export const renumberSpaces = (spaceMap: Map<number, Space>, settings: any) => {
 	}
 	for (let space of spaceMap.values()) {
 		if (!space.isDeleted) {
-			let renumberKey = space.group !== null ? space.group : '-';
+			let renumberKey =
+				typeof space.group === 'number' ? space.group : '-';
 			const nextNum = renumberMap.get(renumberKey);
 			renumberMap.set(renumberKey, nextNum + 1);
 			space.updateNumber(nextNum);

@@ -16,9 +16,10 @@ import { loadMap } from './utils/requests';
 import { Space } from './models/space';
 import { MousePos } from './models/mouse-pos';
 import { NewConnection } from './models/connection';
+import { SDMap } from './models/map';
 
 export const MapEditor = () => {
-	const [map, setMap] = useState<any>();
+	const [map, setMap] = useState<SDMap>();
 	const [spaceMap, setSpaceMap] = useState<Map<number, Space>>();
 	const [timer, setTimer] = useState<NodeJS.Timeout>();
 	const [settings, setSettings] = useState<any>();
@@ -33,8 +34,6 @@ export const MapEditor = () => {
 
 	const { mapId } = useParams();
 
-	console.log('Rerender');
-
 	useEffect(() => {
 		return () => {
 			clearInterval(timer);
@@ -43,10 +42,9 @@ export const MapEditor = () => {
 
 	useEffect(() => {
 		if (mapId) {
-			const handleMapLoad = async () => {
-				setMap(await loadMap(mapId));
-			};
-			handleMapLoad();
+			loadMap(mapId).then((sdMap) => {
+				setMap(sdMap);
+			});
 		}
 	}, [mapId]);
 
@@ -55,8 +53,7 @@ export const MapEditor = () => {
 			const hasSpaces = map.spaces && map.spaces.length > 0;
 			const { spaceMap, objects } = setupSpaces(
 				hasSpaces ? map.spaces : undefined,
-				[],
-				map.drawOptions
+				map.mapSettings
 			);
 			const settings = setupSettings(
 				map.spaceGroups ? map.spaceGroups : []
@@ -69,13 +66,13 @@ export const MapEditor = () => {
 				document.getElementById('canvasEditor')!;
 			const ctx = canvas.getContext('2d')!;
 
-			drawMap(map.drawOptions.backgroundImageUrl);
+			drawMap(map.mapSettings.backgroundImageUrl);
 			const animationTimer = setInterval(() => {
 				redraw(
 					canvas,
 					ctx,
 					spaceMap,
-					map.drawOptions.spaceColor,
+					map.mapSettings.spaceColor,
 					mousePos.current ?? { x: 0, y: 0 },
 					newConnection.current,
 					distanceMap.current,

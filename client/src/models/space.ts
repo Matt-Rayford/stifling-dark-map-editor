@@ -1,7 +1,7 @@
 import { DRAW_CONSTANTS, MAP_CONSTANTS } from '../utils/constants';
 import { DrawOptions } from './draw-options';
 import { LightLevel } from './light-level';
-import { MapDrawOptions } from './map-draw-options';
+import { MapSettings } from './map-settings';
 import { Point } from './map-models';
 import { ObjectType } from './object';
 
@@ -89,7 +89,7 @@ export class Space {
 		number: number,
 		row: number,
 		col: number,
-		mapDrawOptions: MapDrawOptions,
+		mapDrawOptions: MapSettings,
 		radius = MAP_CONSTANTS.SPACE_RADIUS,
 		isDeleted = false,
 		group?: number
@@ -176,7 +176,7 @@ export class Space {
 		this.baseWidth = 1;
 	}
 
-	updateDrawOptions(settings: MapDrawOptions) {
+	updateDrawOptions(settings: MapSettings) {
 		this.radius = settings.spaceRadius;
 		this.center.x =
 			settings.paddingX +

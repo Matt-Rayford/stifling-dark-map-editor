@@ -19,12 +19,12 @@ const SpaceSettings = ({
 	onDisableDistances,
 }: Props) => {
 	const [lightLevel, setLightLevel] = useState<LightLevel>();
-	const [spaceType, setSpaceType] = useState<SpaceType>();
-	const [spaceGroup, setSpaceGroup] = useState<number>();
+	const [spaceType, setSpaceType] = useState<SpaceType>(space.type);
+	const [spaceGroup, setSpaceGroup] = useState<number>(-1);
 
 	useEffect(() => {
 		if (space) {
-			setSpaceGroup(space.group);
+			setSpaceGroup(space.group ?? -1);
 			setLightLevel(space.lightLevel);
 		}
 	}, [space]);
@@ -42,7 +42,7 @@ const SpaceSettings = ({
 	const updateGroup = (spaceGroup?: number) => {
 		if (!spaceGroup) {
 			space.removeGroup();
-			setSpaceGroup(undefined);
+			setSpaceGroup(-1);
 		} else {
 			space.updateGroup(spaceGroup);
 			setSpaceGroup(spaceGroup);
@@ -80,7 +80,7 @@ const SpaceSettings = ({
 						)
 					}
 				>
-					<option value=''>None...</option>
+					<option value={-1}>None...</option>
 					{spaceGroups.map((g) => (
 						<option key={g.id} value={g.id}>
 							{g.name} ({g.prefix})
@@ -97,7 +97,7 @@ const SpaceSettings = ({
 					<label className='input-group-text'>Space Type</label>
 				</div>
 				<select
-					value={space.type ?? SpaceType.BASIC}
+					value={spaceType ?? SpaceType.BASIC}
 					className='form-select'
 					onChange={(e) =>
 						updateSpaceType(e.target.value as SpaceType)

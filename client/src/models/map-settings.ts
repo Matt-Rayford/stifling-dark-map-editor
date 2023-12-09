@@ -1,4 +1,4 @@
-export class MapDrawOptions {
+export class MapSettings {
 	backgroundImageUrl: string;
 	spaceColor: string;
 	horizontalSpacing: number;

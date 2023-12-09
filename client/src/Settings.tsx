@@ -1,28 +1,26 @@
-import React, { Component, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { updateSpaceColor } from './utils/canvas';
-import { updateMap, updateMapSettings } from './utils/requests';
+import { updateMap } from './utils/requests';
+import { MapSettings } from './models/map-settings';
+
 import { Space } from './models/space';
 
 interface Props {
 	mapId: string;
 	spaceMap: Map<number, Space>;
-	mapSettings: any;
+	mapSettings: MapSettings;
 	onUpdateBackgroundImage: (imageUrl: string) => void;
 }
 
-const MapSettings = ({
+const Settings = ({
 	mapId,
 	spaceMap,
 	mapSettings,
 	onUpdateBackgroundImage,
 }: Props) => {
-	const [origSettings, setOrigSettings] = useState<any>();
-	const [curMapSettings, setCurMapSettings] = useState<any>();
-
-	useEffect(() => {
-		if (!origSettings) setOrigSettings(mapSettings);
-		if (!curMapSettings) setCurMapSettings(mapSettings);
-	}, [mapSettings]);
+	const [origSettings, setOrigSettings] = useState<MapSettings>(mapSettings);
+	const [curMapSettings, setCurMapSettings] =
+		useState<MapSettings>(mapSettings);
 
 	const onSave = () => {
 		let spaceData = Array.from(spaceMap.values()).map((space) => {
@@ -72,6 +70,7 @@ const MapSettings = ({
 
 	const handleOptionsUpdate = (property: string, value: string) => {
 		const settings = { ...curMapSettings };
+		//@ts-ignore
 		settings[property] = parseFloat(value);
 		setCurMapSettings(settings);
 		for (let space of spaceMap.values()) {
@@ -120,6 +119,7 @@ const MapSettings = ({
 							type='number'
 							step='0.01'
 							className='form-control'
+							//@ts-ignore
 							value={curMapSettings[settingKey] || 0}
 							onChange={(e) =>
 								handleOptionsUpdate(settingKey, e.target.value)
@@ -152,4 +152,4 @@ const MapSettings = ({
 	) : null;
 };
 
-export default MapSettings;
+export default Settings;

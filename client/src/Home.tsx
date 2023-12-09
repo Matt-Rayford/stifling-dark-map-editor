@@ -1,10 +1,11 @@
-import React, { Component, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { loadMaps } from './utils/requests';
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import { SDMap } from './models/map';
 
 export const Home = () => {
-	const [maps, setMaps] = useState([]);
+	const [maps, setMaps] = useState<Pick<SDMap, 'id' | 'title'>[]>([]);
 	const navigate = useNavigate();
 
 	const { isLoading, error, user, loginWithRedirect } = useAuth0();

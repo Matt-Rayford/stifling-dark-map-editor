@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import SpaceGroupRow from './SpaceGroupRow';
 import { addMapSpaceGroup } from './utils/requests';
 
 interface Props {
 	mapId: string;
-	existingGroups: number[];
+	existingGroups: SpaceGroup[];
 	settings: any;
 	onUpdateSpaceGroups: () => void;
 }
 
-const SpaceGroup = ({
+const SpaceGroupSettings = ({
 	mapId,
 	existingGroups,
 	settings,
@@ -17,7 +17,7 @@ const SpaceGroup = ({
 }: Props) => {
 	const [name, setName] = useState('');
 	const [prefix, setPrefix] = useState('');
-	const [groups, setGroups] = useState<any[]>([]);
+	const [groups, setGroups] = useState<SpaceGroup[]>([]);
 
 	useEffect(() => {
 		if (existingGroups) {
@@ -106,4 +106,4 @@ const SpaceGroup = ({
 	);
 };
 
-export default SpaceGroup;
+export default SpaceGroupSettings;
