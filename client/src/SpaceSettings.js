@@ -146,7 +146,6 @@ const SpaceSettings = ({
 
 			<h5>Connections</h5>
 			{space.connections.map((connection) => {
-				console.log('Connection: ', connection);
 				const connectionLabel = connection.group
 					? `${spaceGroups[connection.group]?.prefix}-${
 							connection.number
