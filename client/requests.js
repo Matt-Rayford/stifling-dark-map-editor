@@ -1,4 +1,8 @@
-const endpointURL = 'http://localhost:9000/graphql';
+var env = process.env.NODE_ENV || 'development';
+const endpointURL =
+	env === 'production'
+		? 'https://stifling-dark-map-editor-production.up.railway.app/'
+		: 'http://localhost:9000/graphql';
 
 async function createMap(title) {
 	const mutation = `
