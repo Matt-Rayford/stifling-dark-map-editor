@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const db = require('./db');
 const { auth } = require('express-oauth2-jwt-bearer');
 
-const port = 9000;
+const port = process.env.port ?? 9000;
 const jwtSecret = Buffer.from('Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt', 'base64');
 const appOrigin = process.env.APP_URL || `http://localhost:3000`;
 
