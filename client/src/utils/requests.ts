@@ -1,7 +1,13 @@
 import { SDMap } from '../models/map';
 import { MapSettings } from '../models/map-settings';
 
-const endpointURL = 'http://localhost:9000/graphql';
+var env = process.env.NODE_ENV ?? 'development';
+const endpointURL =
+	env === 'production'
+		? 'https://stifling-dark-map-editor-production.up.railway.app/grapqhl'
+		: 'http://localhost:9000/graphql';
+
+console.log('Endpoint URL: ', endpointURL);
 
 export async function createMap(title: string): Promise<SDMap> {
 	const mutation = `
