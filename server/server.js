@@ -10,7 +10,7 @@ const { auth } = require('express-oauth2-jwt-bearer');
 
 const port = process.env.PORT ?? 9000;
 const jwtSecret = Buffer.from('Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt', 'base64');
-const appOrigin = process.env.APP_URL || `http://localhost:3000`;
+const appOrigin = process.env.APP_URL ?? `http://localhost:3000`;
 
 /*
 if (!process.env.OAUTH_DOMAIN || !process.env.OAUTH_AUDIENCE_URL) {
@@ -31,7 +31,9 @@ const checkJwt = auth({
 
 const app = express();
 app.use(
-	cors({ origin: appOrigin }),
+	cors({
+		origin: ['https://matt-rayford.github.io', 'http://localhost:3000'],
+	}),
 	bodyParser.json(),
 	expressJwt({
 		secret: jwtSecret,

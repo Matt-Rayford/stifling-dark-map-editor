@@ -334,6 +334,21 @@ export const drawSpaces = (
 		ctx.strokeStyle = space.drawOptions.color;
 		drawCircle(ctx, space.center.x, space.center.y, space.radius);
 		ctx.strokeStyle = space.drawOptions.color;
+		let spaceText = `${space.number}`;
+		if (typeof space.group === 'number' && spaceGroupMap) {
+			const spaceGroup = spaceGroupMap.get(space.group);
+			if (spaceGroup) {
+				spaceText = `${spaceGroup.prefix}-${space.number}`;
+			}
+		}
+		drawText(
+			ctx,
+			space.center.x,
+			space.center.y + 5,
+			spaceText,
+			'bold 10pt Arial',
+			getSpaceTypeDetails(space.type).fontColor
+		);
 		for (let connection of space.connections) {
 			var dX = connection.center.x - space.center.x;
 			var dY = connection.center.y - space.center.y;
