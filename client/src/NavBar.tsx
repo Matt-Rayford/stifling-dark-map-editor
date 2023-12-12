@@ -11,8 +11,6 @@ const NavBar = () => {
 			},
 		});
 
-	console.log('User: ', user);
-
 	return (
 		<nav className='navbar navbar-expand-lg navbar-dark bg-dark px-2'>
 			<Link className='navbar-brand' to='/'>
@@ -31,10 +29,16 @@ const NavBar = () => {
 			</button>
 			<div className='collapse navbar-collapse' id='navbarNavAltMarkup'>
 				<div className='navbar-nav'>
-					<Link className='nav-item nav-link' to='/'>
+					<Link
+						className='nav-item nav-link'
+						to='stifling-dark-map-editor'
+					>
 						Load Map
 					</Link>
-					<Link className='nav-item nav-link' to='/maps/new'>
+					<Link
+						className='nav-item nav-link'
+						to='stifling-dark-map-editor/maps/new'
+					>
 						Create Map
 					</Link>
 				</div>

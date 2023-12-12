@@ -13,10 +13,11 @@ export const Home = () => {
 
 	useEffect(() => {
 		const load = async () => {
+			console.log('Load maps: ');
 			const maps = await loadMaps();
 			setMaps(maps);
 		};
-		if (!isLoading && user) {
+		if (!isLoading && (user || isBeta)) {
 			load();
 		}
 	}, [isLoading, user]);
@@ -55,7 +56,7 @@ export const Home = () => {
 								key={mapData.id}
 								type='button'
 								className='btn btn-primary'
-								onClick={() => navigate(`/map/${mapData.id}`)}
+								onClick={() => navigate(`map/${mapData.id}`)}
 								style={{ marginRight: '15px' }}
 							>
 								{mapData.title}
