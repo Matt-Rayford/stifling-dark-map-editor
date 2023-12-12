@@ -9,6 +9,7 @@ export const Home = () => {
 	const navigate = useNavigate();
 
 	const { isLoading, error, user, loginWithRedirect } = useAuth0();
+	const isBeta = true;
 
 	useEffect(() => {
 		const load = async () => {
@@ -30,7 +31,7 @@ export const Home = () => {
 
 	return (
 		<>
-			{!user && (
+			{!user && !isBeta && (
 				<div>
 					<h1>
 						Create an Account to use the Stifling Dark Map Editor
@@ -45,7 +46,7 @@ export const Home = () => {
 					</p>
 				</div>
 			)}
-			{user && (
+			{(user || isBeta) && (
 				<div>
 					<h1>Your Maps</h1>
 					{maps.map((mapData: any) => {
