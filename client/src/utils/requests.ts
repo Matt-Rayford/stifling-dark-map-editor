@@ -4,7 +4,7 @@ import { MapSettings } from '../models/map-settings';
 var env = process.env.NODE_ENV ?? 'development';
 const endpointURL =
 	env === 'production'
-		? 'https://stifling-dark-map-editor-production.up.railway.app/grapqhl'
+		? 'https://stifling-dark-map-editor-production.up.railway.app/graphql'
 		: 'http://localhost:9000/graphql';
 
 console.log('Endpoint URL: ', endpointURL);
