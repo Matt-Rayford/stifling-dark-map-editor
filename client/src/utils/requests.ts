@@ -8,8 +8,8 @@ const endpointURL =
 		? 'https://stifling-dark-map-editor-production.up.railway.app/graphql'
 		: 'http://localhost:9000/graphql';
 */
-const endpointURL = 'http://localhost:9000/graphql';
-//'https://stifling-dark-map-editor-production.up.railway.app/graphql';
+const endpointURL =
+	'https://stifling-dark-map-editor-production.up.railway.app/graphql';
 
 console.log('Endpoint URL: ', endpointURL);
 
