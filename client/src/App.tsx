@@ -11,18 +11,9 @@ export const App = () => {
 			<section className='section'>
 				<div className='container'>
 					<Routes>
-						<Route
-							path='/stifling-dark-map-editor/'
-							element={<Home />}
-						/>
-						<Route
-							path='/stifling-dark-map-editor/map/:mapId'
-							element={<MapEditor />}
-						/>
-						<Route
-							path='/stifling-dark-map-editor/maps/new'
-							element={<MapForm />}
-						/>
+						<Route path='/' element={<Home />} />
+						<Route path='/map/:mapId' element={<MapEditor />} />
+						<Route path='/maps/new' element={<MapForm />} />
 					</Routes>
 				</div>
 			</section>

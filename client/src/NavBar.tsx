@@ -29,16 +29,10 @@ const NavBar = () => {
 			</button>
 			<div className='collapse navbar-collapse' id='navbarNavAltMarkup'>
 				<div className='navbar-nav'>
-					<Link
-						className='nav-item nav-link'
-						to='stifling-dark-map-editor'
-					>
+					<Link className='nav-item nav-link' to='/'>
 						Load Map
 					</Link>
-					<Link
-						className='nav-item nav-link'
-						to='stifling-dark-map-editor/maps/new'
-					>
+					<Link className='nav-item nav-link' to='/maps/new'>
 						Create Map
 					</Link>
 				</div>
