@@ -56,4 +56,6 @@ app.get('/api/external', checkJwt, (req, res) => {
 });
 */
 
-app.listen(port, () => console.info(`Server started on port ${port}`));
+app.listen(port, '0.0.0.0', () =>
+	console.info(`Server started on port ${port}`)
+);
