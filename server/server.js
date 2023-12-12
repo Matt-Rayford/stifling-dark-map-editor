@@ -32,7 +32,7 @@ const checkJwt = auth({
 const app = express();
 app.use(
 	cors({
-		origin: ['https://matt-rayford.github.io', 'http://localhost:3000'],
+		origin: ['https://matt-rayford.github.io/', 'http://localhost:3000'],
 	}),
 	bodyParser.json(),
 	expressJwt({
