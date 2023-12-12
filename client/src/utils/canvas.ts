@@ -77,7 +77,7 @@ export const calculateAllPaths = (fromSpace: Space) => {
 			var visitData = visitList?.shift();
 			var curSpace = visitData?.space;
 			var curDistance = visitData?.distance;
-			if (curSpace && curDistance) {
+			if (curSpace && typeof curDistance === 'number') {
 				if (!visitedMap.has(curSpace.id)) {
 					visitedMap.set(curSpace.id, curDistance);
 					for (var j = 0; j < curSpace.connections.length; j++) {
@@ -97,6 +97,7 @@ export const calculateAllPaths = (fromSpace: Space) => {
 			}
 		}
 
+		console.log('Visited map: ', visitedMap);
 		return visitedMap;
 	}
 };
