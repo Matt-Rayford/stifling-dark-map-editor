@@ -41,7 +41,16 @@ const Settings = ({
 			return s;
 		});
 
-		updateMap(mapId, spaceData, curMapSettings);
+		updateMap(
+			mapId,
+			spaceData.map((space) => ({
+				...space,
+				connections: space.connections.map(
+					(connection: Space) => connection.id
+				),
+			})),
+			curMapSettings
+		);
 		setOrigSettings({ ...curMapSettings });
 	};
 
