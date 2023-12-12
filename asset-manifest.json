@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/stifling-dark-map-editor/static/css/main.7e63eaaa.css",
-    "main.js": "/stifling-dark-map-editor/static/js/main.90671679.js",
+    "main.js": "/stifling-dark-map-editor/static/js/main.db6c4538.js",
     "index.html": "/stifling-dark-map-editor/index.html",
     "main.7e63eaaa.css.map": "/stifling-dark-map-editor/static/css/main.7e63eaaa.css.map",
-    "main.90671679.js.map": "/stifling-dark-map-editor/static/js/main.90671679.js.map"
+    "main.db6c4538.js.map": "/stifling-dark-map-editor/static/js/main.db6c4538.js.map"
   },
   "entrypoints": [
     "static/css/main.7e63eaaa.css",
-    "static/js/main.90671679.js"
+    "static/js/main.db6c4538.js"
   ]
 }
