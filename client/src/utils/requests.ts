@@ -1,11 +1,15 @@
 import { SDMap } from '../models/map';
 import { MapSettings } from '../models/map-settings';
 
+/*
 var env = process.env.NODE_ENV ?? 'development';
 const endpointURL =
 	env === 'production'
 		? 'https://stifling-dark-map-editor-production.up.railway.app/graphql'
 		: 'http://localhost:9000/graphql';
+*/
+const endpointURL =
+	'https://stifling-dark-map-editor-production.up.railway.app/graphql';
 
 console.log('Endpoint URL: ', endpointURL);
 
