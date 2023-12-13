@@ -1,13 +1,12 @@
 {
 	"name": "stifling-dark-map-editor",
-	"homepage": "http://matt-rayford.github.io/stifling-dark-map-editor",
+	"homepage": ".",
 	"private": true,
 	"license": "MIT",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build"
+		"deploy": "gh-pages -d build --cname thestiflingdark.com"
 	},
 	"dependencies": {
 		"@auth0/auth0-react": "^2.2.3",
