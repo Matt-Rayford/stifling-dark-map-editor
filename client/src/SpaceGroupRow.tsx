@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { deleteMapSpaceGroup, updateMapSpaceGroup } from './utils/requests';
 
 interface Props {

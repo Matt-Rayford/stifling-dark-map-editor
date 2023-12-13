@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { updateSpaceColor } from './utils/canvas';
 import { updateMap } from './utils/requests';
 import { MapSettings } from './models/map-settings';
