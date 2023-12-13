@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"postbuild": "mkdir build\\stifling-dark-map-editor && mv build/static/* build/images build/stifling-dark-map-editor",
+		"postbuild": "mkdir build\\stifling-dark-map-editor && mv build/static build/images build/stifling-dark-map-editor",
 		"deploy": "gh-pages -d build --cname thestiflingdark.com"
 	},
 	"dependencies": {
