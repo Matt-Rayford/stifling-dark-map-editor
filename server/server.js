@@ -34,7 +34,7 @@ app.use(
 	cors({
 		origin: [
 			'https://matt-rayford.github.io',
-			'https://matt-rayford.github.io/',
+			'https://www.thestiflingdark.com',
 			'http://localhost:3000',
 		],
 	}),
