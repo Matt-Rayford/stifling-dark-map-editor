@@ -1,5 +1,0 @@
-lsi: false
-safe: true
-source: /client
-incremental: false
-baseUrl: /static/
