@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import Settings from './Settings';
 import SpaceGroupSettings from './SpaceGroupSettings';
@@ -86,9 +86,7 @@ const ToolMenu = ({
 	const getSpaceLabel = (space: Space) => {
 		const spaceGroupMap = settings.get('spaceGroups');
 		if (space.group !== null) {
-			return `Space ${spaceGroupMap.get(space.group).prefix}-${
-				space.number
-			}`;
+			return `Space ${spaceGroupMap.get(space.group).prefix}-${space.number}`;
 		}
 		return `Space ${space.number}`;
 	};
