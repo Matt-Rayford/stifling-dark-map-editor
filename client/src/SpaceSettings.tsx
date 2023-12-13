@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Space, SpaceType, getSpaceTypeDetails } from './models/space';
 import { calculateAllPaths } from './utils/canvas';
 import { LightLevel, getLightLevelDetails } from './models/light-level';
@@ -73,11 +73,7 @@ const SpaceSettings = ({
 					className='form-select'
 					value={spaceGroup}
 					onChange={(e) =>
-						updateGroup(
-							e.target.value
-								? parseInt(e.target.value)
-								: undefined
-						)
+						updateGroup(e.target.value ? parseInt(e.target.value) : undefined)
 					}
 				>
 					<option value={-1}>None...</option>
@@ -99,9 +95,7 @@ const SpaceSettings = ({
 				<select
 					value={spaceType ?? SpaceType.BASIC}
 					className='form-select'
-					onChange={(e) =>
-						updateSpaceType(e.target.value as SpaceType)
-					}
+					onChange={(e) => updateSpaceType(e.target.value as SpaceType)}
 				>
 					<option value='' disabled>
 						Select Type...
@@ -124,9 +118,7 @@ const SpaceSettings = ({
 				<select
 					value={lightLevel}
 					className='form-select'
-					onChange={(e) =>
-						updateLightLevel(e.target.value as LightLevel)
-					}
+					onChange={(e) => updateLightLevel(e.target.value as LightLevel)}
 				>
 					<option value='' disabled>
 						Select Level...
@@ -168,9 +160,7 @@ const SpaceSettings = ({
 			<h5>Connections</h5>
 			{space.connections.map((connection) => {
 				const connectionLabel = connection.group
-					? `${spaceGroups[connection.group]?.prefix}-${
-							connection.number
-					  }`
+					? `${spaceGroups[connection.group]?.prefix}-${connection.number}`
 					: connection.number;
 				return (
 					<div key={connection.id} className='input-group'>
@@ -185,9 +175,7 @@ const SpaceSettings = ({
 							<button
 								className='btn btn-outline-danger'
 								type='button'
-								onClick={() =>
-									removeConnection(space, connection)
-								}
+								onClick={() => removeConnection(space, connection)}
 							>
 								{'Delete'}
 							</button>
