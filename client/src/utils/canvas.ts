@@ -14,7 +14,7 @@ export const setupSpaces = (
 	const { ROWS, COLS, SPACER_X, SPACER_Y, INDENT, PADDING_X, PADDING_Y } =
 		MAP_CONSTANTS;
 	const spaceMap = new Map<number, Space>();
-	if (!existingSpaces) {
+	if (!existingSpaces || existingSpaces.length === 0) {
 		let curSpace = 1;
 		for (let i = 0; i < ROWS; i++) {
 			for (let j = 0; j < COLS; j++) {
@@ -87,10 +87,7 @@ export const calculateAllPaths = (fromSpace: Space) => {
 								space: conSpace,
 								distance:
 									curDistance +
-									(conSpace.lightLevel ===
-									LightLevel.PITCH_BLACK
-										? 2
-										: 1),
+									(conSpace.lightLevel === LightLevel.PITCH_BLACK ? 2 : 1),
 							});
 					}
 				}
@@ -117,7 +114,7 @@ const setupConnections = (
 	connectionMap?: Map<number, number[]>
 ) => {
 	const { ROWS, COLS } = MAP_CONSTANTS;
-	if (!existingSpaces) {
+	if (!existingSpaces || existingSpaces.length === 0) {
 		for (let space of spaceMap.values()) {
 			var topLeftMod = -COLS;
 			var topRightMod = -COLS + 1;
@@ -128,9 +125,7 @@ const setupConnections = (
 			// Check above left and right if row not at top
 			if (space.row != 1) {
 				if (space.row % 2 == 0 || space.col != 1)
-					space.connections.push(
-						spaceMap.get(space.id + topLeftMod - offset)!
-					);
+					space.connections.push(spaceMap.get(space.id + topLeftMod - offset)!);
 				if (space.row % 2 == 1 || space.col != COLS)
 					space.connections.push(
 						spaceMap.get(space.id + topRightMod - offset)!
@@ -288,11 +283,9 @@ export const drawSpaces = (
 				var startX = space.center.x + space.radius * Math.cos(angle);
 				var startY = space.center.y + space.radius * Math.sin(angle);
 				var endX =
-					connection.center.x +
-					space.radius * Math.cos(Math.PI + angle);
+					connection.center.x + space.radius * Math.cos(Math.PI + angle);
 				var endY =
-					connection.center.y +
-					space.radius * Math.sin(Math.PI + angle);
+					connection.center.y + space.radius * Math.sin(Math.PI + angle);
 
 				drawLine(
 					ctx,
@@ -356,10 +349,8 @@ export const drawSpaces = (
 			var angle = Math.atan2(dY, dX);
 			var startX = space.center.x + space.radius * Math.cos(angle);
 			var startY = space.center.y + space.radius * Math.sin(angle);
-			var endX =
-				connection.center.x + space.radius * Math.cos(Math.PI + angle);
-			var endY =
-				connection.center.y + space.radius * Math.sin(Math.PI + angle);
+			var endX = connection.center.x + space.radius * Math.cos(Math.PI + angle);
+			var endY = connection.center.y + space.radius * Math.sin(Math.PI + angle);
 
 			drawLine(
 				ctx,
@@ -368,9 +359,7 @@ export const drawSpaces = (
 				startY,
 				endX,
 				endY,
-				!connection.connections.some(
-					(otherSpace) => otherSpace.id === space.id
-				)
+				!connection.connections.some((otherSpace) => otherSpace.id === space.id)
 			);
 		}
 		ctx.restore();
@@ -519,8 +508,7 @@ export const renumberSpaces = (spaceMap: Map<number, Space>, settings: any) => {
 	}
 	for (let space of spaceMap.values()) {
 		if (!space.isDeleted) {
-			let renumberKey =
-				typeof space.group === 'number' ? space.group : '-';
+			let renumberKey = typeof space.group === 'number' ? space.group : '-';
 			const nextNum = renumberMap.get(renumberKey);
 			renumberMap.set(renumberKey, nextNum + 1);
 			space.updateNumber(nextNum);

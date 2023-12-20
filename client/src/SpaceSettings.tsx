@@ -40,7 +40,7 @@ const SpaceSettings = ({
 	};
 
 	const updateGroup = (spaceGroup?: number) => {
-		if (!spaceGroup) {
+		if (typeof spaceGroup !== 'number') {
 			space.removeGroup();
 			setSpaceGroup(-1);
 		} else {
@@ -73,7 +73,11 @@ const SpaceSettings = ({
 					className='form-select'
 					value={spaceGroup}
 					onChange={(e) =>
-						updateGroup(e.target.value ? parseInt(e.target.value) : undefined)
+						updateGroup(
+							e.target.value && e.target.value !== '-1'
+								? parseInt(e.target.value)
+								: undefined
+						)
 					}
 				>
 					<option value={-1}>None...</option>

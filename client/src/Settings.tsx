@@ -112,17 +112,12 @@ const Settings = ({
 				/>
 			</div>
 			{Object.keys(curMapSettings).map((settingKey) => {
-				if (
-					settingKey === 'spaceColor' ||
-					settingKey === 'backgroundImageUrl'
-				)
+				if (settingKey === 'spaceColor' || settingKey === 'backgroundImageUrl')
 					return null;
 				return (
 					<div className='input-group mb-3' key={settingKey}>
 						<div className='input-group-prepend'>
-							<span className='input-group-text'>
-								{settingKey}
-							</span>
+							<span className='input-group-text'>{settingKey}</span>
 						</div>
 						<input
 							type='number'
@@ -130,9 +125,7 @@ const Settings = ({
 							className='form-control'
 							//@ts-ignore
 							value={curMapSettings[settingKey] || 0}
-							onChange={(e) =>
-								handleOptionsUpdate(settingKey, e.target.value)
-							}
+							onChange={(e) => handleOptionsUpdate(settingKey, e.target.value)}
 						/>
 					</div>
 				);

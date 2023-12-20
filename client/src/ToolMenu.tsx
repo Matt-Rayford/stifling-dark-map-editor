@@ -13,7 +13,7 @@ interface Props {
 	map: any;
 	spaceMap: Map<number, Space>;
 	settings: any;
-	selectedObject: any;
+	selectedObject?: Space;
 	onUpdateBackgroundImage: (imageUrl: string) => void;
 	onGenerateDistances: (distanceMap: Map<number, number>) => void;
 	onDisableDistances: () => void;
@@ -85,7 +85,7 @@ const ToolMenu = ({
 
 	const getSpaceLabel = (space: Space) => {
 		const spaceGroupMap = settings.get('spaceGroups');
-		if (space.group !== null) {
+		if (space.group) {
 			return `Space ${spaceGroupMap.get(space.group).prefix}-${space.number}`;
 		}
 		return `Space ${space.number}`;

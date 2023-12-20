@@ -23,13 +23,15 @@ export const MapEditor = () => {
 	const [spaceMap, setSpaceMap] = useState<Map<number, Space>>();
 	const [timer, setTimer] = useState<NodeJS.Timeout>();
 	const [settings, setSettings] = useState<any>();
-	const [selectedObject, setSelectedObject] = useState<Space>();
+	const [selectedSpace, setSelectedSpace] = useState<Space>();
 	const [canvas, setCanvas] = useState<HTMLCanvasElement>();
 	const [objects, setObjects] = useState<any[]>([]);
+	const [isDragging, setIsDragging] = useState(false);
 
 	const distanceMap = useRef<Map<number, number>>();
 	const newConnection = useRef<NewConnection>();
 	const mousePos = useRef<MousePos>();
+	const selectedObject = useRef<Space>();
 	const highlightedObject = useRef<Space>();
 
 	const { mapId } = useParams();
@@ -55,9 +57,7 @@ export const MapEditor = () => {
 				hasSpaces ? map.spaces : undefined,
 				map.mapSettings
 			);
-			const settings = setupSettings(
-				map.spaceGroups ? map.spaceGroups : []
-			);
+			const settings = setupSettings(map.spaceGroups ? map.spaceGroups : []);
 
 			setObjects(objects);
 
@@ -89,7 +89,7 @@ export const MapEditor = () => {
 			document.addEventListener('keyup', (event) => {
 				var key = event.key.toLowerCase();
 				if (key == 'delete') {
-					const obj = selectedObject || highlightedObject.current;
+					const obj = selectedObject.current || highlightedObject.current;
 					if (obj) {
 						const connections = obj.connections;
 						obj.delete();
@@ -98,7 +98,8 @@ export const MapEditor = () => {
 								(space2) => space2.id != obj.id
 							);
 						}
-						setSelectedObject(undefined);
+						setSelectedSpace(undefined);
+						selectedObject.current = undefined;
 						highlightedObject.current = undefined;
 						renumberSpaces(spaceMap, settings);
 					}
@@ -110,16 +111,14 @@ export const MapEditor = () => {
 					if (selectedObject || highlightedObject.current) {
 						newConnection.current = {
 							isTwoWay: false,
-							fromSpace:
-								selectedObject ?? highlightedObject.current!,
+							fromSpace: selectedObject.current ?? highlightedObject.current!,
 						};
 					}
 				} else if (key == '2') {
 					if (selectedObject || highlightedObject.current) {
 						newConnection.current = {
 							isTwoWay: true,
-							fromSpace:
-								selectedObject ?? highlightedObject.current!,
+							fromSpace: selectedObject.current ?? highlightedObject.current!,
 						};
 					}
 				} else {
@@ -142,9 +141,7 @@ export const MapEditor = () => {
 					curObject.unHighlight();
 					if (curObject.objectType == ObjectType.SPACE) {
 						if (isMouseInObject(newMousePos, curObject)) {
-							if (
-								highlightedObject.current?.id !== curObject.id
-							) {
+							if (highlightedObject.current?.id !== curObject.id) {
 								highlightedObject.current = curObject;
 								curObject.highlight();
 								break;
@@ -167,8 +164,7 @@ export const MapEditor = () => {
 				if (newConnection.current) {
 					if (
 						highlightedObject.current &&
-						newConnection.current.fromSpace.id !==
-							highlightedObject.current.id
+						newConnection.current.fromSpace.id !== highlightedObject.current.id
 					) {
 						newConnection.current.fromSpace.connections.push(
 							highlightedObject.current
@@ -181,20 +177,52 @@ export const MapEditor = () => {
 						newConnection.current = undefined;
 					}
 				} else {
-					if (selectedObject) {
-						selectedObject.deselect();
+					if (selectedObject.current) {
+						selectedObject.current.deselect();
 					}
 					if (highlightedObject.current) {
 						highlightedObject.current.select();
 					}
 
-					setSelectedObject(highlightedObject.current);
+					newConnection.current = {
+						isTwoWay: true,
+						fromSpace: highlightedObject.current!,
+					};
+					setSelectedSpace(highlightedObject.current);
+					selectedObject.current = highlightedObject.current;
+					setIsDragging(true);
 				}
 			} else {
-				if (selectedObject) {
-					selectedObject.deselect();
+				if (selectedObject.current) {
+					selectedObject.current.deselect();
 				}
-				setSelectedObject(undefined);
+				setSelectedSpace(undefined);
+				selectedObject.current = undefined;
+			}
+		});
+
+		canvas.addEventListener('mouseup', (event) => {
+			const newMousePos = getMousePos(event, canvas);
+			mousePos.current = { x: newMousePos.x, y: newMousePos.y };
+
+			if (
+				newConnection &&
+				highlightedObject.current &&
+				newConnection.current &&
+				highlightedObject.current &&
+				newConnection.current.fromSpace.id !== highlightedObject.current.id
+			) {
+				newConnection.current.fromSpace.connections.push(
+					highlightedObject.current
+				);
+				if (newConnection.current.isTwoWay) {
+					highlightedObject.current.connections.push(
+						newConnection.current.fromSpace
+					);
+				}
+				newConnection.current = undefined;
+			} else {
+				newConnection.current = undefined;
 			}
 		});
 	}
@@ -258,7 +286,7 @@ export const MapEditor = () => {
 				onUpdateBackgroundImage={(backgroundImageUrl: string) =>
 					drawMap(backgroundImageUrl)
 				}
-				selectedObject={selectedObject}
+				selectedObject={selectedSpace}
 				onGenerateDistances={(newDistances: Map<number, number>) =>
 					updateDistances(newDistances)
 				}
