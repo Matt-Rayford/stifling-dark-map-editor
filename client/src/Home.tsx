@@ -13,7 +13,6 @@ export const Home = () => {
 
 	useEffect(() => {
 		const load = async () => {
-			console.log('Load maps: ');
 			const maps = await loadMaps();
 			setMaps(maps);
 		};
@@ -34,9 +33,7 @@ export const Home = () => {
 		<>
 			{!user && !isBeta && (
 				<div>
-					<h1>
-						Create an Account to use the Stifling Dark Map Editor
-					</h1>
+					<h1>Create an Account to use the Stifling Dark Map Editor</h1>
 					<p>
 						<button
 							className='btn btn-primary'

@@ -94,7 +94,6 @@ export const calculateAllPaths = (fromSpace: Space) => {
 			}
 		}
 
-		console.log('Visited map: ', visitedMap);
 		return visitedMap;
 	}
 };
