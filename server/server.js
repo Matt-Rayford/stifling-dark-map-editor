@@ -33,7 +33,7 @@ const app = express();
 app.use(
 	cors({
 		origin: [
-			'https://matt-rayford.github.io',
+			'https://stifling-dark-map-editor.vercel.app',
 			'https://thestiflingdark.com',
 			'http://localhost:3000',
 		],
