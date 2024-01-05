@@ -10,7 +10,6 @@ const { auth } = require('express-oauth2-jwt-bearer');
 
 const port = process.env.PORT ?? 9000;
 const jwtSecret = Buffer.from('Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt', 'base64');
-const appOrigin = process.env.APP_URL ?? `http://localhost:3000`;
 
 /*
 if (!process.env.OAUTH_DOMAIN || !process.env.OAUTH_AUDIENCE_URL) {
@@ -33,9 +32,10 @@ const app = express();
 app.use(
 	cors({
 		origin: [
-			'https://stifling-dark-map-editor.vercel.app',
-			'https://thestiflingdark.com',
 			'http://localhost:3000',
+			'https://thestiflingdark.com',
+			'https://www.thestiflingdark.com',
+			'https://stifling-dark-map-editor.vercel.app',
 		],
 	}),
 	bodyParser.json(),
