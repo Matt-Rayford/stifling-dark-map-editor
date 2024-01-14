@@ -10,8 +10,9 @@ const typeDefs = gql`
 
 	type Mutation {
 		createMap(title: String): Map
-		updateMap(mapId: ID, spaceData: Object, mapSettings: Object): Map
-		updateMapSettings(mapId: ID, mapSettings: Object): Map
+		updateMap(mapId: ID!, spaceData: Object, settings: Object): Map
+		updateMapName(mapId: ID!, mapName: String!): Boolean
+		updateMapSettings(mapId: ID, settings: Object): Map
 		updateMapSpaceGroup(mapId: ID, group: Object): SpaceGroup
 		addMapSpaceGroup(mapId: ID, group: Object): SpaceGroup
 		deleteMapSpaceGroup(mapId: ID, groupId: ID): Boolean
@@ -20,7 +21,7 @@ const typeDefs = gql`
 	type Map {
 		id: ID!
 		title: String!
-		mapSettings: MapSettings
+		settings: MapSettings
 		spaces: [Space]!
 		spaceGroups: [SpaceGroup]
 	}

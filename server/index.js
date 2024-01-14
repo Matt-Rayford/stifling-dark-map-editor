@@ -1,13 +1,10 @@
 const fs = require('fs');
 const { ApolloServer, gql } = require('apollo-server');
-const typeDefs = require('./schema.js');
 const resolvers = require('./resolvers');
 
-async function startApolloServer(typeDefs, resolvers) {
+async function startApolloServer(resolvers) {
 	const server = new ApolloServer({
-		typeDefs: gql(
-			fs.readFileSync('./schema.graphql', { encoding: 'utf8' })
-		),
+		typeDefs: gql(fs.readFileSync('./schema.graphql', { encoding: 'utf8' })),
 		resolvers,
 	});
 
@@ -19,4 +16,4 @@ async function startApolloServer(typeDefs, resolvers) {
     `);
 }
 
-startApolloServer(typeDefs, resolvers);
+startApolloServer(resolvers);

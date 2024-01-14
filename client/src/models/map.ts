@@ -17,7 +17,7 @@ export interface SDSpace {
 export interface SDMap {
 	id: string;
 	title: string;
-	mapSettings: MapSettings;
+	settings: MapSettings;
 	spaces: SDSpace[];
 	spaceGroups: SpaceGroup[];
 }

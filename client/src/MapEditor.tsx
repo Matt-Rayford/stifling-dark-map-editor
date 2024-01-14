@@ -55,7 +55,7 @@ export const MapEditor = () => {
 			const hasSpaces = map.spaces && map.spaces.length > 0;
 			const { spaceMap, objects } = setupSpaces(
 				hasSpaces ? map.spaces : undefined,
-				map.mapSettings
+				map.settings
 			);
 			const settings = setupSettings(map.spaceGroups ? map.spaceGroups : []);
 
@@ -66,13 +66,13 @@ export const MapEditor = () => {
 				document.getElementById('canvasEditor')!;
 			const ctx = canvas.getContext('2d')!;
 
-			drawMap(map.mapSettings.backgroundImageUrl);
+			drawMap(map.settings.backgroundImageUrl);
 			const animationTimer = setInterval(() => {
 				redraw(
 					canvas,
 					ctx,
 					spaceMap,
-					map.mapSettings.spaceColor,
+					map.settings.spaceColor,
 					mousePos.current ?? { x: 0, y: 0 },
 					newConnection.current,
 					distanceMap.current,

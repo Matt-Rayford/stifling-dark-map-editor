@@ -6,18 +6,20 @@ type Query {
 }
 
 type Mutation {
-	createMap(title: String): Map
-	updateMap(mapId: ID, spaceData: Object, mapSettings: Object): Map
-	updateMapSettings(mapId: ID, mapSettings: Object): Map
-	updateMapSpaceGroup(mapId: ID, group: Object): SpaceGroup
 	addMapSpaceGroup(mapId: ID, group: Object): SpaceGroup
+	createMap(title: String): Map
 	deleteMapSpaceGroup(mapId: ID, groupId: ID): Boolean
+	renameMap(mapId: ID!, mapName: String!): String
+	updateMap(mapId: ID, spaceData: Object, settings: Object): Map
+	updateMapSettings(mapId: ID, settings: Object): Map
+	updateMapSpaceGroup(mapId: ID, group: Object): SpaceGroup
+	uploadMapImage(mapId: ID!, imageUrl: String!): String
 }
 
 type Map {
 	id: ID!
 	title: String!
-	mapSettings: MapSettings
+	settings: MapSettings
 	spaces: [Space]!
 	spaceGroups: [SpaceGroup]
 }

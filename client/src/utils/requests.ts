@@ -20,14 +20,14 @@ export async function createMap(title: string): Promise<SDMap> {
 export async function updateMap(
 	id: string,
 	spaceData: any,
-	mapSettings: MapSettings
+	settings: MapSettings
 ): Promise<SDMap> {
 	const mutation = `
-    mutation UpdateMap($id: ID, $spaceData: Object, $mapSettings: Object) {
-      map: updateMap(mapId: $id, spaceData: $spaceData, mapSettings: $mapSettings) {
+    mutation UpdateMap($id: ID, $spaceData: Object, $settings: Object) {
+      map: updateMap(mapId: $id, spaceData: $spaceData, settings: $settings) {
         id
         title
-				mapSettings {
+				settings {
 					backgroundImageUrl
 					spaceColor
 					horizontalSpacing
@@ -52,19 +52,19 @@ export async function updateMap(
 	const { map } = await graphqlRequest(mutation, {
 		id,
 		spaceData,
-		mapSettings,
+		settings,
 	});
 	return map;
 }
 
 export async function updateMapSettings(
 	id: string,
-	mapSettings: any
+	settings: any
 ): Promise<MapSettings> {
 	const mutation = `
-    mutation UpdateMapSettings($id: ID, $mapSettings: Object) {
-      map: updateMapSettings(mapId: $id, mapSettings: $mapSettings) {
-				mapSettings {
+    mutation UpdateMapSettings($id: ID, $settings: Object) {
+      map: updateMapSettings(mapId: $id, settings: $settings) {
+				settings {
 					backgroundImageUrl
 					spaceColor
 					horizontalSpacing
@@ -77,7 +77,7 @@ export async function updateMapSettings(
       }
     }
   `;
-	const { map } = await graphqlRequest(mutation, { id, mapSettings });
+	const { map } = await graphqlRequest(mutation, { id, settings });
 	return map;
 }
 
@@ -87,7 +87,7 @@ export async function loadMap(id: string): Promise<SDMap> {
 			map(id: $id) {
 				id
 				title
-				mapSettings {
+				settings {
 					backgroundImageUrl
 					spaceColor
 					horizontalSpacing
@@ -187,6 +187,18 @@ export async function deleteMapSpaceGroup(
 		groupId,
 	});
 	return wasSuccess;
+}
+
+export async function uploadMapImage(mapId: String, imageUrl: String) {
+	const query = `
+		mutation UploadMapImage($mapId: ID!, $imageUrl: String!) {
+			uploadMapImage(mapId: $mapId, imageUrl: $imageUrl)
+		}
+	`;
+	await graphqlRequest(query, {
+		mapId,
+		imageUrl,
+	});
 }
 
 async function graphqlRequest(query: any, variables: any = {}) {

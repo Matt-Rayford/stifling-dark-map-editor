@@ -73,7 +73,7 @@ const ToolMenu = ({
 	}, [map]);
 
 	const updateMapSettings = (settingName: string, value: any) => {
-		map.mapSettings[settingName] = value;
+		map.settings[settingName] = value;
 		if (settingName === 'spaceColor') {
 			updateSpaceColor(spaceMap, value);
 		}
@@ -143,7 +143,7 @@ const ToolMenu = ({
 				<Tab eventKey='map' title='Map'>
 					<Settings
 						mapId={map.id}
-						mapSettings={map.mapSettings}
+						mapSettings={map.settings}
 						spaceMap={spaceMap}
 						onUpdateBackgroundImage={onUpdateBackgroundImage}
 					/>

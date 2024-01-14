@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import AWS from 'aws-sdk';
 import { updateSpaceColor } from './utils/canvas';
-import { updateMap } from './utils/requests';
+import { updateMap, uploadMapImage } from './utils/requests';
 import { MapSettings } from './models/map-settings';
 
 import { Space } from './models/space';
@@ -57,17 +58,54 @@ const Settings = ({
 	const onReset = () => {
 		setCurMapSettings({ ...origSettings });
 		handleColorUpdate(origSettings.spaceColor);
-		handleImageUpdate(origSettings.backgroundImageUrl);
+		//handleImageUpdate(origSettings.backgroundImageUrl);
 	};
 
-	const handleImageUpdate = (path: string) => {
-		const pathSplits = path.split('\\');
-		const imageUrl = `/images/boards/${pathSplits[pathSplits.length - 1]}`;
+	const handleImageUpdate = async (file?: File) => {
+		if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
+			const s3Bucket = process.env.REACT_APP_AWS_S3_BUCKET;
+			const s3Region = process.env.REACT_APP_AWS_S3_REGION;
 
-		const settings = { ...curMapSettings };
-		settings.backgroundImageUrl = imageUrl;
-		onUpdateBackgroundImage(imageUrl);
-		setCurMapSettings(settings);
+			if (s3Bucket && s3Region) {
+				AWS.config.update({
+					accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
+					secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+				});
+				const s3 = new AWS.S3({
+					params: { Bucket: s3Bucket },
+					region: s3Region,
+				});
+
+				const extension = file.type === 'image/png' ? 'png' : 'jpg';
+				const imageName = `${mapId}-background.${extension}`;
+				const upload = s3
+					.putObject({
+						Bucket: s3Bucket,
+						Key: imageName,
+						Body: file,
+					})
+					.on('httpUploadProgress', (evt) => {
+						console.log(`Uploading ${(evt.loaded * 100) / evt.total}%`);
+					})
+					.promise()
+					.then(async (value) => {
+						const { error, data } = value.$response;
+						if (error) {
+							throw error;
+						} else {
+							const imageUrl = `${process.env.REACT_APP_AWS_S3_URL}${imageName}`;
+							console.log('Image urL: ', imageUrl);
+							const settings = { ...curMapSettings };
+							await uploadMapImage(mapId, imageUrl);
+							settings.backgroundImageUrl = imageUrl;
+							onUpdateBackgroundImage(imageUrl);
+							setCurMapSettings(settings);
+						}
+					});
+
+				await upload;
+			}
+		}
 	};
 
 	const handleColorUpdate = (color: string) => {
@@ -102,13 +140,13 @@ const Settings = ({
 			</div>
 			<div className='input-group mb-3'>
 				<div className='input-group-prepend'>
-					<span className='input-group-text'>Map Path</span>
+					<span className='input-group-text'>Background Image</span>
 				</div>
 				<input
 					type='file'
 					className='form-control'
 					accept='image/png, image/jpeg'
-					onChange={(e) => handleImageUpdate(e.target.value)}
+					onChange={(e) => handleImageUpdate(e.target.files?.[0])}
 				/>
 			</div>
 			{Object.keys(curMapSettings).map((settingKey) => {

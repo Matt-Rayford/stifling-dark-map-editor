@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fs = require('fs');
 const { ApolloServer, gql } = require('apollo-server-express');
 const bodyParser = require('body-parser');
@@ -7,9 +8,22 @@ const expressJwt = require('express-jwt');
 const jwt = require('jsonwebtoken');
 const db = require('./db');
 const { auth } = require('express-oauth2-jwt-bearer');
+const { Client, Pool } = require('pg');
 
 const port = process.env.PORT ?? 9000;
 const jwtSecret = Buffer.from('Zn8Q5tyZ/G1MHltc4F/gTkVJMlrbKiZt', 'base64');
+
+const connectionString = process.env.DB_CONNECTION_URL;
+
+const pool = new Pool({
+	connectionString,
+});
+
+const client = new Client({
+	connectionString,
+});
+
+module.exports = { pool, client };
 
 /*
 if (!process.env.OAUTH_DOMAIN || !process.env.OAUTH_AUDIENCE_URL) {
@@ -51,7 +65,7 @@ const apolloServer = new ApolloServer({
 	typeDefs,
 	resolvers,
 });
-// path defaults to '/graphql' but is nicer to call out explicitly
+
 apolloServer.applyMiddleware({ app, path: '/graphql' });
 
 /*
