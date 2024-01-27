@@ -1,6 +1,31 @@
 const db = require('./db');
 const { pool } = require('./server');
 
+const getMap = async (mapId) => {
+	const query = 'SELECT * FROM sd_map WHERE id=$1';
+
+	const map = await pool
+		.query({
+			rowAsArray: true,
+			text: query,
+			values: [mapId],
+		})
+		.then((r) => {
+			const data = r.rows?.[0];
+			return data;
+		})
+		.catch((e) => {
+			console.log('ERROR: ', e);
+			throw new Error(`Cannot upload image for your map as it cannot be found`);
+		});
+
+	if (!map || !map.id) {
+		throw new Error(`Cannot upload image for your map as it cannot be found`);
+	}
+
+	return map;
+};
+
 const Query = {
 	map: (root, { id }) => {
 		console.log('GET MAP: ', id);
@@ -43,31 +68,6 @@ const Query = {
 	},
 	spaceSetting: (root, { id }) => db.spaceSettings.get(id),
 	spaceSettings: () => db.spaceSettings.list(),
-};
-
-const getMap = async (mapId) => {
-	const query = 'SELECT * FROM sd_map WHERE id=$1';
-
-	const map = await pool
-		.query({
-			rowAsArray: true,
-			text: query,
-			values: [mapId],
-		})
-		.then((r) => {
-			const data = r.rows?.[0];
-			return data;
-		})
-		.catch((e) => {
-			console.log('ERROR: ', e);
-			throw new Error(`Cannot upload image for your map as it cannot be found`);
-		});
-
-	if (!map || !map.id) {
-		throw new Error(`Cannot upload image for your map as it cannot be found`);
-	}
-
-	return map;
 };
 
 const Mutation = {
