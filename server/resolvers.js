@@ -26,6 +26,11 @@ const Query = {
 						backgroundImageUrl: data.background_image_url,
 						spaceColor: data.spaceColor,
 						horizontalSpacing: data.horizontalSpacing,
+						verticalSpacing: data.verticalSpacing,
+						indent: data.indent,
+						paddingX: data.padding_x,
+						paddingY: data.padding_y,
+						spaceRadius: data.spaceRadius,
 					},
 				};
 			})
