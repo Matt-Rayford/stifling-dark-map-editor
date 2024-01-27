@@ -1,7 +1,7 @@
-const db = require('./db');
-const { pool } = require('./server');
+import { db } from './db';
+import { pool } from './server';
 
-const getMap = async (mapId) => {
+const getMap = async (mapId: string) => {
 	const query = 'SELECT * FROM sd_map WHERE id=$1';
 
 	const map = await pool
@@ -26,8 +26,8 @@ const getMap = async (mapId) => {
 	return map;
 };
 
-const Query = {
-	map: (root, { id }) => {
+export const Query = {
+	map: (root, { id }: { id: string }) => {
 		console.log('GET MAP: ', id);
 		const query =
 			'SELECT * \
@@ -66,11 +66,11 @@ const Query = {
 	maps: () => {
 		return db.maps.list();
 	},
-	spaceSetting: (root, { id }) => db.spaceSettings.get(id),
+	spaceSetting: (root, { id }: { id: string }) => db.spaceSettings.get(id),
 	spaceSettings: () => db.spaceSettings.list(),
 };
 
-const Mutation = {
+export const Mutation = {
 	addMapSpaceGroup: async (root, { mapId, group }) => {
 		getMap(mapId);
 
@@ -222,11 +222,11 @@ const Mutation = {
 	},
 };
 
-const Space = {
+export const Space = {
 	settings: (space) => db.spaceSettings.get(space.type),
 };
 
-const Map = {
+export const Map = {
 	settings: (map) => {
 		const query = 'SELECT * FROM sd_map_settings WHERE map_id=$1';
 		return pool
@@ -252,4 +252,4 @@ const Map = {
 	},
 };
 
-module.exports = { Query, Mutation, Space, Map };
+export * as resolvers from './resolvers';

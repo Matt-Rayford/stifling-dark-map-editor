@@ -1,6 +1,6 @@
-const fs = require('fs');
-const { ApolloServer, gql } = require('apollo-server');
-const resolvers = require('./resolvers');
+import fs from 'fs';
+import { ApolloServer, gql } from 'apollo-server';
+import { resolvers } from './resolvers';
 
 async function startApolloServer(resolvers) {
 	const server = new ApolloServer({
