@@ -23,7 +23,7 @@ export async function updateMap(
 	settings: MapSettings
 ): Promise<SDMap> {
 	const mutation = `
-    mutation UpdateMap($id: ID, $spaceData: Object, $settings: Object) {
+    mutation UpdateMap($id: ID, $spaceData: Object, $settings: MapSettingsInput) {
       map: updateMap(mapId: $id, spaceData: $spaceData, settings: $settings) {
         id
         title
@@ -59,10 +59,10 @@ export async function updateMap(
 
 export async function updateMapSettings(
 	id: string,
-	settings: any
+	settings: MapSettings
 ): Promise<MapSettings> {
 	const mutation = `
-    mutation UpdateMapSettings($id: ID, $settings: Object) {
+    mutation UpdateMapSettings($id: ID, $settings: MapSettingsInput) {
       map: updateMapSettings(mapId: $id, settings: $settings) {
 				settings {
 					backgroundImageUrl
@@ -77,6 +77,7 @@ export async function updateMapSettings(
       }
     }
   `;
+	console.log('CALL GQL: ', settings);
 	const { map } = await graphqlRequest(mutation, { id, settings });
 	return map;
 }
@@ -138,7 +139,7 @@ export async function updateMapSpaceGroup(
 	group: any
 ): Promise<SpaceGroup> {
 	const query = `
-    mutation UpdateMapSpaceGroup($mapId: ID!, $group: Object) {
+    mutation UpdateMapSpaceGroup($mapId: ID!, $group: SpaceGroupInput) {
 			updatedGroup: updateMapSpaceGroup(mapId: $mapId, group: $group) {
 				id
 				name
@@ -158,7 +159,7 @@ export async function addMapSpaceGroup(
 	group: any
 ): Promise<SpaceGroup> {
 	const query = `
-    mutation AddMapSpaceGroup($mapId: ID!, $group: Object) {
+    mutation AddMapSpaceGroup($mapId: ID!, $group: SpaceGroupInput) {
 			newGroup: addMapSpaceGroup(mapId: $mapId, group: $group) {
 				id
 				name

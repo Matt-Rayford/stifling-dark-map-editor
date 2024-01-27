@@ -6,13 +6,13 @@ type Query {
 }
 
 type Mutation {
-	addMapSpaceGroup(mapId: ID, group: Object): SpaceGroup
+	addMapSpaceGroup(mapId: ID, group: SpaceGroupInput): SpaceGroup
 	createMap(title: String): Map
 	deleteMapSpaceGroup(mapId: ID, groupId: ID): Boolean
 	renameMap(mapId: ID!, mapName: String!): String
-	updateMap(mapId: ID, spaceData: Object, settings: Object): Map
-	updateMapSettings(mapId: ID, settings: Object): Map
-	updateMapSpaceGroup(mapId: ID, group: Object): SpaceGroup
+	updateMap(mapId: ID, spaceData: Object, settings: MapSettingsInput): Map
+	updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
+	updateMapSpaceGroup(mapId: ID, group: SpaceGroupInput): SpaceGroup
 	uploadMapImage(mapId: ID!, imageUrl: String!): String
 }
 
@@ -54,7 +54,7 @@ enum SpaceTypeEnum {
 }
 
 type SpaceGroup {
-	id: Int!
+	id: ID!
 	name: String!
 	prefix: String!
 }
@@ -82,4 +82,24 @@ type SpaceSetting {
 
 input CreateMapInput {
 	title: String
+}
+
+################################
+#         INPUT TYPES          #
+################################
+input MapSettingsInput {
+	backgroundImageUrl: String
+	spaceColor: String
+	horizontalSpacing: Float
+	verticalSpacing: Float
+	indent: Float
+	paddingX: Float
+	paddingY: Float
+	spaceRadius: Float
+}
+
+input SpaceGroupInput {
+	id: ID
+	name: String!
+	prefix: String!
 }

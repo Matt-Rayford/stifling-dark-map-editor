@@ -3,7 +3,35 @@ const { pool } = require('./server');
 
 const Query = {
 	map: (root, { id }) => {
-		return db.maps.get(id);
+		console.log('GET MAP: ', id);
+		const query =
+			'SELECT * \
+			FROM sd_map sm \
+			INNER JOIN sd_map_settings sms ON sms.map_id = sm.id \
+			WHERE sm.id=$1';
+
+		return pool
+			.query({
+				rowAsArray: true,
+				text: query,
+				values: [id],
+			})
+			.then((r) => {
+				const data = r.rows?.[0];
+				console.log('GET MAP: ', data);
+				return {
+					id: data.id,
+					title: data.name,
+					settings: {
+						backgroundImageUrl: data.background_image_url,
+						spaceColor: data.spaceColor,
+						horizontalSpacing: data.horizontalSpacing,
+					},
+				};
+			})
+			.catch((e) => {
+				throw new Error(`Cannot retrieve your map as it cannot be found`);
+			});
 	},
 	maps: () => {
 		return db.maps.list();
@@ -12,32 +40,51 @@ const Query = {
 	spaceSettings: () => db.spaceSettings.list(),
 };
 
-const Mutation = {
-	addMapSpaceGroup: (root, { mapId, group }) => {
-		const map = db.maps.get(mapId);
-		if (!map)
-			throw new Error(`Cannot update map with id ${mapId}. It does not exist.`);
-		let { spaceGroups } = map;
-		if (!spaceGroups || spaceGroups.length === 0) {
-			group.id = 0;
-			spaceGroups = [];
-		} else {
-			let maxId = -1;
-			for (let group of spaceGroups)
-				if (maxId <= group.id) maxId = group.id + 1;
+const getMap = async (mapId) => {
+	const query = 'SELECT * FROM sd_map WHERE id=$1';
 
-			group.id = maxId;
-		}
-		spaceGroups.push(group);
-
-		db.maps.update({
-			id: mapId,
-			title: map.title,
-			mapSettings: map.settings,
-			spaces: map.spaces,
-			spaceGroups,
+	const map = await pool
+		.query({
+			rowAsArray: true,
+			text: query,
+			values: [mapId],
+		})
+		.then((r) => {
+			const data = r.rows?.[0];
+			return data;
+		})
+		.catch((e) => {
+			console.log('ERROR: ', e);
+			throw new Error(`Cannot upload image for your map as it cannot be found`);
 		});
-		return db.maps.get(mapId).spaceGroups.filter((g) => g.id === group.id)[0];
+
+	if (!map || !map.id) {
+		throw new Error(`Cannot upload image for your map as it cannot be found`);
+	}
+
+	return map;
+};
+
+const Mutation = {
+	addMapSpaceGroup: async (root, { mapId, group }) => {
+		getMap(mapId);
+
+		const query =
+			'INSERT INTO sd_map_space_group (map_id, name, prefix) VALUES ($1, $2, $3) RETURNING *';
+
+		return pool
+			.query({
+				rowAsArray: true,
+				text: query,
+				values: [mapId, group.name, group.prefix],
+			})
+			.then((r) => {
+				const data = r.rows?.[0];
+				return data;
+			})
+			.catch((e) => {
+				throw e;
+			});
 	},
 	createMap: (root, { title }) => {
 		const id = db.maps.create({
@@ -56,22 +103,21 @@ const Mutation = {
 		});
 		return db.maps.get(id);
 	},
-	deleteMapSpaceGroup: (root, { mapId, groupId }) => {
-		const map = db.maps.get(mapId);
-		if (!map)
-			throw new Error(`Cannot update map with id ${mapId}. It does not exist.`);
+	deleteMapSpaceGroup: async (root, { mapId, groupId }) => {
+		getMap(mapId);
 
-		let { spaceGroups } = map;
-		spaceGroups = spaceGroups.filter((g) => g.id !== parseInt(groupId));
-
-		db.maps.update({
-			id: mapId,
-			title: map.title,
-			mapSettings: map.settings,
-			spaces: map.spaces,
-			spaceGroups,
-		});
-		return true;
+		const query = 'DELETE FROM sd_map_space_group WHERE id=$1';
+		return await pool
+			.query({
+				text: query,
+				values: [groupId],
+			})
+			.then((r) => {
+				return true;
+			})
+			.catch((e) => {
+				throw e;
+			});
 	},
 	renameMap: (root, { mapId, mapName }) => {
 		const query = 'UPDATE sd_map SET name=$1 where id=$2 RETURNING name';
@@ -96,57 +142,69 @@ const Mutation = {
 		});
 		return db.maps.get(mapId);
 	},
-	updateMapSettings: (root, { mapId, mapSettings }) => {
-		const map = db.maps.get(mapId);
-		if (!map)
-			throw new Error(`Cannot update map with id ${mapId}. It does not exist.`);
-		const { title, spaces, spaceGroups } = map;
-		db.maps.update({
-			id: mapId,
-			title,
-			mapSettings,
-			spaces,
-			spaceGroups,
-		});
-		return db.maps.get(mapId);
-	},
-	updateMapSpaceGroup: (root, { mapId, group }) => {
-		const map = db.maps.get(mapId);
-		if (!map)
-			throw new Error(`Cannot update map with id ${mapId}. It does not exist.`);
-		const { spaceGroups } = map;
-		if (spaceGroups.some((g) => g.id === group.id)) {
-			const existingGroup = spaceGroups.filter((g) => g.id === group.id)[0];
-			existingGroup.name = group.name;
-			existingGroup.prefix = group.prefix;
+	updateMapSettings: async (root, { mapId, settings }) => {
+		getMap();
 
-			db.maps.update({
-				id: mapId,
-				title: map.title,
-				settings: map.settings,
-				spaces: map.spaces,
-				spaceGroups,
-			});
-			return db.maps.get(mapId).spaceGroups.filter((g) => g.id === group.id)[0];
-		} else
-			throw new Error(
-				`Cannot update space group, since group ${group.id} does not exist`
-			);
-	},
-	uploadMapImage: async (root, { mapId, imageUrl }) => {
-		const map = await pool
+		const query =
+			'UPDATE sd_map_settings \
+			SET space_color=$1, \
+			horizontal_spacing=$2, \
+			vertical_spacing=$3, \
+			"indent"=$4, \
+			padding_x=$5, \
+			padding_y=$6, \
+			space_radius=$7 \
+			WHERE map_id=$8 RETURNING *';
+
+		return await pool
 			.query({
 				rowAsArray: true,
-				text: 'SELECT * FROM sd_map WHERE id=$1',
-				values: [mapId],
+				text: query,
+				values: [
+					settings.spaceColor,
+					settings.horizontalSpacing,
+					settings.verticalSpacing,
+					settings.indent,
+					settings.paddingX,
+					settings.paddingY,
+					settings.spaceRadius,
+					mapId,
+				],
 			})
-			.then((r) => r.rows?.[0]);
-		if (!map || !map.id) {
-			throw new Error(`Cannot upload image for your map as it cannot be found`);
-		}
+			.then((r) => {
+				const data = r.rows?.[0];
+				return data;
+			})
+			.catch((e) => {
+				throw e;
+			});
+	},
+	updateMapSpaceGroup: async (root, { mapId, group }) => {
+		getMap(mapId);
+
+		const query =
+			'UPDATE sd_map_space_group SET name=$1, prefix=$2 WHERE id=$3 RETURNING *';
+
+		return pool
+			.query({
+				rowAsArray: true,
+				text: query,
+				values: [groupId],
+			})
+			.then((r) => {
+				const data = r.rows?.[0];
+				return data;
+			})
+			.catch((e) => {
+				throw e;
+			});
+	},
+	uploadMapImage: async (root, { mapId, imageUrl }) => {
+		getMap(mapId);
 
 		const query =
 			'UPDATE sd_map_settings SET background_image_url=$1 WHERE map_id=$2 RETURNING background_image_url';
+
 		return pool
 			.query({ rowAsArray: true, text: query, values: [imageUrl, mapId] })
 			.then((r) => {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import AWS from 'aws-sdk';
 import { updateSpaceColor } from './utils/canvas';
-import { updateMap, uploadMapImage } from './utils/requests';
+import { updateMapSettings, uploadMapImage } from './utils/requests';
 import { MapSettings } from './models/map-settings';
 
 import { Space } from './models/space';
@@ -24,6 +24,7 @@ const Settings = ({
 		useState<MapSettings>(mapSettings);
 
 	const onSave = () => {
+		/*
 		let spaceData = Array.from(spaceMap.values()).map((space) => {
 			const s: any = {
 				id: space.id,
@@ -42,23 +43,22 @@ const Settings = ({
 			return s;
 		});
 
-		updateMap(
-			mapId,
+		
 			spaceData.map((space) => ({
 				...space,
 				connections: space.connections.map(
 					(connection: Space) => connection.id
 				),
 			})),
-			curMapSettings
-		);
+		*/
+
+		updateMapSettings(mapId, curMapSettings);
 		setOrigSettings({ ...curMapSettings });
 	};
 
 	const onReset = () => {
 		setCurMapSettings({ ...origSettings });
 		handleColorUpdate(origSettings.spaceColor);
-		//handleImageUpdate(origSettings.backgroundImageUrl);
 	};
 
 	const handleImageUpdate = async (file?: File) => {
