@@ -3,9 +3,11 @@
 	"private": true,
 	"license": "MIT",
 	"scripts": {
-		"start": "npx ts-node  server.ts --ignore data/ --env-file=.env.production --env-file=.env.development"
+		"compile": "tsc",
+		"start": "npm run compile && node ./dist/index.js --env-file=.env.production --env-file=.env.development"
 	},
 	"dependencies": {
+		"@apollo/server": "^4.10.0",
 		"apollo-server": "^3.13.0",
 		"apollo-server-express": "^3.13.0",
 		"body-parser": "^1.20.2",
@@ -14,7 +16,8 @@
 		"express": "^4.18.2",
 		"express-jwt": "^8.4.1",
 		"express-oauth2-jwt-bearer": "^1.6.0",
-		"graphql": "^15.7.2",
+		"graphql": "^16.8.1",
+		"http": "^0.0.1-security",
 		"jsonwebtoken": "8.5.1",
 		"notarealdb": "0.2.2",
 		"pg": "^8.11.3"

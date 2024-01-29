@@ -1,4 +1,4 @@
-const { DataStore } = require('notarealdb');
+import { DataStore } from 'notarealdb';
 
 const store = new DataStore('./data');
 

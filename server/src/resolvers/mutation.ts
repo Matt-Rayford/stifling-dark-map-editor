@@ -1,74 +1,5 @@
-import { db } from './db';
-import { pool } from './server';
-
-const getMap = async (mapId: string) => {
-	const query = 'SELECT * FROM sd_map WHERE id=$1';
-
-	const map = await pool
-		.query({
-			rowAsArray: true,
-			text: query,
-			values: [mapId],
-		})
-		.then((r) => {
-			const data = r.rows?.[0];
-			return data;
-		})
-		.catch((e) => {
-			console.log('ERROR: ', e);
-			throw new Error(`Cannot upload image for your map as it cannot be found`);
-		});
-
-	if (!map || !map.id) {
-		throw new Error(`Cannot upload image for your map as it cannot be found`);
-	}
-
-	return map;
-};
-
-export const Query = {
-	map: (root, { id }: { id: string }) => {
-		console.log('GET MAP: ', id);
-		const query =
-			'SELECT * \
-			FROM sd_map sm \
-			INNER JOIN sd_map_settings sms ON sms.map_id = sm.id \
-			WHERE sm.id=$1';
-
-		return pool
-			.query({
-				rowAsArray: true,
-				text: query,
-				values: [id],
-			})
-			.then((r) => {
-				const data = r.rows?.[0];
-				console.log('GET MAP: ', data);
-				return {
-					id: data.id,
-					title: data.name,
-					settings: {
-						backgroundImageUrl: data.background_image_url,
-						spaceColor: data.spaceColor,
-						horizontalSpacing: data.horizontalSpacing,
-						verticalSpacing: data.verticalSpacing,
-						indent: data.indent,
-						paddingX: data.padding_x,
-						paddingY: data.padding_y,
-						spaceRadius: data.spaceRadius,
-					},
-				};
-			})
-			.catch((e) => {
-				throw new Error(`Cannot retrieve your map as it cannot be found`);
-			});
-	},
-	maps: () => {
-		return db.maps.list();
-	},
-	spaceSetting: (root, { id }: { id: string }) => db.spaceSettings.get(id),
-	spaceSettings: () => db.spaceSettings.list(),
-};
+import { pool } from '..';
+import { getMap } from './map';
 
 export const Mutation = {
 	addMapSpaceGroup: async (root, { mapId, group }) => {
@@ -79,7 +10,6 @@ export const Mutation = {
 
 		return pool
 			.query({
-				rowAsArray: true,
 				text: query,
 				values: [mapId, group.name, group.prefix],
 			})
@@ -92,6 +22,7 @@ export const Mutation = {
 			});
 	},
 	createMap: (root, { title }) => {
+		/*
 		const id = db.maps.create({
 			title,
 			spaces: [],
@@ -107,6 +38,7 @@ export const Mutation = {
 			},
 		});
 		return db.maps.get(id);
+		*/
 	},
 	deleteMapSpaceGroup: async (root, { mapId, groupId }) => {
 		getMap(mapId);
@@ -127,7 +59,7 @@ export const Mutation = {
 	renameMap: (root, { mapId, mapName }) => {
 		const query = 'UPDATE sd_map SET name=$1 where id=$2 RETURNING name';
 		return pool
-			.query({ rowAsArray: true, text: query, values: [mapName, mapId] })
+			.query({ text: query, values: [mapName, mapId] })
 			.then((r) => {
 				const data = r.rows?.[0];
 				return data.name;
@@ -137,18 +69,22 @@ export const Mutation = {
 			});
 	},
 	updateMap: (root, { mapId, spaceData, mapSettings }) => {
+		/*
+		//@ts-ignore
 		const { title, spaceGroups } = db.maps.get(mapId);
 		db.maps.update({
 			id: mapId,
+			//@ts-ignore
 			title: title,
 			mapSettings,
 			spaces: spaceData,
 			spaceGroups,
 		});
 		return db.maps.get(mapId);
+		*/
 	},
 	updateMapSettings: async (root, { mapId, settings }) => {
-		getMap();
+		getMap(mapId);
 
 		const query =
 			'UPDATE sd_map_settings \
@@ -163,7 +99,6 @@ export const Mutation = {
 
 		return await pool
 			.query({
-				rowAsArray: true,
 				text: query,
 				values: [
 					settings.spaceColor,
@@ -192,9 +127,8 @@ export const Mutation = {
 
 		return pool
 			.query({
-				rowAsArray: true,
 				text: query,
-				values: [groupId],
+				values: [group.id],
 			})
 			.then((r) => {
 				const data = r.rows?.[0];
@@ -211,7 +145,7 @@ export const Mutation = {
 			'UPDATE sd_map_settings SET background_image_url=$1 WHERE map_id=$2 RETURNING background_image_url';
 
 		return pool
-			.query({ rowAsArray: true, text: query, values: [imageUrl, mapId] })
+			.query({ text: query, values: [imageUrl, mapId] })
 			.then((r) => {
 				const data = r.rows?.[0];
 				return data.background_image_url;
@@ -221,35 +155,3 @@ export const Mutation = {
 			});
 	},
 };
-
-export const Space = {
-	settings: (space) => db.spaceSettings.get(space.type),
-};
-
-export const Map = {
-	settings: (map) => {
-		const query = 'SELECT * FROM sd_map_settings WHERE map_id=$1';
-		return pool
-			.query({ rowAsArray: true, text: query, values: [map.id] })
-			.then((r) => {
-				const data = r.rows?.[0];
-				return {
-					id: data.id,
-					mapId: data.map_id,
-					backgroundImageUrl: data.background_image_url,
-					spaceColor: data.space_color,
-					horizontalSpacing: data.horizontal_spacing,
-					verticalSpacing: data.vertical_spacing,
-					indent: data.indent,
-					paddingX: data.padding_x,
-					paddingY: data.padding_y,
-					spaceRadius: data.space_radius,
-				};
-			})
-			.catch((e) => {
-				throw e;
-			});
-	},
-};
-
-export * as resolvers from './resolvers';
