@@ -1,6 +1,8 @@
 type Query {
 	maps: [Map]
 	map(id: ID!): Map
+	mapSpaceGroups(mapId: ID!): [SpaceGroup]
+	mapSpaces(mapId: ID!): [Space]
 	spaceSetting(id: String!): SpaceSetting
 	spaceSettings: [SpaceSetting]
 }
@@ -38,10 +40,10 @@ type MapSettings {
 scalar Object
 scalar Array
 
-enum LightLevel {
-	BRIGHT
-	DIM
-	PITCH_BLACK
+type LightLevel {
+	id: ID!
+	name: String!
+	movementPoints: Int!
 }
 
 enum SpaceTypeEnum {
@@ -60,14 +62,13 @@ type SpaceGroup {
 }
 
 type Space {
-	id: Int!
+	id: ID!
 	number: Int!
 	type: SpaceTypeEnum!
 	lightLevel: LightLevel!
 	connections: [Int]
 	row: Int!
 	col: Int!
-	settings: SpaceSetting
 	isDeleted: Boolean
 	group: Int
 }

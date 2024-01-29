@@ -1,11 +1,16 @@
-import { LightLevel } from './light-level';
 import { MapSettings } from './map-settings';
-import { SpaceType } from './space';
+import { DBSpace } from './space';
+import { SpaceGroup } from './space-group';
 
 export interface SDMap {
 	id: string;
 	title: string;
 	settings: MapSettings;
-	spaces: Space[];
-	spaceGroups: SpaceGroup[];
+	spaces: DBSpace[] | Promise<DBSpace[]>;
+	spaceGroups: SpaceGroup[] | Promise<SpaceGroup[]>;
+}
+
+export interface DBMap {
+	id: string;
+	name: string;
 }

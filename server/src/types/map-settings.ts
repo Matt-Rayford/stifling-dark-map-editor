@@ -1,4 +1,4 @@
-export class MapSettings {
+export interface MapSettings {
 	backgroundImageUrl: string;
 	spaceColor: string;
 	horizontalSpacing: number;
@@ -7,24 +7,17 @@ export class MapSettings {
 	paddingX: number;
 	paddingY: number;
 	spaceRadius: number;
+}
 
-	constructor(
-		backgroundImageUrl: string,
-		spaceColor: string,
-		horizontalSpacing: number,
-		verticalSpacing: number,
-		indent: number,
-		paddingX: number,
-		paddingY: number,
-		spaceRadius: number
-	) {
-		this.backgroundImageUrl = backgroundImageUrl;
-		this.spaceColor = spaceColor;
-		this.horizontalSpacing = horizontalSpacing;
-		this.verticalSpacing = verticalSpacing;
-		this.indent = indent;
-		this.paddingX = paddingX;
-		this.paddingY = paddingY;
-		this.spaceRadius = spaceRadius;
-	}
+export interface DBMapSettings {
+	id: string;
+	map_id: string;
+	background_image_url: string;
+	space_color: string;
+	horizontal_spacing: number;
+	vertical_spacing: number;
+	indent: number;
+	padding_x: number;
+	padding_y: number;
+	space_radius: number;
 }

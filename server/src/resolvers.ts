@@ -2,10 +2,14 @@ import { Query } from './resolvers/query';
 import { Space } from './resolvers/space';
 import { Map } from './resolvers/map';
 import { Mutation } from './resolvers/mutation';
+import { LightLevel } from './resolvers/light-level';
+import { MapSettings } from './resolvers/map-settings';
 
 export const resolvers = {
 	Query,
 	Mutation,
-	Space,
+	LightLevel,
 	Map,
+	MapSettings,
+	Space,
 };
