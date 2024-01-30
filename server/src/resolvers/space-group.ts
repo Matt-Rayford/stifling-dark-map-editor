@@ -12,15 +12,10 @@ export const getMapSpaceGroups = async (
 			values: [mapId],
 		})
 		.then((r) => {
-			const data = r.rows;
-
-			return data.map((group: SpaceGroup) => ({
-				id: group.id,
-				name: group.name,
-				prefix: group.prefix,
-			}));
+			return r.rows;
 		})
 		.catch((e) => {
-			throw new Error(`Cannot upload image for your map as it cannot be found`);
+			console.error(`ERROR: getMapSpaceGroups(${mapId}): `, e);
+			throw new Error(`Error getting space groups`);
 		});
 };

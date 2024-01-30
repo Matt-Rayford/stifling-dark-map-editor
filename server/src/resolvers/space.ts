@@ -1,6 +1,7 @@
 import { pool } from '..';
 import { DBSpace } from '../types/space';
 import { getLightLevelById } from './light-level';
+import { getSpaceTypeById } from './space-type';
 
 export const getMapSpaces = async (mapId: string): Promise<DBSpace[]> => {
 	const query = 'SELECT * FROM sd_map_space WHERE map_id=$1';
@@ -14,12 +15,17 @@ export const getMapSpaces = async (mapId: string): Promise<DBSpace[]> => {
 			return r.rows as DBSpace[];
 		})
 		.catch((e) => {
-			throw new Error(`Cannot upload image for your map as it cannot be found`);
+			console.error(`ERROR - getMapSpaces(${mapId}): `, e);
+			throw new Error('Error getting map spaces');
 		});
 };
 
 export const Space = {
-	id: (space: DBSpace) => `${space.id}`,
-	number: (space: DBSpace) => space.space_number,
+	col: (space: DBSpace) => space.col_num,
+	group: (space: DBSpace) => space.zone_id,
+	isDeleted: (space: DBSpace) => space.is_deleted,
 	lightLevel: (space: DBSpace) => getLightLevelById(space.light_level_id),
+	number: (space: DBSpace) => space.space_number,
+	row: (space: DBSpace) => space.row_num,
+	type: (space: DBSpace) => getSpaceTypeById(space.type_id),
 };

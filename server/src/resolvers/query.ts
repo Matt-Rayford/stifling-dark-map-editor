@@ -1,17 +1,15 @@
-import { getMap } from './map';
+import { getLightLevels } from './light-level';
+import { getMap, getMaps } from './map';
 import { getMapSpaces } from './space';
 import { getMapSpaceGroups } from './space-group';
+import { getSpaceTypes } from './space-type';
 
 export const Query = {
+	lightLevels: () => getLightLevels(),
 	map: (root, { id }: { id: string }) => getMap(id),
-	maps: () => {
-		/*
-		return db.maps.list();
-		*/
-	},
+	maps: () => getMaps(),
 	mapSpaceGroups: (root, { mapId }: { mapId: string }) =>
 		getMapSpaceGroups(mapId),
 	mapSpaces: (root, { mapId }: { mapId: string }) => getMapSpaces(mapId),
-	spaceSetting: (root, { id }: { id: string }) => null, // FIX THIS,
-	spaceSettings: () => null, // FIX THIS,
+	spaceTypes: () => getSpaceTypes(),
 };

@@ -11,55 +11,13 @@ export interface SpaceTypeDetails {
 	image?: string;
 }
 
-export enum SpaceType {
-	BASIC = 'BASIC',
-	ADVERSARY = 'ADVERSARY',
-	STARTING = 'STARTING',
-	INTERACTION = 'INTERACTION',
-	INVOLVED = 'INVOLVED',
-	DOOR = 'DOOR',
+export interface SpaceType {
+	id: string;
+	color: string;
+	description: string;
+	iconUrl?: string;
+	name: string;
 }
-
-export const getSpaceTypeDetails = (spaceType: SpaceType): SpaceTypeDetails => {
-	switch (spaceType) {
-		case SpaceType.BASIC:
-			return {
-				name: 'Basic Movement Space',
-				fontColor: DRAW_CONSTANTS.SPACE_COLOR,
-			};
-		case SpaceType.ADVERSARY:
-			return {
-				name: 'Adversary',
-				image: 'adversary-space',
-				fontColor: '#FFFFFF',
-			};
-		case SpaceType.STARTING:
-			return {
-				name: 'Starting',
-				image: 'start-space',
-				fontColor: '#FFFFFF',
-			};
-		case SpaceType.INTERACTION:
-			return {
-				name: 'Interaction',
-				image: 'interaction-space',
-				fontColor: '#FFFFFF',
-			};
-		case SpaceType.INVOLVED:
-			return {
-				name: 'Involved Action Space',
-				image: 'involved-space',
-				fontColor: '#FFFFFF',
-			};
-		case SpaceType.DOOR:
-			return { name: 'Door', image: 'door-space', fontColor: '#FFFFFF' };
-		default:
-			return {
-				name: 'Basic Movement Space',
-				fontColor: DRAW_CONSTANTS.SPACE_COLOR,
-			};
-	}
-};
 
 export class Space {
 	id: number;
@@ -127,9 +85,7 @@ export class Space {
 
 	updateGroup(groupNumber: number | string) {
 		this.group =
-			typeof groupNumber === 'string'
-				? parseInt(groupNumber)
-				: groupNumber;
+			typeof groupNumber === 'string' ? parseInt(groupNumber) : groupNumber;
 	}
 
 	removeGroup() {

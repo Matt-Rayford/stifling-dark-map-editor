@@ -14,6 +14,7 @@ export const getLightLevels = async (): Promise<DBLightLevel[]> => {
 				return r.rows as DBLightLevel[];
 			})
 			.catch((e) => {
+				console.error('ERROR - getLightLevels(): ', e);
 				throw new Error(`Error retrieving light levels`);
 			});
 		lightLevels.map((lightLevel) => {

@@ -13,7 +13,7 @@ export const getMapSettings = async (mapId: string): Promise<DBMapSettings> => {
 			return r.rows?.[0];
 		})
 		.catch((e) => {
-			console.log(e);
+			console.error(`ERROR - getMapSettings(${mapId}): `, e);
 			throw new Error(`Error retrieving map settings`);
 		});
 };

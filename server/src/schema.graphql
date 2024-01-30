@@ -1,10 +1,10 @@
 type Query {
+	lightLevels: [LightLevel]
 	maps: [Map]
 	map(id: ID!): Map
 	mapSpaceGroups(mapId: ID!): [SpaceGroup]
 	mapSpaces(mapId: ID!): [Space]
-	spaceSetting(id: String!): SpaceSetting
-	spaceSettings: [SpaceSetting]
+	spaceTypes: [SpaceType]
 }
 
 type Mutation {
@@ -46,13 +46,12 @@ type LightLevel {
 	movementPoints: Int!
 }
 
-enum SpaceTypeEnum {
-	ADVERSARY
-	BASIC
-	DOOR
-	INTERACTION
-	INVOLVED
-	STARTING
+type SpaceType {
+	id: ID!
+	name: String!
+	iconUrl: String
+	description: String!
+	color: String!
 }
 
 type SpaceGroup {
@@ -64,7 +63,7 @@ type SpaceGroup {
 type Space {
 	id: ID!
 	number: Int!
-	type: SpaceTypeEnum!
+	type: SpaceType!
 	lightLevel: LightLevel!
 	connections: [Int]
 	row: Int!

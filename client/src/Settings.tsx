@@ -94,7 +94,6 @@ const Settings = ({
 							throw error;
 						} else {
 							const imageUrl = `${process.env.REACT_APP_AWS_S3_URL}${imageName}`;
-							console.log('Image urL: ', imageUrl);
 							const settings = { ...curMapSettings };
 							await uploadMapImage(mapId, imageUrl);
 							settings.backgroundImageUrl = imageUrl;

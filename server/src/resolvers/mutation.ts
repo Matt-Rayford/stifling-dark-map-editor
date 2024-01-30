@@ -18,7 +18,8 @@ export const Mutation = {
 				return data;
 			})
 			.catch((e) => {
-				throw e;
+				console.error(`ERROR - addMapSpaceGroup(${mapId}, ${group.name}): `, e);
+				throw new Error('Error adding space group');
 			});
 	},
 	createMap: (root, { title }) => {
@@ -49,11 +50,12 @@ export const Mutation = {
 				text: query,
 				values: [groupId],
 			})
-			.then((r) => {
+			.then(() => {
 				return true;
 			})
 			.catch((e) => {
-				throw e;
+				console.error(`ERROR - deleteMapSpaceGroup(${mapId}, ${groupId}): `, e);
+				throw new Error('Error deleting space group');
 			});
 	},
 	renameMap: (root, { mapId, mapName }) => {
@@ -61,11 +63,11 @@ export const Mutation = {
 		return pool
 			.query({ text: query, values: [mapName, mapId] })
 			.then((r) => {
-				const data = r.rows?.[0];
-				return data.name;
+				return r.rows?.[0];
 			})
 			.catch((e) => {
-				throw e;
+				console.error(`ERROR - renameMap(${mapId}, ${mapName}): `, e);
+				throw new Error('Error renaming map');
 			});
 	},
 	updateMap: (root, { mapId, spaceData, mapSettings }) => {
@@ -116,7 +118,11 @@ export const Mutation = {
 				return data;
 			})
 			.catch((e) => {
-				throw e;
+				console.error(
+					`ERROR - updateMapSettings(${mapId}, ${settings.id}): `,
+					e
+				);
+				throw new Error('Error updating map settings');
 			});
 	},
 	updateMapSpaceGroup: async (root, { mapId, group }) => {
@@ -135,7 +141,11 @@ export const Mutation = {
 				return data;
 			})
 			.catch((e) => {
-				throw e;
+				console.error(
+					`ERROR - updateMapSpaceGroup(${mapId}, ${group.id}): `,
+					e
+				);
+				throw new Error('Error updating space group');
 			});
 	},
 	uploadMapImage: async (root, { mapId, imageUrl }) => {
@@ -151,7 +161,8 @@ export const Mutation = {
 				return data.background_image_url;
 			})
 			.catch((e) => {
-				throw e;
+				console.error(`ERROR - uploadMapImage(${mapId}, ${imageUrl}): `, e);
+				throw new Error('Error uploading map image');
 			});
 	},
 };

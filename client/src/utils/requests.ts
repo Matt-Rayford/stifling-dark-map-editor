@@ -40,8 +40,15 @@ export async function updateMap(
         spaces {
           id
           number
-          type
-          lightLevel
+          type {
+						id
+						color
+					}
+          lightLevel {
+						id
+						name
+						movementPoints
+					}
           connections
 					isDeleted
 					group
@@ -77,7 +84,6 @@ export async function updateMapSettings(
       }
     }
   `;
-	console.log('CALL GQL: ', settings);
 	const { map } = await graphqlRequest(mutation, { id, settings });
 	return map;
 }
@@ -101,8 +107,15 @@ export async function loadMap(id: string): Promise<SDMap> {
 				spaces {
           id
           number
-          type
-          lightLevel
+          type {
+						id
+						color
+					}
+          lightLevel {
+						id
+						name
+						movementPoints
+					}
           row
           col
           connections
@@ -200,6 +213,36 @@ export async function uploadMapImage(mapId: String, imageUrl: String) {
 		mapId,
 		imageUrl,
 	});
+}
+
+export async function getLightLevels() {
+	const query = `
+		query LightLevels {
+			lightLevels {
+				id
+				name
+				movementPoints
+			}
+		}
+	`;
+	const { lightLevels } = await graphqlRequest(query);
+	return lightLevels;
+}
+
+export async function getSpaceTypes() {
+	const query = `
+		query SpaceTypes {
+			spaceTypes {
+				id
+				color
+				iconUrl
+				description
+				name
+			}
+		}
+	`;
+	const { spaceTypes } = await graphqlRequest(query);
+	return spaceTypes;
 }
 
 async function graphqlRequest(query: any, variables: any = {}) {
