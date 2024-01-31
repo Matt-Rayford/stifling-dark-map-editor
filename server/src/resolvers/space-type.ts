@@ -1,28 +1,9 @@
-import { pool } from '..';
 import { DBSpaceType } from '../types/space-type';
-
-const cachedSpaceTypes: Map<string, DBSpaceType> = new Map();
+import { cachedSpaceTypes, initDBCache } from '../utils/cache';
 
 export const getSpaceTypes = async (): Promise<DBSpaceType[]> => {
 	if (!cachedSpaceTypes.size) {
-		const query = 'SELECT * FROM sd_map_space_type';
-
-		const spaceTypes = await pool
-			.query({
-				text: query,
-			})
-			.then((r) => {
-				return r.rows as DBSpaceType[];
-			})
-			.catch((e) => {
-				console.error('ERROR - getSpaceTypes(): ', e);
-				throw new Error('Error getting space types');
-			});
-
-		spaceTypes.map((spaceType) => {
-			cachedSpaceTypes.set(spaceType.id, spaceType);
-		});
-		return spaceTypes;
+		await initDBCache();
 	}
 	return Array.from(cachedSpaceTypes.values());
 };

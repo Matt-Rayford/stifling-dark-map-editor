@@ -3,8 +3,9 @@ import { MapSettings } from './map-settings';
 import { SpaceType } from './space';
 
 export interface SDSpace {
-	id: number;
+	id: string;
 	number: number;
+	displayNumber: number;
 	type: SpaceType;
 	lightLevel: LightLevel;
 	group: number;

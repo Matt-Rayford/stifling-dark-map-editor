@@ -10,6 +10,7 @@ import http from 'http';
 import dotenv from 'dotenv';
 
 import { resolvers } from './resolvers';
+import { initDBCache } from './utils/cache';
 
 dotenv.config();
 
@@ -56,4 +57,6 @@ const startApolloServer = async () => {
 };
 
 startExpressServer();
-startApolloServer();
+startApolloServer().then(() => {
+	initDBCache();
+});

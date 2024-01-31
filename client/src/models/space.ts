@@ -20,12 +20,13 @@ export interface SpaceType {
 }
 
 export class Space {
-	id: number;
+	id: string;
 	center: Point;
 	type: SpaceType;
 	baseWidth = 1;
 	lightLevel: LightLevel;
 	number: number;
+	displayNumber: number;
 	radius: number;
 	row: number;
 	col: number;
@@ -39,12 +40,13 @@ export class Space {
 	group?: number;
 
 	constructor(
-		id: number,
+		id: string,
 		x: number,
 		y: number,
 		spaceType: SpaceType,
 		lightLevel: LightLevel,
 		number: number,
+		displayNumber: number,
 		row: number,
 		col: number,
 		mapDrawOptions: MapSettings,
@@ -57,6 +59,7 @@ export class Space {
 		this.type = spaceType;
 		this.lightLevel = lightLevel;
 		this.number = number;
+		this.displayNumber = displayNumber;
 		this.radius = radius;
 		this.objectType = ObjectType.SPACE;
 		this.drawOptions = new DrawOptions(mapDrawOptions.spaceColor);
@@ -143,7 +146,7 @@ export class Space {
 	}
 
 	updateNumber(newNum: number) {
-		this.number = newNum;
+		this.displayNumber = newNum;
 	}
 
 	delete() {

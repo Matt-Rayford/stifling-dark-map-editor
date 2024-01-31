@@ -86,9 +86,11 @@ const ToolMenu = ({
 	const getSpaceLabel = (space: Space) => {
 		const spaceGroupMap = settings.get('spaceGroups');
 		if (space.group) {
-			return `Space ${spaceGroupMap.get(space.group).prefix}-${space.number}`;
+			return `Space ${spaceGroupMap.get(space.group).prefix}-${
+				space.displayNumber
+			}`;
 		}
-		return `Space ${space.number}`;
+		return `Space ${space.displayNumber}`;
 	};
 
 	const updateSpaceGroups = () => {

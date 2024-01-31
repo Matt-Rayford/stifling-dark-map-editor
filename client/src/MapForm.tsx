@@ -8,7 +8,7 @@ const MapForm = () => {
 	const handleSubmit = useCallback(
 		(title: string) => {
 			createMap(title).then(({ id }) => {
-				navigate(`map/${id}`);
+				navigate(`/map/${id}`);
 			});
 		},
 		[navigate]

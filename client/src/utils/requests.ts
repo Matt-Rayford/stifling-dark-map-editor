@@ -40,6 +40,7 @@ export async function updateMap(
         spaces {
           id
           number
+					displayNumber
           type {
 						id
 						color
@@ -107,6 +108,7 @@ export async function loadMap(id: string): Promise<SDMap> {
 				spaces {
           id
           number
+					displayNumber
           type {
 						id
 						color
@@ -243,6 +245,42 @@ export async function getSpaceTypes() {
 	`;
 	const { spaceTypes } = await graphqlRequest(query);
 	return spaceTypes;
+}
+
+export async function deleteSpace(mapId: string, spaceId: string) {
+	const query = `
+	  mutation DeleteSpace($mapId: ID!, $spaceId: ID!) {
+			deleteSpace(mapId: $mapId, spaceId: $spaceId)
+		}
+	`;
+
+	const { deleteSpace } = await graphqlRequest(query, { mapId, spaceId });
+	return deleteSpace;
+}
+
+export async function connectSpaces(space1Id: string, space2Id: string) {
+	const query = `
+		mutation ConnectSpaces($space1Id: ID!, $space2Id: ID!) {
+			connectSpaces(space1Id: $space1Id, space2Id: $space2Id)
+		}
+	`;
+
+	const { connectSpaces } = await graphqlRequest(query, { space1Id, space2Id });
+	return connectSpaces;
+}
+
+export async function disconnectSpaces(space1Id: string, space2Id: string) {
+	const query = `
+		mutation DisconnectSpaces($space1Id: ID!, $space2Id: ID!) {
+			disconnectSpaces(space1Id: $space1Id, space2Id: $space2Id)
+		}
+	`;
+
+	const { disconnectSpaces } = await graphqlRequest(query, {
+		space1Id,
+		space2Id,
+	});
+	return disconnectSpaces;
 }
 
 async function graphqlRequest(query: any, variables: any = {}) {

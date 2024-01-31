@@ -38,6 +38,28 @@ export const getMaps = async (): Promise<DBMap[]> => {
 		});
 };
 
+export const createMap = async (mapName: string): Promise<DBMap> => {
+	const query = `SELECT create_map($1)`;
+
+	return pool
+		.query({
+			text: query,
+			values: [mapName],
+		})
+		.then((r) => {
+			const mapRow = r.rows?.[0];
+			if (mapRow) {
+				return getMap(mapRow.create_map);
+			} else {
+				throw new Error(`Error creating map`);
+			}
+		})
+		.catch((e) => {
+			console.error(`ERROR - createMap(${mapName}): `, e);
+			throw new Error(`Error creating map`);
+		});
+};
+
 export const renameMap = async (mapId: string, mapName: string) => {
 	const query = 'UPDATE sd_map SET name=$1 where id=$2 RETURNING name';
 	return pool

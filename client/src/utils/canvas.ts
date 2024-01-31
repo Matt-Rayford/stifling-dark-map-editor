@@ -18,7 +18,7 @@ export const setupSpaces = (
 		for (let i = 0; i < ROWS; i++) {
 			for (let j = 0; j < COLS; j++) {
 				const space = new Space(
-					curSpace - 1,
+					`${curSpace - 1}`,
 					PADDING_X + j * SPACER_X + (i % 2 === 0 ? 0 : INDENT),
 					PADDING_Y + i * SPACER_Y,
 					{
@@ -33,6 +33,7 @@ export const setupSpaces = (
 						movementPoints: 1,
 					},
 					curSpace,
+					curSpace,
 					i + 1,
 					j + 1,
 					mapSettings
@@ -46,8 +47,17 @@ export const setupSpaces = (
 	} else {
 		const connectionMap = new Map<number, number[]>();
 		for (let loadedSpace of existingSpaces) {
-			const { id, row, col, type, lightLevel, number, isDeleted, group } =
-				loadedSpace;
+			const {
+				id,
+				row,
+				col,
+				type,
+				lightLevel,
+				number,
+				displayNumber,
+				isDeleted,
+				group,
+			} = loadedSpace;
 			let i = row - 1,
 				j = col - 1;
 			const space = new Space(
@@ -59,6 +69,7 @@ export const setupSpaces = (
 				type,
 				lightLevel,
 				number,
+				displayNumber,
 				row,
 				col,
 				mapSettings,
@@ -86,11 +97,11 @@ export const calculateAllPaths = (fromSpace: Space) => {
 			var curSpace = visitData?.space;
 			var curDistance = visitData?.distance;
 			if (curSpace && typeof curDistance === 'number') {
-				if (!visitedMap.has(curSpace.id)) {
-					visitedMap.set(curSpace.id, curDistance);
+				if (!visitedMap.has(curSpace.number)) {
+					visitedMap.set(curSpace.number, curDistance);
 					for (var j = 0; j < curSpace.connections.length; j++) {
 						var conSpace = curSpace.connections[j];
-						if (!visitedMap.has(conSpace.id))
+						if (!visitedMap.has(conSpace.number))
 							visitList.push({
 								space: conSpace,
 								distance: curDistance + conSpace.lightLevel.movementPoints,
@@ -134,7 +145,9 @@ const setupConnections = (
 			// Check above left and right if row not at top
 			if (space.row != 1) {
 				if (space.row % 2 == 0 || space.col != 1)
-					space.connections.push(spaceMap.get(space.id + topLeftMod - offset)!);
+					space.connections.push(
+						spaceMap.get(space.number + topLeftMod - offset)!
+					);
 				if (space.row % 2 == 1 || space.col != COLS)
 					space.connections.push(
 						spaceMap.get(space.number + topRightMod - offset)!
@@ -267,11 +280,11 @@ export const drawSpaces = (
 
 			drawCircle(ctx, space.center.x, space.center.y, space.radius);
 
-			let spaceText = `${space.number}`;
+			let spaceText = `${space.displayNumber}`;
 			if (typeof space.group === 'number' && spaceGroupMap) {
 				const spaceGroup = spaceGroupMap.get(space.group);
 				if (spaceGroup) {
-					spaceText = `${spaceGroup.prefix}-${space.number}`;
+					spaceText = `${spaceGroup.prefix}-${space.displayNumber}`;
 				}
 			}
 			drawText(
@@ -313,7 +326,7 @@ export const drawSpaces = (
 
 			if (distanceMap) {
 				ctx.save();
-				var distance = distanceMap.get(space.id);
+				var distance = distanceMap.get(space.number);
 				drawFilledCircle(
 					ctx,
 					space.center.x,
@@ -338,11 +351,11 @@ export const drawSpaces = (
 		ctx.strokeStyle = space.drawOptions.color;
 		drawCircle(ctx, space.center.x, space.center.y, space.radius);
 		ctx.strokeStyle = space.drawOptions.color;
-		let spaceText = `${space.number}`;
+		let spaceText = `${space.displayNumber}`;
 		if (typeof space.group === 'number' && spaceGroupMap) {
 			const spaceGroup = spaceGroupMap.get(space.group);
 			if (spaceGroup) {
-				spaceText = `${spaceGroup.prefix}-${space.number}`;
+				spaceText = `${spaceGroup.prefix}-${space.displayNumber}`;
 			}
 		}
 		drawText(

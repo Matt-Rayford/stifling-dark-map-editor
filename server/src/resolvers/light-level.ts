@@ -1,26 +1,9 @@
-import { pool } from '..';
 import { DBLightLevel } from '../types/light-level';
-
-const cachedLightLevels: Map<string, DBLightLevel> = new Map();
+import { cachedLightLevels, initDBCache } from '../utils/cache';
 
 export const getLightLevels = async (): Promise<DBLightLevel[]> => {
 	if (!cachedLightLevels.size) {
-		const query = 'SELECT * FROM sd_map_space_light_level';
-		const lightLevels = await pool
-			.query({
-				text: query,
-			})
-			.then((r) => {
-				return r.rows as DBLightLevel[];
-			})
-			.catch((e) => {
-				console.error('ERROR - getLightLevels(): ', e);
-				throw new Error(`Error retrieving light levels`);
-			});
-		lightLevels.map((lightLevel) => {
-			cachedLightLevels.set(lightLevel.id, lightLevel);
-		});
-		return lightLevels;
+		await initDBCache();
 	}
 	return Array.from(cachedLightLevels.values());
 };

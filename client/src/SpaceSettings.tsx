@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Space, SpaceType } from './models/space';
 import { calculateAllPaths } from './utils/canvas';
-import { getLightLevels, getSpaceTypes } from './utils/requests';
+import {
+	disconnectSpaces,
+	getLightLevels,
+	getSpaceTypes,
+} from './utils/requests';
 import { LightLevel } from './models/light-level';
 
 interface Props {
@@ -19,6 +23,9 @@ const SpaceSettings = ({
 	onUpdateGroup,
 	onDisableDistances,
 }: Props) => {
+	const [connections, setSpaceConnections] = useState<Space[]>(
+		space.connections
+	);
 	const [lightLevels, setLightLevels] = useState<LightLevel[]>([]);
 	const [lightLevel, setLightLevel] = useState<LightLevel>();
 	const [spaceTypes, setSpaceTypes] = useState<SpaceType[]>([]);
@@ -38,6 +45,7 @@ const SpaceSettings = ({
 		if (space) {
 			setSpaceGroup(space.group ?? -1);
 			setLightLevel(space.lightLevel);
+			setSpaceConnections(space.connections);
 		}
 	}, [space]);
 
@@ -63,12 +71,14 @@ const SpaceSettings = ({
 	};
 
 	const removeConnection = (space: Space, connection: Space) => {
+		disconnectSpaces(space.id, connection.id);
 		space.connections = space.connections.filter(
 			(space2) => space2.id !== connection.id
 		);
 		connection.connections = connection.connections.filter(
 			(space2) => space2.id !== space.id
 		);
+		setSpaceConnections(space.connections);
 	};
 
 	const generateDistances = () => {
@@ -183,31 +193,35 @@ const SpaceSettings = ({
 			{renderGroups()}
 
 			<h5>Connections</h5>
-			{space.connections.map((connection) => {
-				const connectionLabel = connection.group
-					? `${spaceGroups[connection.group]?.prefix}-${connection.number}`
-					: connection.number;
-				return (
-					<div key={connection.id} className='input-group'>
-						<input
-							type='text'
-							className='form-control'
-							disabled
-							value={connectionLabel}
-						/>
+			{connections
+				.sort((a, b) => (a.displayNumber < b.displayNumber ? -1 : 1))
+				.map((connection) => {
+					const connectionLabel = connection.group
+						? `${spaceGroups[connection.group]?.prefix}-${
+								connection.displayNumber
+						  }`
+						: connection.displayNumber;
+					return (
+						<div key={connection.id} className='input-group'>
+							<input
+								type='text'
+								className='form-control'
+								disabled
+								value={connectionLabel}
+							/>
 
-						<div className='input-group-append'>
-							<button
-								className='btn btn-outline-danger'
-								type='button'
-								onClick={() => removeConnection(space, connection)}
-							>
-								{'Delete'}
-							</button>
+							<div className='input-group-append'>
+								<button
+									className='btn btn-outline-danger'
+									type='button'
+									onClick={() => removeConnection(space, connection)}
+								>
+									{'Delete'}
+								</button>
+							</div>
 						</div>
-					</div>
-				);
-			})}
+					);
+				})}
 		</div>
 	);
 };

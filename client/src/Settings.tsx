@@ -24,34 +24,6 @@ const Settings = ({
 		useState<MapSettings>(mapSettings);
 
 	const onSave = () => {
-		/*
-		let spaceData = Array.from(spaceMap.values()).map((space) => {
-			const s: any = {
-				id: space.id,
-				number: space.number,
-				type: space.type,
-				lightLevel: space.lightLevel,
-				row: space.row,
-				col: space.col,
-				connections: space.connections.map((c) => c),
-				isDeleted: space.isDeleted,
-			};
-			if (space.group !== null) {
-				s.group = space.group;
-			}
-
-			return s;
-		});
-
-		
-			spaceData.map((space) => ({
-				...space,
-				connections: space.connections.map(
-					(connection: Space) => connection.id
-				),
-			})),
-		*/
-
 		updateMapSettings(mapId, curMapSettings);
 		setOrigSettings({ ...curMapSettings });
 	};
@@ -117,7 +89,7 @@ const Settings = ({
 	const handleOptionsUpdate = (property: string, value: string) => {
 		const settings = { ...curMapSettings };
 		//@ts-ignore
-		settings[property] = parseFloat(value);
+		settings[property] = value ? parseFloat(value) : '';
 		setCurMapSettings(settings);
 		for (let space of spaceMap.values()) {
 			space.updateDrawOptions(settings);
@@ -158,10 +130,10 @@ const Settings = ({
 						</div>
 						<input
 							type='number'
-							step='0.01'
+							step='0.1'
 							className='form-control'
 							//@ts-ignore
-							value={curMapSettings[settingKey] || 0}
+							value={curMapSettings[settingKey]}
 							onChange={(e) => handleOptionsUpdate(settingKey, e.target.value)}
 						/>
 					</div>

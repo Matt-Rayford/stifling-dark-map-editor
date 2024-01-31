@@ -12,7 +12,7 @@ import {
 	setupSettings,
 	renumberSpaces,
 } from './utils/canvas';
-import { loadMap } from './utils/requests';
+import { connectSpaces, deleteSpace, loadMap } from './utils/requests';
 import { Space } from './models/space';
 import { MousePos } from './models/mouse-pos';
 import { NewConnection } from './models/connection';
@@ -102,6 +102,7 @@ export const MapEditor = () => {
 						selectedObject.current = undefined;
 						highlightedObject.current = undefined;
 						renumberSpaces(spaceMap, settings);
+						deleteSpace(map.id, obj.id);
 					}
 				}
 				if (key == 'a') {
@@ -218,6 +219,10 @@ export const MapEditor = () => {
 				if (newConnection.current.isTwoWay) {
 					highlightedObject.current.connections.push(
 						newConnection.current.fromSpace
+					);
+					connectSpaces(
+						newConnection.current.fromSpace.id,
+						highlightedObject.current.id
 					);
 				}
 				newConnection.current = undefined;

@@ -8,12 +8,13 @@ type Query {
 }
 
 type Mutation {
-	addMapSpaceGroup(mapId: ID, group: SpaceGroupInput): SpaceGroup
+	addMapSpaceGroup(mapId: ID!, group: SpaceGroupInput!): SpaceGroup
+	connectSpaces(space1Id: ID!, space2Id: ID!): Boolean
+	disconnectSpaces(space1Id: ID!, space2Id: ID!): Boolean
 	createMap(title: String): Map
 	deleteMapSpaceGroup(mapId: ID, groupId: ID): Boolean
-	deleteSpace(spaceId: ID): Boolean
+	deleteSpace(mapId: ID!, spaceId: ID!): Boolean
 	renameMap(mapId: ID!, mapName: String!): String
-	updateMap(mapId: ID, spaceData: Object, settings: MapSettingsInput): Map
 	updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
 	updateMapSpaceGroup(mapId: ID, group: SpaceGroupInput): SpaceGroup
 	uploadMapImage(mapId: ID!, imageUrl: String!): String
@@ -64,6 +65,7 @@ type SpaceGroup {
 type Space {
 	id: ID!
 	number: Int!
+	displayNumber: Int!
 	type: SpaceType!
 	lightLevel: LightLevel!
 	connections: [Int]

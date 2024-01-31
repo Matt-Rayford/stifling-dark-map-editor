@@ -31,6 +31,7 @@ export interface DBSpace {
 	id: string;
 	map_id: string;
 	space_number: number;
+	display_number: number;
 	light_level_id: string;
 	type_id: string;
 	row_num: number;
