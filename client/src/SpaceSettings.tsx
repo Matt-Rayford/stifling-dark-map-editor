@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Space, SpaceType, getSpaceTypeDetails } from './models/space';
+import { Space, SpaceType } from './models/space';
 import { calculateAllPaths } from './utils/canvas';
-import { LightLevel, getLightLevelDetails } from './models/light-level';
+import { getLightLevels, getSpaceTypes } from './utils/requests';
+import { LightLevel } from './models/light-level';
 
 interface Props {
 	space: Space;
@@ -18,9 +19,20 @@ const SpaceSettings = ({
 	onUpdateGroup,
 	onDisableDistances,
 }: Props) => {
+	const [lightLevels, setLightLevels] = useState<LightLevel[]>([]);
 	const [lightLevel, setLightLevel] = useState<LightLevel>();
+	const [spaceTypes, setSpaceTypes] = useState<SpaceType[]>([]);
 	const [spaceType, setSpaceType] = useState<SpaceType>(space.type);
 	const [spaceGroup, setSpaceGroup] = useState<number>(-1);
+
+	useEffect(() => {
+		getLightLevels().then((lightLevels: LightLevel[]) => {
+			setLightLevels(lightLevels);
+		});
+		getSpaceTypes().then((spaceTypes: SpaceType[]) => {
+			setSpaceTypes(spaceTypes);
+		});
+	}, []);
 
 	useEffect(() => {
 		if (space) {
@@ -97,18 +109,21 @@ const SpaceSettings = ({
 					<label className='input-group-text'>Space Type</label>
 				</div>
 				<select
-					value={spaceType ?? SpaceType.BASIC}
+					value={space.type.id}
 					className='form-select'
-					onChange={(e) => updateSpaceType(e.target.value as SpaceType)}
+					onChange={(e) =>
+						updateSpaceType(
+							spaceTypes.find((spaceType) => spaceType.id === e.target.value)!
+						)
+					}
 				>
 					<option value='' disabled>
 						Select Type...
 					</option>
-					{Object.keys(SpaceType).map((key) => {
-						const details = getSpaceTypeDetails(key as SpaceType);
+					{spaceTypes.map((spaceType) => {
 						return (
-							<option key={key} value={details.name}>
-								{details.name}
+							<option key={spaceType.id} value={spaceType.id}>
+								{spaceType.name}
 							</option>
 						);
 					})}
@@ -120,17 +135,23 @@ const SpaceSettings = ({
 					<label className='input-group-text'>Brightness</label>
 				</div>
 				<select
-					value={lightLevel}
+					value={lightLevel?.id}
 					className='form-select'
-					onChange={(e) => updateLightLevel(e.target.value as LightLevel)}
+					onChange={(e) =>
+						updateLightLevel(
+							lightLevels.find(
+								(lightLevel) => lightLevel.id === e.target.value
+							)!
+						)
+					}
 				>
 					<option value='' disabled>
 						Select Level...
 					</option>
-					{Object.keys(LightLevel).map((key) => {
+					{lightLevels.map((lightLevel: LightLevel) => {
 						return (
-							<option key={key} value={key}>
-								{getLightLevelDetails(key as LightLevel).name}
+							<option key={lightLevel.id} value={lightLevel.id}>
+								{lightLevel.name}
 							</option>
 						);
 					})}

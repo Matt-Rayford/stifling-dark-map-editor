@@ -1,0 +1,106 @@
+type Query {
+	lightLevels: [LightLevel]
+	maps: [Map]
+	map(id: ID!): Map
+	mapSpaceGroups(mapId: ID!): [SpaceGroup]
+	mapSpaces(mapId: ID!): [Space]
+	spaceTypes: [SpaceType]
+}
+
+type Mutation {
+	addMapSpaceGroup(mapId: ID, group: SpaceGroupInput): SpaceGroup
+	createMap(title: String): Map
+	deleteMapSpaceGroup(mapId: ID, groupId: ID): Boolean
+	deleteSpace(spaceId: ID): Boolean
+	renameMap(mapId: ID!, mapName: String!): String
+	updateMap(mapId: ID, spaceData: Object, settings: MapSettingsInput): Map
+	updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
+	updateMapSpaceGroup(mapId: ID, group: SpaceGroupInput): SpaceGroup
+	uploadMapImage(mapId: ID!, imageUrl: String!): String
+}
+
+type Map {
+	id: ID!
+	title: String!
+	settings: MapSettings
+	spaces: [Space]!
+	spaceGroups: [SpaceGroup]
+}
+
+type MapSettings {
+	backgroundImageUrl: String
+	spaceColor: String
+	horizontalSpacing: Float
+	verticalSpacing: Float
+	indent: Float
+	paddingX: Float
+	paddingY: Float
+	spaceRadius: Float
+}
+
+scalar Object
+scalar Array
+
+type LightLevel {
+	id: ID!
+	name: String!
+	movementPoints: Int!
+}
+
+type SpaceType {
+	id: ID!
+	name: String!
+	iconUrl: String
+	description: String!
+	color: String!
+}
+
+type SpaceGroup {
+	id: ID!
+	name: String!
+	prefix: String!
+}
+
+type Space {
+	id: ID!
+	number: Int!
+	type: SpaceType!
+	lightLevel: LightLevel!
+	connections: [Int]
+	row: Int!
+	col: Int!
+	isDeleted: Boolean
+	group: Int
+}
+
+type SpaceSetting {
+	id: String!
+	name: String!
+	imageUrl: String
+	fontColor: String
+	spaceColor: String
+}
+
+input CreateMapInput {
+	title: String
+}
+
+################################
+#         INPUT TYPES          #
+################################
+input MapSettingsInput {
+	backgroundImageUrl: String
+	spaceColor: String
+	horizontalSpacing: Float
+	verticalSpacing: Float
+	indent: Float
+	paddingX: Float
+	paddingY: Float
+	spaceRadius: Float
+}
+
+input SpaceGroupInput {
+	id: ID
+	name: String!
+	prefix: String!
+}

@@ -1,9 +1,8 @@
 import { NewConnection } from '../models/connection';
-import { LightLevel } from '../models/light-level';
 import { SDSpace } from '../models/map';
 import { MapSettings } from '../models/map-settings';
 import { MousePos } from '../models/mouse-pos';
-import { Space, SpaceType, getSpaceTypeDetails } from '../models/space';
+import { Space } from '../models/space';
 import { MAP_CONSTANTS } from './constants';
 
 export const setupSpaces = (
@@ -22,8 +21,17 @@ export const setupSpaces = (
 					curSpace - 1,
 					PADDING_X + j * SPACER_X + (i % 2 === 0 ? 0 : INDENT),
 					PADDING_Y + i * SPACER_Y,
-					SpaceType.BASIC,
-					LightLevel.DIM,
+					{
+						id: 'aea9112e-f85e-4b61-8e3f-c42525558eb8',
+						description: 'General movement space',
+						name: 'Movement',
+						color: '#FFFFFF',
+					},
+					{
+						id: '509838ac-8c4a-4dbd-a832-aefc6c97d929',
+						name: 'Dim',
+						movementPoints: 1,
+					},
 					curSpace,
 					i + 1,
 					j + 1,
@@ -31,7 +39,7 @@ export const setupSpaces = (
 				);
 				objects.push(space);
 				curSpace++;
-				spaceMap.set(space.id, space);
+				spaceMap.set(space.number, space);
 			}
 		}
 		setupConnections(spaceMap);
@@ -60,8 +68,8 @@ export const setupSpaces = (
 			);
 
 			objects.push(space);
-			spaceMap.set(space.id, space);
-			connectionMap.set(loadedSpace.id, loadedSpace.connections);
+			spaceMap.set(space.number, space);
+			connectionMap.set(loadedSpace.number, loadedSpace.connections);
 		}
 		setupConnections(spaceMap, objects, connectionMap);
 	}
@@ -85,9 +93,7 @@ export const calculateAllPaths = (fromSpace: Space) => {
 						if (!visitedMap.has(conSpace.id))
 							visitList.push({
 								space: conSpace,
-								distance:
-									curDistance +
-									(conSpace.lightLevel === LightLevel.PITCH_BLACK ? 2 : 1),
+								distance: curDistance + conSpace.lightLevel.movementPoints,
 							});
 					}
 				}
@@ -113,7 +119,11 @@ const setupConnections = (
 	connectionMap?: Map<number, number[]>
 ) => {
 	const { ROWS, COLS } = MAP_CONSTANTS;
-	if (!existingSpaces || existingSpaces.length === 0) {
+	if (
+		!existingSpaces ||
+		existingSpaces.length === 0 ||
+		connectionMap?.size === 0
+	) {
 		for (let space of spaceMap.values()) {
 			var topLeftMod = -COLS;
 			var topRightMod = -COLS + 1;
@@ -127,7 +137,7 @@ const setupConnections = (
 					space.connections.push(spaceMap.get(space.id + topLeftMod - offset)!);
 				if (space.row % 2 == 1 || space.col != COLS)
 					space.connections.push(
-						spaceMap.get(space.id + topRightMod - offset)!
+						spaceMap.get(space.number + topRightMod - offset)!
 					);
 			}
 
@@ -135,30 +145,30 @@ const setupConnections = (
 			if (space.row != ROWS) {
 				if (space.row % 2 == 0 || space.col != 1)
 					space.connections.push(
-						spaceMap.get(space.id + bottomLeftMod - offset)!
+						spaceMap.get(space.number + bottomLeftMod - offset)!
 					);
 				if (space.row % 2 == 1 || space.col != COLS)
 					space.connections.push(
-						spaceMap.get(space.id + bottomRightMod - offset)!
+						spaceMap.get(space.number + bottomRightMod - offset)!
 					);
 			}
 
 			// Check left
 			if (space.col != 1) {
-				space.connections.push(spaceMap.get(space.id - 1)!);
+				space.connections.push(spaceMap.get(space.number - 1)!);
 			}
 
 			// Check right
 			if (space.col != COLS) {
-				space.connections.push(spaceMap.get(space.id + 1)!);
+				space.connections.push(spaceMap.get(space.number + 1)!);
 			}
 		}
 	} else {
 		for (const loadedSpace of existingSpaces) {
-			const space = spaceMap.get(loadedSpace.id)!;
-			const connectionIds = connectionMap!.get(space.id)!;
-			for (const spaceId of connectionIds) {
-				space.connections.push(spaceMap.get(spaceId)!);
+			const space = spaceMap.get(loadedSpace.number)!;
+			const connectionIds = connectionMap!.get(space.number)!;
+			for (const spaceNumber of connectionIds) {
+				space.connections.push(spaceMap.get(spaceNumber)!);
 			}
 		}
 	}
@@ -229,7 +239,8 @@ export const drawSpaces = (
 			ctx.lineWidth = space.drawOptions.width;
 			ctx.strokeStyle = space.drawOptions.color;
 			let pattern: number[] = [];
-			if (space.lightLevel === LightLevel.PITCH_BLACK) {
+			// TODO: Check this better
+			if (space.lightLevel.movementPoints === 2) {
 				pattern = [5, 5];
 			}
 			ctx.setLineDash(pattern);
@@ -269,7 +280,7 @@ export const drawSpaces = (
 				space.center.y + 5,
 				spaceText,
 				'bold 10pt Arial',
-				getSpaceTypeDetails(space.type).fontColor
+				space.type.color
 			);
 
 			ctx.lineWidth = 1;
@@ -340,7 +351,7 @@ export const drawSpaces = (
 			space.center.y + 5,
 			spaceText,
 			'bold 10pt Arial',
-			getSpaceTypeDetails(space.type).fontColor
+			space.type.color
 		);
 		for (let connection of space.connections) {
 			var dX = connection.center.x - space.center.x;

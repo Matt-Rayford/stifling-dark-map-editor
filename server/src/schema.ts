@@ -1,6 +1,6 @@
-const { gql } = require('apollo-server');
+import { gql } from 'apollo-server';
 
-const typeDefs = gql`
+export const typeDefs = gql`
 	type Query {
 		maps: [Map]
 		map(id: ID!): Map
@@ -86,5 +86,3 @@ const typeDefs = gql`
 		title: String
 	}
 `;
-
-module.exports = typeDefs;

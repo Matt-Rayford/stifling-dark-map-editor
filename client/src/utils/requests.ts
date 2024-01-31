@@ -23,7 +23,7 @@ export async function updateMap(
 	settings: MapSettings
 ): Promise<SDMap> {
 	const mutation = `
-    mutation UpdateMap($id: ID, $spaceData: Object, $settings: Object) {
+    mutation UpdateMap($id: ID, $spaceData: Object, $settings: MapSettingsInput) {
       map: updateMap(mapId: $id, spaceData: $spaceData, settings: $settings) {
         id
         title
@@ -40,8 +40,15 @@ export async function updateMap(
         spaces {
           id
           number
-          type
-          lightLevel
+          type {
+						id
+						color
+					}
+          lightLevel {
+						id
+						name
+						movementPoints
+					}
           connections
 					isDeleted
 					group
@@ -59,10 +66,10 @@ export async function updateMap(
 
 export async function updateMapSettings(
 	id: string,
-	settings: any
+	settings: MapSettings
 ): Promise<MapSettings> {
 	const mutation = `
-    mutation UpdateMapSettings($id: ID, $settings: Object) {
+    mutation UpdateMapSettings($id: ID, $settings: MapSettingsInput) {
       map: updateMapSettings(mapId: $id, settings: $settings) {
 				settings {
 					backgroundImageUrl
@@ -100,8 +107,15 @@ export async function loadMap(id: string): Promise<SDMap> {
 				spaces {
           id
           number
-          type
-          lightLevel
+          type {
+						id
+						color
+					}
+          lightLevel {
+						id
+						name
+						movementPoints
+					}
           row
           col
           connections
@@ -138,7 +152,7 @@ export async function updateMapSpaceGroup(
 	group: any
 ): Promise<SpaceGroup> {
 	const query = `
-    mutation UpdateMapSpaceGroup($mapId: ID!, $group: Object) {
+    mutation UpdateMapSpaceGroup($mapId: ID!, $group: SpaceGroupInput) {
 			updatedGroup: updateMapSpaceGroup(mapId: $mapId, group: $group) {
 				id
 				name
@@ -158,7 +172,7 @@ export async function addMapSpaceGroup(
 	group: any
 ): Promise<SpaceGroup> {
 	const query = `
-    mutation AddMapSpaceGroup($mapId: ID!, $group: Object) {
+    mutation AddMapSpaceGroup($mapId: ID!, $group: SpaceGroupInput) {
 			newGroup: addMapSpaceGroup(mapId: $mapId, group: $group) {
 				id
 				name
@@ -199,6 +213,36 @@ export async function uploadMapImage(mapId: String, imageUrl: String) {
 		mapId,
 		imageUrl,
 	});
+}
+
+export async function getLightLevels() {
+	const query = `
+		query LightLevels {
+			lightLevels {
+				id
+				name
+				movementPoints
+			}
+		}
+	`;
+	const { lightLevels } = await graphqlRequest(query);
+	return lightLevels;
+}
+
+export async function getSpaceTypes() {
+	const query = `
+		query SpaceTypes {
+			spaceTypes {
+				id
+				color
+				iconUrl
+				description
+				name
+			}
+		}
+	`;
+	const { spaceTypes } = await graphqlRequest(query);
+	return spaceTypes;
 }
 
 async function graphqlRequest(query: any, variables: any = {}) {
