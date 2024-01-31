@@ -11,6 +11,7 @@ type Mutation {
 	addMapSpaceGroup(mapId: ID, group: SpaceGroupInput): SpaceGroup
 	createMap(title: String): Map
 	deleteMapSpaceGroup(mapId: ID, groupId: ID): Boolean
+	deleteSpace(spaceId: ID): Boolean
 	renameMap(mapId: ID!, mapName: String!): String
 	updateMap(mapId: ID, spaceData: Object, settings: MapSettingsInput): Map
 	updateMapSettings(mapId: ID, settings: MapSettingsInput): Map

@@ -20,6 +20,23 @@ export const getMapSpaces = async (mapId: string): Promise<DBSpace[]> => {
 		});
 };
 
+export const deleteSpace = async (spaceId: string): Promise<boolean> => {
+	const query = 'DELETE FROM sd_map_space WHERE id=$1';
+
+	return pool
+		.query({
+			text: query,
+			values: [spaceId],
+		})
+		.then(() => {
+			return true;
+		})
+		.catch((e) => {
+			console.error(`ERROR - deleteSpace(${spaceId}): `, e);
+			throw new Error('Error deleting map space');
+		});
+};
+
 export const Space = {
 	col: (space: DBSpace) => space.col_num,
 	group: (space: DBSpace) => space.zone_id,
