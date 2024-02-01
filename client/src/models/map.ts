@@ -8,7 +8,7 @@ export interface SDSpace {
 	displayNumber: number;
 	type: SpaceType;
 	lightLevel: LightLevel;
-	group: number;
+	group: SpaceGroup;
 	row: number;
 	col: number;
 	connections: number[];

@@ -16,6 +16,7 @@ type Mutation {
 	deleteSpace(mapId: ID!, spaceId: ID!): Boolean
 	renameMap(mapId: ID!, mapName: String!): String
 	updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
+	updateSpace(space: SpaceInput!): Space
 	updateMapSpaceGroup(mapId: ID, group: SpaceGroupInput): SpaceGroup
 	uploadMapImage(mapId: ID!, imageUrl: String!): String
 }
@@ -72,7 +73,7 @@ type Space {
 	row: Int!
 	col: Int!
 	isDeleted: Boolean
-	group: Int
+	group: SpaceGroup
 }
 
 type SpaceSetting {
@@ -99,6 +100,15 @@ input MapSettingsInput {
 	paddingX: Float
 	paddingY: Float
 	spaceRadius: Float
+}
+
+input SpaceInput {
+	id: ID!
+	isDeleted: Boolean
+	groupId: ID
+	lightLevelId: ID
+	spaceGroupId: ID
+	connections: [Int]
 }
 
 input SpaceGroupInput {

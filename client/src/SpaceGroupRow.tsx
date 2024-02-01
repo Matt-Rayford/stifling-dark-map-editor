@@ -4,11 +4,10 @@ import { deleteMapSpaceGroup, updateMapSpaceGroup } from './utils/requests';
 interface Props {
 	mapId: string;
 	group: SpaceGroup;
-	settings: any;
-	onDelete: (id: number) => void;
+	onDelete: (id: string) => void;
 }
 
-const SpaceGroupRow = ({ mapId, group, onDelete, settings }: Props) => {
+const SpaceGroupRow = ({ mapId, group, onDelete }: Props) => {
 	const [name, setName] = useState(group.name);
 	const [prefix, setPrefix] = useState(group.prefix);
 	const [origState, setOrigState] = useState(group);
@@ -20,15 +19,6 @@ const SpaceGroupRow = ({ mapId, group, onDelete, settings }: Props) => {
 				name,
 				prefix,
 			}).then((updatedGroup) => {
-				if (settings.has('spaceGroups')) {
-					const spaceGroupMap = settings.get('spaceGroups');
-					const group = spaceGroupMap.get(updatedGroup.id);
-					if (group) {
-						group.name = updatedGroup.name;
-						group.prefix = updatedGroup.prefix;
-						spaceGroupMap.set(group.id, group);
-					}
-				}
 				setOrigState(updatedGroup);
 			});
 		}
@@ -38,10 +28,6 @@ const SpaceGroupRow = ({ mapId, group, onDelete, settings }: Props) => {
 		if (mapId) {
 			deleteMapSpaceGroup(mapId, group.id).then((success) => {
 				if (success) {
-					if (settings.has('spaceGroups')) {
-						const spaceGroupMap = settings.get('spaceGroups');
-						spaceGroupMap.delete(group.id);
-					}
 					onDelete(group.id);
 				} else {
 					//TODO: Error logic
@@ -73,10 +59,7 @@ const SpaceGroupRow = ({ mapId, group, onDelete, settings }: Props) => {
 					<button
 						type='button'
 						className='btn btn-outline-primary'
-						disabled={
-							name === origState.name &&
-							prefix === origState.prefix
-						}
+						disabled={name === origState.name && prefix === origState.prefix}
 						onClick={() => updateGroup()}
 					>
 						Update

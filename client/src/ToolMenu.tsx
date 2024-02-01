@@ -5,14 +5,14 @@ import SpaceGroupSettings from './SpaceGroupSettings';
 import SpaceSettings from './SpaceSettings';
 import { renumberSpaces, updateSpaceColor } from './utils/canvas';
 import { Space } from './models/space';
+import { SDMap } from './models/map';
 
 let isDragging = false;
 const mousePos = { x: 0, y: 0 };
 
 interface Props {
-	map: any;
+	map: SDMap;
 	spaceMap: Map<number, Space>;
-	settings: any;
 	selectedObject?: Space;
 	onUpdateBackgroundImage: (imageUrl: string) => void;
 	onGenerateDistances: (distanceMap: Map<number, number>) => void;
@@ -22,13 +22,12 @@ interface Props {
 const ToolMenu = ({
 	map,
 	spaceMap,
-	settings,
 	onUpdateBackgroundImage,
 	selectedObject,
 	onGenerateDistances,
 	onDisableDistances,
 }: Props) => {
-	const [spaceGroups, setSpaceGroups] = useState([]);
+	const [spaceGroups, setSpaceGroups] = useState(map.spaceGroups);
 
 	useEffect(() => {
 		const optionsBanner = document.getElementById('options-banner')!;
@@ -72,29 +71,19 @@ const ToolMenu = ({
 		}
 	}, [map]);
 
-	const updateMapSettings = (settingName: string, value: any) => {
-		map.settings[settingName] = value;
-		if (settingName === 'spaceColor') {
-			updateSpaceColor(spaceMap, value);
-		}
-	};
-
 	const updateGroup = () => {
-		renumberSpaces(spaceMap, settings);
+		renumberSpaces(spaceMap, map.spaceGroups);
 	};
 
 	const getSpaceLabel = (space: Space) => {
-		const spaceGroupMap = settings.get('spaceGroups');
 		if (space.group) {
-			return `Space ${spaceGroupMap.get(space.group).prefix}-${
-				space.displayNumber
-			}`;
+			return `Space ${space.group.prefix}-${space.displayNumber}`;
 		}
 		return `Space ${space.displayNumber}`;
 	};
 
 	const updateSpaceGroups = () => {
-		setSpaceGroups(Array.from(settings.get('spaceGroups').values()));
+		setSpaceGroups(map.spaceGroups);
 	};
 
 	return (
@@ -137,7 +126,6 @@ const ToolMenu = ({
 						<SpaceGroupSettings
 							mapId={map.id}
 							existingGroups={spaceGroups}
-							settings={settings}
 							onUpdateSpaceGroups={updateSpaceGroups}
 						/>
 					</div>

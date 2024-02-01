@@ -1,4 +1,5 @@
 import { LightLevel } from './light-level';
+import { SpaceGroup } from './space-group';
 
 export interface SpaceTypeDetails {
 	name: string;
@@ -20,11 +21,20 @@ export interface Space {
 	number: number;
 	type: SpaceType;
 	lightLevel: LightLevel;
-	group: number;
+	group: SpaceGroup;
 	row: number;
 	col: number;
 	connections: number[];
 	isDeleted: boolean;
+}
+
+export interface SpaceInput {
+	id: string;
+	isDeleted?: boolean;
+	groupId?: string | null;
+	lightLevelId?: string;
+	typeId?: string;
+	connections?: number[];
 }
 
 export interface DBSpace {

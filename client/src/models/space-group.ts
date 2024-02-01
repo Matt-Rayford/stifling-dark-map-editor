@@ -1,5 +1,5 @@
 interface SpaceGroup {
-	id: number;
+	id: string;
 	name: string;
 	prefix: string;
 }

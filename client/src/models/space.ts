@@ -19,6 +19,15 @@ export interface SpaceType {
 	name: string;
 }
 
+export interface SpaceInput {
+	id: string;
+	isDeleted?: boolean;
+	groupId?: string | null;
+	lightLevelId?: string;
+	typeId?: string;
+	connections?: number[];
+}
+
 export class Space {
 	id: string;
 	center: Point;
@@ -37,7 +46,7 @@ export class Space {
 	selected: boolean;
 	highlighted: boolean;
 	isDeleted: boolean;
-	group?: number;
+	group?: SpaceGroup;
 
 	constructor(
 		id: string,
@@ -52,7 +61,7 @@ export class Space {
 		mapDrawOptions: MapSettings,
 		radius = MAP_CONSTANTS.SPACE_RADIUS,
 		isDeleted = false,
-		group?: number
+		group?: SpaceGroup
 	) {
 		this.id = id;
 		this.center = new Point(x, y);
@@ -86,9 +95,8 @@ export class Space {
 		this.type = spaceType;
 	}
 
-	updateGroup(groupNumber: number | string) {
-		this.group =
-			typeof groupNumber === 'string' ? parseInt(groupNumber) : groupNumber;
+	updateGroup(group: SpaceGroup) {
+		this.group = group;
 	}
 
 	removeGroup() {

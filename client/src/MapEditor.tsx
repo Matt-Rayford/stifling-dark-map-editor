@@ -9,7 +9,6 @@ import {
 	redrawMap,
 	setupSpaces,
 	clearCanvas,
-	setupSettings,
 	renumberSpaces,
 } from './utils/canvas';
 import { connectSpaces, deleteSpace, loadMap } from './utils/requests';
@@ -23,7 +22,6 @@ export const MapEditor = () => {
 	const [map, setMap] = useState<SDMap>();
 	const [spaceMap, setSpaceMap] = useState<Map<number, Space>>();
 	const [timer, setTimer] = useState<NodeJS.Timeout>();
-	const [settings, setSettings] = useState<any>();
 	const [selectedSpace, setSelectedSpace] = useState<Space>();
 	const [canvas, setCanvas] = useState<HTMLCanvasElement>();
 	const [objects, setObjects] = useState<any[]>([]);
@@ -58,7 +56,6 @@ export const MapEditor = () => {
 				hasSpaces ? map.spaces : undefined,
 				map.settings
 			);
-			const settings = setupSettings(map.spaceGroups ? map.spaceGroups : []);
 
 			setObjects(objects);
 
@@ -76,13 +73,11 @@ export const MapEditor = () => {
 					map.settings.spaceColor,
 					mousePos.current ?? { x: 0, y: 0 },
 					newConnection.current,
-					distanceMap.current,
-					settings
+					distanceMap.current
 				);
 			}, 30);
 
 			setTimer(animationTimer);
-			setSettings(settings);
 			setMap(map);
 			setSpaceMap(spaceMap);
 			setCanvas(canvas);
@@ -102,7 +97,7 @@ export const MapEditor = () => {
 						setSelectedSpace(undefined);
 						selectedObject.current = undefined;
 						highlightedObject.current = undefined;
-						renumberSpaces(spaceMap, settings);
+						renumberSpaces(spaceMap, map.spaceGroups);
 						deleteSpace(map.id, obj.id);
 					}
 				}
@@ -275,7 +270,6 @@ export const MapEditor = () => {
 			<ToolMenu
 				map={map}
 				spaceMap={spaceMap!}
-				settings={settings}
 				onUpdateBackgroundImage={(backgroundImageUrl: string) =>
 					drawMap(backgroundImageUrl)
 				}

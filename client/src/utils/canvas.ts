@@ -210,12 +210,10 @@ export const redraw = (
 	baseColor: string,
 	mousePos: MousePos,
 	newConnection?: NewConnection,
-	distanceMap?: Map<number, number>,
-	settings?: any
+	distanceMap?: Map<number, number>
 ) => {
-	const spaceGroupMap = settings?.get('spaceGroups');
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	drawSpaces(ctx, spaceMap, distanceMap, spaceGroupMap);
+	drawSpaces(ctx, spaceMap, distanceMap);
 
 	/*
 	if (selectingPointA) {
@@ -239,8 +237,7 @@ export const redraw = (
 export const drawSpaces = (
 	ctx: CanvasRenderingContext2D,
 	spaceMap: Map<number, Space>,
-	distanceMap?: Map<number, number>,
-	spaceGroupMap?: Map<number, SpaceGroup>
+	distanceMap?: Map<number, number>
 ) => {
 	let highlightedSpaces = [];
 	ctx.moveTo(0, 0);
@@ -281,11 +278,8 @@ export const drawSpaces = (
 			drawCircle(ctx, space.center.x, space.center.y, space.radius);
 
 			let spaceText = `${space.displayNumber}`;
-			if (typeof space.group === 'number' && spaceGroupMap) {
-				const spaceGroup = spaceGroupMap.get(space.group);
-				if (spaceGroup) {
-					spaceText = `${spaceGroup.prefix}-${space.displayNumber}`;
-				}
+			if (space.group) {
+				spaceText = `${space.group.prefix}-${space.displayNumber}`;
 			}
 			drawText(
 				ctx,
@@ -352,11 +346,8 @@ export const drawSpaces = (
 		drawCircle(ctx, space.center.x, space.center.y, space.radius);
 		ctx.strokeStyle = space.drawOptions.color;
 		let spaceText = `${space.displayNumber}`;
-		if (typeof space.group === 'number' && spaceGroupMap) {
-			const spaceGroup = spaceGroupMap.get(space.group);
-			if (spaceGroup) {
-				spaceText = `${spaceGroup.prefix}-${space.displayNumber}`;
-			}
+		if (space.group) {
+			spaceText = `${space.group.prefix}-${space.displayNumber}`;
 		}
 		drawText(
 			ctx,
@@ -511,27 +502,18 @@ export const getMousePos = (
 	};
 };
 
-export const setupSettings = (spaceGroups: SpaceGroup[]) => {
-	const settings = new Map();
-
-	const spaceGroupMap = new Map<number, SpaceGroup>();
-	for (let group of spaceGroups) {
-		spaceGroupMap.set(group.id, group);
-	}
-	settings.set('spaceGroups', spaceGroupMap);
-	return settings;
-};
-
-export const renumberSpaces = (spaceMap: Map<number, Space>, settings: any) => {
-	const spaceGroupMap = settings.get('spaceGroups');
+export const renumberSpaces = (
+	spaceMap: Map<number, Space>,
+	spaceGroups: SpaceGroup[]
+) => {
 	const renumberMap = new Map();
 	renumberMap.set('-', 1);
-	for (let group of spaceGroupMap.values()) {
+	for (const group of spaceGroups) {
 		renumberMap.set(group.id, 1);
 	}
-	for (let space of spaceMap.values()) {
+	for (const space of spaceMap.values()) {
 		if (!space.isDeleted) {
-			let renumberKey = typeof space.group === 'number' ? space.group : '-';
+			const renumberKey = space.group ? space.group.id : '-';
 			const nextNum = renumberMap.get(renumberKey);
 			renumberMap.set(renumberKey, nextNum + 1);
 			space.updateNumber(nextNum);

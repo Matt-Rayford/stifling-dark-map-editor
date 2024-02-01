@@ -5,6 +5,7 @@ import {
 	disconnectSpaces,
 	getLightLevels,
 	getSpaceTypes,
+	updateSpace,
 } from './utils/requests';
 import { LightLevel } from './models/light-level';
 
@@ -30,7 +31,7 @@ const SpaceSettings = ({
 	const [lightLevel, setLightLevel] = useState<LightLevel>();
 	const [spaceTypes, setSpaceTypes] = useState<SpaceType[]>([]);
 	const [spaceType, setSpaceType] = useState<SpaceType>(space.type);
-	const [spaceGroup, setSpaceGroup] = useState<number>(-1);
+	const [spaceGroupId, setSpaceGroupId] = useState<string>('-');
 
 	useEffect(() => {
 		getLightLevels().then((lightLevels: LightLevel[]) => {
@@ -43,29 +44,33 @@ const SpaceSettings = ({
 
 	useEffect(() => {
 		if (space) {
-			setSpaceGroup(space.group ?? -1);
+			setSpaceGroupId(space.group?.id ?? '-');
 			setLightLevel(space.lightLevel);
 			setSpaceConnections(space.connections);
 		}
 	}, [space]);
 
 	const updateLightLevel = (lightLevel: LightLevel) => {
+		updateSpace({ id: space.id, lightLevelId: lightLevel.id });
 		space.updateLightLevel(lightLevel);
 		setLightLevel(lightLevel);
 	};
 
 	const updateSpaceType = (spaceType: SpaceType) => {
+		updateSpace({ id: space.id, typeId: spaceType.id });
 		space.updateType(spaceType);
 		setSpaceType(spaceType);
 	};
 
-	const updateGroup = (spaceGroup?: number) => {
-		if (typeof spaceGroup !== 'number') {
+	const updateGroup = (spaceGroupId?: string) => {
+		if (!spaceGroupId) {
+			updateSpace({ id: space.id, groupId: null });
 			space.removeGroup();
-			setSpaceGroup(-1);
+			setSpaceGroupId('-');
 		} else {
-			space.updateGroup(spaceGroup);
-			setSpaceGroup(spaceGroup);
+			updateSpace({ id: space.id, groupId: spaceGroupId });
+			space.updateGroup(spaceGroups.find((g) => g.id === spaceGroupId)!);
+			setSpaceGroupId(spaceGroupId);
 		}
 		onUpdateGroup();
 	};
@@ -93,11 +98,11 @@ const SpaceSettings = ({
 			return (
 				<select
 					className='form-select'
-					value={spaceGroup}
+					value={spaceGroupId}
 					onChange={(e) =>
 						updateGroup(
 							e.target.value && e.target.value !== '-1'
-								? parseInt(e.target.value)
+								? e.target.value
 								: undefined
 						)
 					}
@@ -197,9 +202,7 @@ const SpaceSettings = ({
 				.sort((a, b) => (a.displayNumber < b.displayNumber ? -1 : 1))
 				.map((connection) => {
 					const connectionLabel = connection.group
-						? `${spaceGroups[connection.group]?.prefix}-${
-								connection.displayNumber
-						  }`
+						? `${connection.group?.prefix}-${connection.displayNumber}`
 						: connection.displayNumber;
 					return (
 						<div key={connection.id} className='input-group'>

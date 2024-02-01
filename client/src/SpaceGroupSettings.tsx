@@ -5,14 +5,12 @@ import { addMapSpaceGroup } from './utils/requests';
 interface Props {
 	mapId: string;
 	existingGroups: SpaceGroup[];
-	settings: any;
 	onUpdateSpaceGroups: () => void;
 }
 
 const SpaceGroupSettings = ({
 	mapId,
 	existingGroups,
-	settings,
 	onUpdateSpaceGroups,
 }: Props) => {
 	const [name, setName] = useState('');
@@ -33,18 +31,13 @@ const SpaceGroupSettings = ({
 		addMapSpaceGroup(mapId, group).then((result) => {
 			const newGroups = [...groups, result];
 			setGroups(newGroups);
-			if (settings.has('spaceGroups')) {
-				const spaceGroupMap = settings.get('spaceGroups');
-				spaceGroupMap.set(result.id, result);
-				onUpdateSpaceGroups();
-			}
 		});
 
 		setName('');
 		setPrefix('');
 	};
 
-	const onDelete = (groupId: number) => {
+	const onDelete = (groupId: string) => {
 		setGroups([...groups.filter((g) => g.id !== groupId)]);
 		onUpdateSpaceGroups();
 	};
@@ -66,7 +59,6 @@ const SpaceGroupSettings = ({
 							key={group.id}
 							mapId={mapId}
 							group={group}
-							settings={settings}
 							onDelete={onDelete}
 						/>
 					))}

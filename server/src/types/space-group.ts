@@ -1,11 +1,12 @@
 export interface SpaceGroup {
-	id: number;
+	id: string;
 	name: string;
 	prefix: string;
 }
 
 export interface DBSpaceGroup {
-	id: number;
+	id: string;
+	map_id: string;
 	name: string;
 	prefix: string;
 }

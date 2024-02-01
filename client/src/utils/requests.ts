@@ -1,5 +1,6 @@
 import { SDMap } from '../models/map';
 import { MapSettings } from '../models/map-settings';
+import { SpaceInput } from '../models/space';
 
 const endpointURL =
 	process.env.REACT_APP_GRAPHQL_ENDPOINT_URL ?? 'http://localhost:9000/graphql';
@@ -52,7 +53,11 @@ export async function updateMap(
 					}
           connections
 					isDeleted
-					group
+					group {
+						id
+						name
+						prefix
+					}
 				}
       }
     }
@@ -122,7 +127,11 @@ export async function loadMap(id: string): Promise<SDMap> {
           col
           connections
 					isDeleted
-					group
+					group {
+						id
+						name
+						prefix
+					}
 				}
 				spaceGroups {
 					id
@@ -174,7 +183,7 @@ export async function addMapSpaceGroup(
 	group: any
 ): Promise<SpaceGroup> {
 	const query = `
-    mutation AddMapSpaceGroup($mapId: ID!, $group: SpaceGroupInput) {
+    mutation AddMapSpaceGroup($mapId: ID!, $group: SpaceGroupInput!) {
 			newGroup: addMapSpaceGroup(mapId: $mapId, group: $group) {
 				id
 				name
@@ -191,7 +200,7 @@ export async function addMapSpaceGroup(
 
 export async function deleteMapSpaceGroup(
 	mapId: string,
-	groupId: number
+	groupId: string
 ): Promise<boolean> {
 	const query = `
     mutation DeleteMapSpaceGroup($mapId: ID!, $groupId: ID!) {
@@ -281,6 +290,21 @@ export async function disconnectSpaces(space1Id: string, space2Id: string) {
 		space2Id,
 	});
 	return disconnectSpaces;
+}
+
+export async function updateSpace(space: SpaceInput) {
+	const query = `
+		mutation UpdateSpace($space: SpaceInput!) {
+			updateSpace(space: $space) {
+				id
+			}
+		}
+	`;
+
+	const { updateSpace } = await graphqlRequest(query, {
+		space,
+	});
+	return updateSpace;
 }
 
 async function graphqlRequest(query: any, variables: any = {}) {

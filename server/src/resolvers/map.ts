@@ -1,9 +1,11 @@
 import { pool } from '..';
 import { DBMap } from '../types/map';
 import { MapSettings } from '../types/map-settings';
-import { SpaceGroup } from '../types/space-group';
+import { DBSpaceGroup, SpaceGroup } from '../types/space-group';
+import { cachedSpaceGroups } from '../utils/cache';
 import { getMapSettings } from './map-settings';
 import { getMapSpaces } from './space';
+import { getMapSpaceGroups } from './space-group';
 
 export const getMap = async (mapId: string): Promise<DBMap> => {
 	const query = 'SELECT * FROM sd_map WHERE id=$1';
@@ -144,8 +146,9 @@ export const addMapSpaceGroup = async (mapId: string, group: SpaceGroup) => {
 			values: [mapId, group.name, group.prefix],
 		})
 		.then((r) => {
-			const data = r.rows?.[0];
-			return data;
+			const spaceGroup = r.rows?.[0] as DBSpaceGroup;
+			cachedSpaceGroups.get(mapId)?.push(spaceGroup);
+			return spaceGroup;
 		})
 		.catch((e) => {
 			console.error(`ERROR - addMapSpaceGroup(${mapId}, ${group.name}): `, e);
@@ -163,6 +166,13 @@ export const deleteMapSpaceGroup = async (mapId: string, groupId: string) => {
 			values: [groupId],
 		})
 		.then(() => {
+			const spaceGroups = cachedSpaceGroups.get(mapId);
+			if (spaceGroups) {
+				spaceGroups.splice(
+					spaceGroups.findIndex((g) => g.id === groupId),
+					1
+				);
+			}
 			return true;
 		})
 		.catch((e) => {
@@ -199,4 +209,5 @@ export const Map = {
 		const spaces = await getMapSpaces(map.id);
 		return spaces;
 	},
+	spaceGroups: async (map: DBMap) => getMapSpaceGroups(map.id),
 };

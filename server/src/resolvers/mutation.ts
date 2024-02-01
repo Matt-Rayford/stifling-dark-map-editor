@@ -1,4 +1,5 @@
 import { MapSettings } from '../types/map-settings';
+import { SpaceInput } from '../types/space';
 import { SpaceGroup } from '../types/space-group';
 import {
 	addMapSpaceGroup,
@@ -9,7 +10,12 @@ import {
 	updateMapSettings,
 	updateMapSpaceGroup,
 } from './map';
-import { connectSpaces, deleteSpace, disconnectSpaces } from './space';
+import {
+	connectSpaces,
+	deleteSpace,
+	disconnectSpaces,
+	updateSpace,
+} from './space';
 
 export const Mutation = {
 	addMapSpaceGroup: async (
@@ -45,4 +51,6 @@ export const Mutation = {
 		root,
 		{ mapId, imageUrl }: { mapId: string; imageUrl: string }
 	) => updateMapImage(mapId, imageUrl),
+	updateSpace: async (root, { space }: { space: SpaceInput }) =>
+		updateSpace(space),
 };
