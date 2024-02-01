@@ -506,7 +506,7 @@ export const renumberSpaces = (
 	spaceMap: Map<number, Space>,
 	spaceGroups: SpaceGroup[]
 ) => {
-	const renumberMap = new Map();
+	const renumberMap = new Map<string, number>();
 	renumberMap.set('-', 1);
 	for (const group of spaceGroups) {
 		renumberMap.set(group.id, 1);
@@ -514,7 +514,7 @@ export const renumberSpaces = (
 	for (const space of spaceMap.values()) {
 		if (!space.isDeleted) {
 			const renumberKey = space.group ? space.group.id : '-';
-			const nextNum = renumberMap.get(renumberKey);
+			const nextNum = renumberMap.get(renumberKey) ?? 1;
 			renumberMap.set(renumberKey, nextNum + 1);
 			space.updateNumber(nextNum);
 		} else {

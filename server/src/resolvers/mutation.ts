@@ -8,7 +8,6 @@ import {
 	renameMap,
 	updateMapImage,
 	updateMapSettings,
-	updateMapSpaceGroup,
 } from './map';
 import {
 	connectSpaces,
@@ -16,6 +15,7 @@ import {
 	disconnectSpaces,
 	updateSpace,
 } from './space';
+import { updateSpaceGroup } from './space-group';
 
 export const Mutation = {
 	addMapSpaceGroup: async (
@@ -46,7 +46,7 @@ export const Mutation = {
 	updateMapSpaceGroup: async (
 		root,
 		{ mapId, group }: { mapId: string; group: SpaceGroup }
-	) => updateMapSpaceGroup(mapId, group),
+	) => updateSpaceGroup(mapId, group),
 	uploadMapImage: async (
 		root,
 		{ mapId, imageUrl }: { mapId: string; imageUrl: string }

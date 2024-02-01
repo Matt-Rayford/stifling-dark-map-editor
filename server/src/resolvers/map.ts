@@ -181,27 +181,6 @@ export const deleteMapSpaceGroup = async (mapId: string, groupId: string) => {
 		});
 };
 
-export const updateMapSpaceGroup = async (mapId: string, group: SpaceGroup) => {
-	getMap(mapId);
-
-	const query =
-		'UPDATE sd_map_space_group SET name=$1, prefix=$2 WHERE id=$3 RETURNING *';
-
-	return pool
-		.query({
-			text: query,
-			values: [group.id],
-		})
-		.then((r) => {
-			const data = r.rows?.[0];
-			return data;
-		})
-		.catch((e) => {
-			console.error(`ERROR - updateMapSpaceGroup(${mapId}, ${group.id}): `, e);
-			throw new Error('Error updating space group');
-		});
-};
-
 export const Map = {
 	title: (map: DBMap) => map.name,
 	settings: (map: DBMap) => getMapSettings(map.id),

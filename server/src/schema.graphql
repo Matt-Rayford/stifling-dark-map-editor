@@ -17,7 +17,7 @@ type Mutation {
 	renameMap(mapId: ID!, mapName: String!): String
 	updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
 	updateSpace(space: SpaceInput!): Space
-	updateMapSpaceGroup(mapId: ID, group: SpaceGroupInput): SpaceGroup
+	updateMapSpaceGroup(mapId: ID!, group: SpaceGroupInput!): SpaceGroup
 	uploadMapImage(mapId: ID!, imageUrl: String!): String
 }
 

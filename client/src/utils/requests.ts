@@ -163,7 +163,7 @@ export async function updateMapSpaceGroup(
 	group: any
 ): Promise<SpaceGroup> {
 	const query = `
-    mutation UpdateMapSpaceGroup($mapId: ID!, $group: SpaceGroupInput) {
+    mutation UpdateMapSpaceGroup($mapId: ID!, $group: SpaceGroupInput!) {
 			updatedGroup: updateMapSpaceGroup(mapId: $mapId, group: $group) {
 				id
 				name

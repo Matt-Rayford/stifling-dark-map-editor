@@ -59,6 +59,8 @@ export const MapEditor = () => {
 
 			setObjects(objects);
 
+			renumberSpaces(spaceMap, map.spaceGroups);
+
 			//@ts-ignore
 			const canvas: HTMLCanvasElement =
 				document.getElementById('canvasEditor')!;
