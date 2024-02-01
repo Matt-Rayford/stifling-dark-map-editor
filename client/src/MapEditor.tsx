@@ -17,6 +17,7 @@ import { Space } from './models/space';
 import { MousePos } from './models/mouse-pos';
 import { NewConnection } from './models/connection';
 import { SDMap } from './models/map';
+import { loadImage, toDataURL } from './utils/image';
 
 export const MapEditor = () => {
 	const [map, setMap] = useState<SDMap>();
@@ -245,33 +246,20 @@ export const MapEditor = () => {
 		);
 	};
 
-	const loadImage = (imageUrl: string, width: number, height: number) =>
-		new Promise((resolve, reject) => {
-			let image: HTMLImageElement;
-			if (imageUrl) {
-				image = new Image(width, height);
-				image.src = `${process.env.PUBLIC_URL}${imageUrl}`;
-				image.onload = () => {
-					resolve(image);
-				};
-				image.onerror = () => {
-					reject(`ERROR: Could not find image at ${imageUrl}`);
-				};
-			}
-		});
-
 	const drawMap = (backgroundImageUrl: string) => {
 		//@ts-ignore
 		const canvas: HTMLCanvasElement = document.getElementById('mapLayer')!;
 		const ctx = canvas.getContext('2d')!;
-		loadImage(backgroundImageUrl, canvas.width, canvas.height)
-			.then((image) => {
-				redrawMap(canvas, ctx, image as CanvasImageSource);
-			})
-			.catch((err) => {
-				console.log(err);
-				clearCanvas(canvas, ctx);
-			});
+		toDataURL(backgroundImageUrl, (b64Image) => {
+			loadImage(String(b64Image), canvas.width, canvas.height)
+				.then((image) => {
+					redrawMap(canvas, ctx, image as CanvasImageSource);
+				})
+				.catch((err) => {
+					console.log(err);
+					clearCanvas(canvas, ctx);
+				});
+		});
 	};
 
 	const updateDistances = (newDistances: Map<number, number>) => {
@@ -309,7 +297,7 @@ export const MapEditor = () => {
 						border: '2px solid #000',
 						zIndex: '0',
 					}}
-				></canvas>
+				/>
 				<canvas
 					id='canvasEditor'
 					width='1310'
@@ -320,7 +308,7 @@ export const MapEditor = () => {
 						border: '2px solid #000',
 						zIndex: '10',
 					}}
-				></canvas>
+				/>
 			</div>
 		</div>
 	) : (

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import AWS from 'aws-sdk';
+import mergeImages from 'merge-images';
 import { updateSpaceColor } from './utils/canvas';
 import { updateMapSettings, uploadMapImage } from './utils/requests';
 import { MapSettings } from './models/map-settings';
@@ -7,6 +8,7 @@ import { MapSettings } from './models/map-settings';
 import { Space } from './models/space';
 
 interface Props {
+	name: string;
 	mapId: string;
 	spaceMap: Map<number, Space>;
 	mapSettings: MapSettings;
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const Settings = ({
+	name,
 	mapId,
 	spaceMap,
 	mapSettings,
@@ -31,6 +34,23 @@ const Settings = ({
 	const onReset = () => {
 		setCurMapSettings({ ...origSettings });
 		handleColorUpdate(origSettings.spaceColor);
+	};
+
+	const onDownload = () => {
+		const backgroundCanvas = document.getElementById('mapLayer');
+		// @ts-expect-error toDataURL exists on the canvas
+		const backgroundImage = backgroundCanvas.toDataURL();
+
+		const canvas = document.getElementById('canvasEditor');
+		// @ts-expect-error toDataURL exists on the canvas
+		const canvasImage = canvas.toDataURL();
+
+		mergeImages([backgroundImage, canvasImage]).then((b64) => {
+			const downloadLink = document.createElement('a');
+			downloadLink.download = `${name ?? 'map'}.png`;
+			downloadLink.href = b64;
+			downloadLink.click();
+		});
 	};
 
 	const handleImageUpdate = async (file?: File) => {
@@ -144,7 +164,7 @@ const Settings = ({
 					<button
 						type='button'
 						className='btn btn-primary w-100'
-						onClick={() => onSave()}
+						onClick={onSave}
 					>
 						Save
 					</button>
@@ -153,9 +173,20 @@ const Settings = ({
 					<button
 						type='button'
 						className='btn btn-danger w-100'
-						onClick={() => onReset()}
+						onClick={onReset}
 					>
 						Reset
+					</button>
+				</div>
+			</div>
+			<div className='row' style={{ marginTop: '8px' }}>
+				<div className='col-12'>
+					<button
+						type='button'
+						className='btn btn-secondary w-100'
+						onClick={onDownload}
+					>
+						Download
 					</button>
 				</div>
 			</div>

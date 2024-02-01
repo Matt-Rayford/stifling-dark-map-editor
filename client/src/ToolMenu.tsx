@@ -144,6 +144,7 @@ const ToolMenu = ({
 				</Tab>
 				<Tab eventKey='map' title='Map'>
 					<Settings
+						name={map.title}
 						mapId={map.id}
 						mapSettings={map.settings}
 						spaceMap={spaceMap}
