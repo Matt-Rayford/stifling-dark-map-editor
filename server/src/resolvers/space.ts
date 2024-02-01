@@ -175,8 +175,9 @@ export const Space = {
 			await initSpaceGroupsCache();
 		}
 		return (
-			cachedSpaceGroups.get(space.map_id).find((g) => g.id === space.zone_id) ??
-			null
+			cachedSpaceGroups
+				.get(space.map_id)
+				?.find((g) => g.id === space.zone_id) ?? null
 		);
 	},
 	isDeleted: (space: DBSpace) => space.is_deleted,

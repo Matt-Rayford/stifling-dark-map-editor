@@ -56,10 +56,12 @@ const SpaceSettings = ({
 		setLightLevel(lightLevel);
 	};
 
-	const updateSpaceType = (spaceType: SpaceType) => {
-		updateSpace({ id: space.id, typeId: spaceType.id });
-		space.updateType(spaceType);
-		setSpaceType(spaceType);
+	const updateSpaceType = (spaceType?: SpaceType) => {
+		if (spaceType) {
+			updateSpace({ id: space.id, typeId: spaceType.id });
+			space.updateType(spaceType);
+			setSpaceType(spaceType);
+		}
 	};
 
 	const updateGroup = (spaceGroupId?: string) => {
@@ -128,7 +130,7 @@ const SpaceSettings = ({
 					className='form-select'
 					onChange={(e) =>
 						updateSpaceType(
-							spaceTypes.find((spaceType) => spaceType.id === e.target.value)!
+							spaceTypes.find((spaceType) => spaceType.id === e.target.value)
 						)
 					}
 				>
