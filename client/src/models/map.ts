@@ -1,6 +1,6 @@
+import { SpaceType } from '../graphql/__generated__/graphql';
 import { LightLevel } from './light-level';
 import { MapSettings } from './map-settings';
-import { SpaceType } from './space';
 
 export interface SDSpace {
 	id: string;

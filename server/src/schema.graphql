@@ -1,6 +1,6 @@
 type Query {
 	lightLevels: [LightLevel]
-	maps: [Map]
+	maps: [Map!]!
 	map(id: ID!): Map
 	mapSpaceGroups(mapId: ID!): [SpaceGroup]
 	mapSpaces(mapId: ID!): [Space]
@@ -24,20 +24,20 @@ type Mutation {
 type Map {
 	id: ID!
 	title: String!
-	settings: MapSettings
-	spaces: [Space]!
-	spaceGroups: [SpaceGroup]
+	settings: MapSettings!
+	spaces: [Space!]!
+	spaceGroups: [SpaceGroup!]
 }
 
 type MapSettings {
 	backgroundImageUrl: String
-	spaceColor: String
-	horizontalSpacing: Float
-	verticalSpacing: Float
-	indent: Float
-	paddingX: Float
-	paddingY: Float
-	spaceRadius: Float
+	spaceColor: String!
+	horizontalSpacing: Float!
+	verticalSpacing: Float!
+	indent: Float!
+	paddingX: Float!
+	paddingY: Float!
+	spaceRadius: Float!
 }
 
 scalar Object
@@ -69,7 +69,7 @@ type Space {
 	displayNumber: Int!
 	type: SpaceType!
 	lightLevel: LightLevel!
-	connections: [Int]
+	connections: [Int!]!
 	row: Int!
 	col: Int!
 	isDeleted: Boolean

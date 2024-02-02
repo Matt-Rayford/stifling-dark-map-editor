@@ -1,12 +1,14 @@
+import {
+	Space as DBSpace,
+	MapSettings,
+} from '../graphql/__generated__/graphql';
 import { NewConnection } from '../models/connection';
-import { SDSpace } from '../models/map';
-import { MapSettings } from '../models/map-settings';
 import { MousePos } from '../models/mouse-pos';
 import { Space } from '../models/space';
 import { MAP_CONSTANTS } from './constants';
 
 export const setupSpaces = (
-	existingSpaces: SDSpace[] = [],
+	existingSpaces: DBSpace[] = [],
 	mapSettings: MapSettings
 ) => {
 	const objects: Space[] = [];
@@ -74,8 +76,8 @@ export const setupSpaces = (
 				col,
 				mapSettings,
 				mapSettings.spaceRadius,
-				isDeleted,
-				group
+				isDeleted ?? false,
+				group ?? undefined
 			);
 
 			objects.push(space);

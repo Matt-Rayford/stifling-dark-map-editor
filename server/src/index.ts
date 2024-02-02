@@ -8,11 +8,17 @@ import bodyParser from 'body-parser';
 import { Pool } from 'pg';
 import http from 'http';
 import dotenv from 'dotenv';
+import { auth } from 'express-oauth2-jwt-bearer';
 
 import { resolvers } from './resolvers';
 import { initDBCache } from './utils/cache';
 
 dotenv.config();
+
+const checkJwt = auth({
+	audience: process.env.OAUTH_AUDIENCE_URL,
+	issuerBaseURL: `https://www.thestiflingdark.com/`,
+});
 
 const connectionString = process.env.DB_CONNECTION_URL;
 export const pool = new Pool({
@@ -22,6 +28,7 @@ export const pool = new Pool({
 const port = process.env.PORT ? parseInt(process.env.PORT) : 9000;
 
 const app = express();
+
 const httpServer = http.createServer(app);
 
 const server = new ApolloServer({
@@ -39,6 +46,7 @@ const startApolloServer = async () => {
 	await server.start();
 	app.use(
 		cors<cors.CorsRequest>({
+			credentials: true,
 			origin: [
 				'http://localhost:3000',
 				'https://thestiflingdark.com',
@@ -47,7 +55,9 @@ const startApolloServer = async () => {
 			],
 		}),
 		express.json(),
-		expressMiddleware(server),
+		expressMiddleware(server, {
+			context: async ({ req }) => ({ token: req.headers }),
+		}),
 		bodyParser.json()
 		/*expressJwt({
 		secret: jwtSecret,
@@ -56,7 +66,7 @@ const startApolloServer = async () => {
 	);
 };
 
-startExpressServer();
 startApolloServer().then(() => {
 	initDBCache();
+	startExpressServer();
 });

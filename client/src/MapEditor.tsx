@@ -11,15 +11,17 @@ import {
 	clearCanvas,
 	renumberSpaces,
 } from './utils/canvas';
-import { connectSpaces, deleteSpace, loadMap } from './utils/requests';
+import { connectSpaces, deleteSpace } from './utils/requests';
 import { Space } from './models/space';
 import { MousePos } from './models/mouse-pos';
 import { NewConnection } from './models/connection';
-import { SDMap } from './models/map';
+//import { SDMap } from './models/map';
 import { loadImage, toDataURL } from './utils/image';
+import { useQuery } from '@apollo/client';
+import { LoadMapDocument, LoadMapQuery } from './graphql/__generated__/graphql';
 
 export const MapEditor = () => {
-	const [map, setMap] = useState<SDMap>();
+	const [map, setMap] = useState<LoadMapQuery['map']>();
 	const [spaceMap, setSpaceMap] = useState<Map<number, Space>>();
 	const [timer, setTimer] = useState<NodeJS.Timeout>();
 	const [selectedSpace, setSelectedSpace] = useState<Space>();
@@ -35,6 +37,11 @@ export const MapEditor = () => {
 
 	const { mapId } = useParams();
 
+	const { data } = useQuery(LoadMapDocument, {
+		variables: { id: mapId! },
+		skip: !mapId,
+	});
+
 	useEffect(() => {
 		return () => {
 			clearInterval(timer);
@@ -42,31 +49,29 @@ export const MapEditor = () => {
 	}, [timer]);
 
 	useEffect(() => {
-		if (mapId) {
-			loadMap(mapId).then((sdMap) => {
-				setMap(sdMap);
-			});
+		if (data?.map) {
+			setMap(data.map);
 		}
-	}, [mapId]);
+	}, [data]);
 
 	useEffect(() => {
 		if (map) {
-			const hasSpaces = map.spaces && map.spaces.length > 0;
-			const { spaceMap, objects } = setupSpaces(
-				hasSpaces ? map.spaces : undefined,
-				map.settings
-			);
+			const { spaceMap, objects } = setupSpaces(map.spaces, map.settings);
 
 			setObjects(objects);
 
-			renumberSpaces(spaceMap, map.spaceGroups);
+			if (map.spaceGroups) {
+				renumberSpaces(spaceMap, map.spaceGroups);
+			}
 
 			//@ts-ignore
 			const canvas: HTMLCanvasElement =
 				document.getElementById('canvasEditor')!;
 			const ctx = canvas.getContext('2d')!;
 
-			drawMap(map.settings.backgroundImageUrl);
+			if (map.settings.backgroundImageUrl) {
+				drawMap(map.settings.backgroundImageUrl);
+			}
 			const animationTimer = setInterval(() => {
 				redraw(
 					canvas,
@@ -99,7 +104,9 @@ export const MapEditor = () => {
 						setSelectedSpace(undefined);
 						selectedObject.current = undefined;
 						highlightedObject.current = undefined;
-						renumberSpaces(spaceMap, map.spaceGroups);
+						if (map.spaceGroups) {
+							renumberSpaces(spaceMap, map.spaceGroups);
+						}
 						deleteSpace(map.id, obj.id);
 					}
 				}
@@ -267,7 +274,11 @@ export const MapEditor = () => {
 		distanceMap.current = undefined;
 	};
 
-	return map ? (
+	if (!map) {
+		return <span>Loading map data...</span>;
+	}
+
+	return (
 		<div>
 			<ToolMenu
 				map={map}
@@ -307,7 +318,5 @@ export const MapEditor = () => {
 				/>
 			</div>
 		</div>
-	) : (
-		<span>Loading map data...</span>
 	);
 };

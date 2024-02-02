@@ -1063,7 +1063,7 @@ express-jwt@*, express-jwt@^8.4.1:
 
 express-oauth2-jwt-bearer@^1.6.0:
   version "1.6.0"
-  resolved "https://registry.npmjs.org/express-oauth2-jwt-bearer/-/express-oauth2-jwt-bearer-1.6.0.tgz"
+  resolved "https://registry.yarnpkg.com/express-oauth2-jwt-bearer/-/express-oauth2-jwt-bearer-1.6.0.tgz#7cdb24d5b5712c46e67685de5fd8115ec9aef10a"
   integrity sha512-HXnez7vocYlOqlfF3ozPcf/WE3zxT7zfUNfeg5FHJnvNwhBYlNXiPOvuCtBalis8xcigvwtInzEKhBuH87+9ug==
   dependencies:
     jose "^4.13.1"

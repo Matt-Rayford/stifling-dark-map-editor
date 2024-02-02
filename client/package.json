@@ -7,12 +7,16 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"predeploy": "npm run build",
-		"deploy": "vercel deploy --prebuilt"
+		"deploy": "vercel deploy --prebuilt",
+		"compile": "graphql-codegen",
+		"watch": "graphql-codegen -w"
 	},
 	"dependencies": {
+		"@apollo/client": "^3.9.2",
 		"@auth0/auth0-react": "^2.2.3",
 		"aws-sdk": "^2.1536.0",
 		"bootstrap": "^5.3.2",
+		"graphql": "^16.8.1",
 		"jquery": "^3.7.1",
 		"merge-images": "^2.0.0",
 		"popper.js": "^1.16.1",

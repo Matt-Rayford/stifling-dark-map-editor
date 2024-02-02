@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Space, SpaceType } from './models/space';
+import { Space } from './models/space';
 import { calculateAllPaths } from './utils/canvas';
 import {
 	disconnectSpaces,
@@ -8,10 +8,11 @@ import {
 	updateSpace,
 } from './utils/requests';
 import { LightLevel } from './models/light-level';
+import { SpaceType } from './graphql/__generated__/graphql';
 
 interface Props {
 	space: Space;
-	spaceGroups: SpaceGroup[];
+	spaceGroups?: SpaceGroup[] | null;
 	onGenerateDistances: (distanceMap: Map<number, number>) => void;
 	onUpdateGroup: () => void;
 	onDisableDistances: () => void;
@@ -71,7 +72,7 @@ const SpaceSettings = ({
 			setSpaceGroupId('-');
 		} else {
 			updateSpace({ id: space.id, groupId: spaceGroupId });
-			space.updateGroup(spaceGroups.find((g) => g.id === spaceGroupId)!);
+			space.updateGroup(spaceGroups?.find((g) => g.id === spaceGroupId)!);
 			setSpaceGroupId(spaceGroupId);
 		}
 		onUpdateGroup();

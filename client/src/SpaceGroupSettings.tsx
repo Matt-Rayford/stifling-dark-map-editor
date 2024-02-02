@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import SpaceGroupRow from './SpaceGroupRow';
+import { SpaceGroup } from './graphql/__generated__/graphql';
 import { addMapSpaceGroup } from './utils/requests';
 
 interface Props {
 	mapId: string;
-	existingGroups: SpaceGroup[];
+	existingGroups?: SpaceGroup[] | null;
 	onUpdateSpaceGroups: () => void;
 }
 

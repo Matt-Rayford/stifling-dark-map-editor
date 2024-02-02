@@ -1,25 +1,43 @@
 import { useEffect, useState } from 'react';
-import { loadMaps } from './utils/requests';
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import { SDMap } from './models/map';
+import { useQuery } from '@apollo/client';
+import {
+	LoadMapsDocument,
+	Map as SDMap,
+} from './graphql/__generated__/graphql';
 
 export const Home = () => {
 	const [maps, setMaps] = useState<Pick<SDMap, 'id' | 'title'>[]>([]);
 	const navigate = useNavigate();
 
-	const { isLoading, error, user, loginWithRedirect } = useAuth0();
+	const { data, loading } = useQuery(LoadMapsDocument);
+
+	const { isLoading, error, user, loginWithRedirect, getAccessTokenSilently } =
+		useAuth0();
+
 	const isBeta = true;
 
 	useEffect(() => {
-		const load = async () => {
-			const maps = await loadMaps();
-			setMaps(maps);
+		const getUserToken = async () => {
+			try {
+				const accessToken = await getAccessTokenSilently();
+				document.cookie = `access_token=${accessToken}`;
+			} catch (e) {
+				console.log(e);
+			}
 		};
-		if (!isLoading && (user || isBeta)) {
-			load();
+
+		getUserToken();
+	}, [getAccessTokenSilently, user?.sub]);
+
+	useEffect(() => {
+		if (!loading) {
+			if (data?.maps) {
+				setMaps(data.maps.filter((m) => !!m));
+			}
 		}
-	}, [isLoading, user]);
+	}, [data, loading]);
 
 	if (error) {
 		return <div>Failed to load auth: {error.message}</div>;
