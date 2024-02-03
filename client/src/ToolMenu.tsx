@@ -27,11 +27,12 @@ const ToolMenu = ({
 	onGenerateDistances,
 	onDisableDistances,
 }: Props) => {
+	const [currentTab, setCurrentTab] = useState('map-settings');
 	const [spaceGroups, setSpaceGroups] = useState(map.spaceGroups);
 
 	useEffect(() => {
-		const optionsBanner = document.getElementById('options-banner')!;
-		const options = document.getElementById('options')!;
+		const optionsBanner = document.getElementById('settings-banner')!;
+		const options = document.getElementById('settings')!;
 
 		const handleMouseDown = (event: any) => {
 			const { clientX, clientY } = event;
@@ -90,7 +91,7 @@ const ToolMenu = ({
 
 	return (
 		<div
-			id='options'
+			id='settings'
 			style={{
 				width: '400px',
 				height: 'auto',
@@ -102,16 +103,16 @@ const ToolMenu = ({
 			}}
 		>
 			<h3
-				id='options-banner'
+				id='settings-banner'
 				style={{
 					cursor: 'move',
 					backgroundColor: '#5bc0de',
 					padding: '10px',
 				}}
 			>
-				Options
+				Settings
 			</h3>
-			<Tabs defaultActiveKey='Home' id='settings-tabs'>
+			<Tabs defaultActiveKey='map-settings' id='settings-tabs'>
 				{selectedObject && (
 					<Tab eventKey='space' title={getSpaceLabel(selectedObject)}>
 						<SpaceSettings
@@ -132,7 +133,7 @@ const ToolMenu = ({
 						/>
 					</div>
 				</Tab>
-				<Tab eventKey='map' title='Map'>
+				<Tab eventKey='map-settings' title='Map'>
 					<Settings
 						name={map.title}
 						mapId={map.id}

@@ -23,21 +23,6 @@
 		"rootDir": "src",
 		"outDir": "out"
 	},
-	"include": [
-		"src/**/*.ts",
-		"src/**/*.js",
-		"src/Home.tsx",
-		"src/App.tsx",
-		"src/index.tsx",
-		"src/MapForm.tsx",
-		"src/ToolSettings.tsx",
-		"src/NavBar.tsx",
-		"src/SpaceGroupRow.tsx",
-		"src/SpaceGroupSettings.tsx",
-		"src/Settings.tsx",
-		"src/SpaceSettings.tsx",
-		"src/ToolMenu.tsx",
-		"src/MapEditor.tsx"
-	],
+	"include": ["src/**/*"],
 	"exclude": ["node_modules", "<node_internals>/**"]
 }

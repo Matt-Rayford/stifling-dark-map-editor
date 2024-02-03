@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AWS from 'aws-sdk';
 import mergeImages from 'merge-images';
 import { updateSpaceColor } from './utils/canvas';
@@ -6,6 +6,7 @@ import { updateMapSettings, uploadMapImage } from './utils/requests';
 
 import { Space } from './models/space';
 import { MapSettings } from './graphql/__generated__/graphql';
+import { useTour } from '@reactour/tour';
 
 interface Props {
 	name: string;
@@ -117,7 +118,7 @@ const Settings = ({
 	};
 
 	return curMapSettings ? (
-		<div style={{ padding: '5px' }}>
+		<div id='map-settings' style={{ padding: '5px' }}>
 			<div className='input-group mb-3'>
 				<div className='input-group-prepend'>
 					<span className='input-group-text'>Space color</span>
@@ -186,6 +187,7 @@ const Settings = ({
 			<div className='row' style={{ marginTop: '8px' }}>
 				<div className='col-12'>
 					<button
+						id='download-button'
 						type='button'
 						className='btn btn-secondary w-100'
 						onClick={onDownload}

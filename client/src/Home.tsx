@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useQuery } from '@apollo/client';
+import { useTour } from '@reactour/tour';
 import {
 	LoadMapsDocument,
 	Map as SDMap,
@@ -11,6 +12,7 @@ export const Home = () => {
 	const [maps, setMaps] = useState<Pick<SDMap, 'id' | 'title'>[]>([]);
 	const navigate = useNavigate();
 	const { isLoading, error, user, loginWithRedirect } = useAuth0();
+	const { setIsOpen } = useTour();
 
 	const skipQuery = !user?.email;
 	const email = user?.email;
@@ -59,6 +61,10 @@ export const Home = () => {
 		return <div>Loading...</div>;
 	}
 
+	if (user) {
+		setIsOpen(true);
+	}
+
 	return (
 		<>
 			{!user && (
@@ -75,7 +81,7 @@ export const Home = () => {
 				</div>
 			)}
 			{user && (
-				<div>
+				<div id='your-maps'>
 					<h1>Your Maps</h1>
 					{maps.map((mapData: any) => {
 						return (
