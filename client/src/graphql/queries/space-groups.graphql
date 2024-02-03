@@ -1,0 +1,7 @@
+query SpaceGroups($mapId: ID!) {
+	spaceGroups: mapSpaceGroups(mapId: $mapId) {
+		id
+		name
+		prefix
+	}
+}

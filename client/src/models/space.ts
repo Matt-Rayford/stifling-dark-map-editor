@@ -99,11 +99,10 @@ export class Space {
 		this.group = undefined;
 	}
 
-	highlight(highlightedObject: Space) {
+	highlight() {
 		this.drawOptions.color = '#E81C0E';
 		this.drawOptions.width = 3;
 		this.highlighted = true;
-		highlightedObject = this;
 	}
 
 	unHighlight() {

@@ -2,7 +2,7 @@ type Query {
 	lightLevels: [LightLevel]
 	maps(email: String!): [Map!]!
 	map(id: ID!): Map
-	mapSpaceGroups(mapId: ID!): [SpaceGroup]
+	mapSpaceGroups(mapId: ID!): [SpaceGroup!]
 	mapSpaces(mapId: ID!): [Space]
 	spaceTypes: [SpaceType]
 }

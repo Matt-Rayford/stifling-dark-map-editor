@@ -8,11 +8,15 @@ import {
 	updateSpace,
 } from './utils/requests';
 import { LightLevel } from './models/light-level';
-import { SpaceType } from './graphql/__generated__/graphql';
+import {
+	SpaceGroupsDocument,
+	SpaceType,
+} from './graphql/__generated__/graphql';
+import { useQuery } from '@apollo/client';
 
 interface Props {
 	space: Space;
-	spaceGroups?: SpaceGroup[] | null;
+	mapId: string;
 	onGenerateDistances: (distanceMap: Map<number, number>) => void;
 	onUpdateGroup: () => void;
 	onDisableDistances: () => void;
@@ -20,7 +24,7 @@ interface Props {
 
 const SpaceSettings = ({
 	space,
-	spaceGroups,
+	mapId,
 	onGenerateDistances,
 	onUpdateGroup,
 	onDisableDistances,
@@ -33,6 +37,13 @@ const SpaceSettings = ({
 	const [spaceTypes, setSpaceTypes] = useState<SpaceType[]>([]);
 	const [spaceType, setSpaceType] = useState<SpaceType>(space.type);
 	const [spaceGroupId, setSpaceGroupId] = useState<string>('-');
+
+	const { data } = useQuery(SpaceGroupsDocument, {
+		variables: { mapId: mapId },
+		pollInterval: 500,
+	});
+
+	const spaceGroups = data?.spaceGroups ?? [];
 
 	useEffect(() => {
 		getLightLevels().then((lightLevels: LightLevel[]) => {

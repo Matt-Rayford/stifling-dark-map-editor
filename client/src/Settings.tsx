@@ -141,7 +141,11 @@ const Settings = ({
 				/>
 			</div>
 			{Object.keys(curMapSettings).map((settingKey) => {
-				if (settingKey === 'spaceColor' || settingKey === 'backgroundImageUrl')
+				if (
+					settingKey === 'spaceColor' ||
+					settingKey === 'backgroundImageUrl' ||
+					settingKey === '__typename'
+				)
 					return null;
 				return (
 					<div className='input-group mb-3' key={settingKey}>
