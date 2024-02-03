@@ -26,6 +26,7 @@ const oAuthProviderConfig = {
 	authorizationParams: {
 		redirect_uri: window.location.origin,
 	},
+	useCookiesForTransactions: true,
 };
 
 const root = createRoot(document.getElementById('root')!);

@@ -90,7 +90,8 @@ export type MutationConnectSpacesArgs = {
 
 
 export type MutationCreateMapArgs = {
-  title?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 
@@ -165,6 +166,11 @@ export type QueryMapSpacesArgs = {
   mapId: Scalars['ID']['input'];
 };
 
+
+export type QueryMapsArgs = {
+  email: Scalars['String']['input'];
+};
+
 export type Space = {
   __typename?: 'Space';
   col: Scalars['Int']['output'];
@@ -219,7 +225,17 @@ export type SpaceType = {
   name: Scalars['String']['output'];
 };
 
-export type LoadMapsQueryVariables = Exact<{ [key: string]: never; }>;
+export type CreateMapMutationVariables = Exact<{
+  title: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+}>;
+
+
+export type CreateMapMutation = { __typename?: 'Mutation', map?: { __typename?: 'Map', id: string, title: string } | null };
+
+export type LoadMapsQueryVariables = Exact<{
+  email: Scalars['String']['input'];
+}>;
 
 
 export type LoadMapsQuery = { __typename?: 'Query', maps: Array<{ __typename?: 'Map', id: string, title: string }> };
@@ -232,5 +248,6 @@ export type LoadMapQueryVariables = Exact<{
 export type LoadMapQuery = { __typename?: 'Query', map?: { __typename?: 'Map', id: string, title: string, settings: { __typename?: 'MapSettings', backgroundImageUrl?: string | null, spaceColor: string, horizontalSpacing: number, verticalSpacing: number, indent: number, paddingX: number, paddingY: number, spaceRadius: number }, spaces: Array<{ __typename?: 'Space', id: string, number: number, displayNumber: number, row: number, col: number, connections: Array<number>, isDeleted?: boolean | null, type: { __typename?: 'SpaceType', id: string, color: string, name: string, description: string }, lightLevel: { __typename?: 'LightLevel', id: string, name: string, movementPoints: number }, group?: { __typename?: 'SpaceGroup', id: string, name: string, prefix: string } | null }>, spaceGroups?: Array<{ __typename?: 'SpaceGroup', id: string, name: string, prefix: string }> | null } | null };
 
 
-export const LoadMapsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LoadMaps"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"maps"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<LoadMapsQuery, LoadMapsQueryVariables>;
+export const CreateMapDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMap"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"map"},"name":{"kind":"Name","value":"createMap"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<CreateMapMutation, CreateMapMutationVariables>;
+export const LoadMapsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LoadMaps"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"maps"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<LoadMapsQuery, LoadMapsQueryVariables>;
 export const LoadMapDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LoadMap"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"map"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"settings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"backgroundImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"spaceColor"}},{"kind":"Field","name":{"kind":"Name","value":"horizontalSpacing"}},{"kind":"Field","name":{"kind":"Name","value":"verticalSpacing"}},{"kind":"Field","name":{"kind":"Name","value":"indent"}},{"kind":"Field","name":{"kind":"Name","value":"paddingX"}},{"kind":"Field","name":{"kind":"Name","value":"paddingY"}},{"kind":"Field","name":{"kind":"Name","value":"spaceRadius"}}]}},{"kind":"Field","name":{"kind":"Name","value":"spaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"number"}},{"kind":"Field","name":{"kind":"Name","value":"displayNumber"}},{"kind":"Field","name":{"kind":"Name","value":"type"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lightLevel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"movementPoints"}}]}},{"kind":"Field","name":{"kind":"Name","value":"row"}},{"kind":"Field","name":{"kind":"Name","value":"col"}},{"kind":"Field","name":{"kind":"Name","value":"connections"}},{"kind":"Field","name":{"kind":"Name","value":"isDeleted"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"prefix"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"spaceGroups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"prefix"}}]}}]}}]}}]} as unknown as DocumentNode<LoadMapQuery, LoadMapQueryVariables>;

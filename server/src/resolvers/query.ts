@@ -7,7 +7,7 @@ import { getSpaceTypes } from './space-type';
 export const Query = {
 	lightLevels: () => getLightLevels(),
 	map: (root, { id }: { id: string }) => getMap(id),
-	maps: () => getMaps(),
+	maps: (root, { email }: { email: string }) => getMaps(email),
 	mapSpaceGroups: (root, { mapId }: { mapId: string }) =>
 		getMapSpaceGroups(mapId),
 	mapSpaces: (root, { mapId }: { mapId: string }) => getMapSpaces(mapId),

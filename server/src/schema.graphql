@@ -1,6 +1,6 @@
 type Query {
 	lightLevels: [LightLevel]
-	maps: [Map!]!
+	maps(email: String!): [Map!]!
 	map(id: ID!): Map
 	mapSpaceGroups(mapId: ID!): [SpaceGroup]
 	mapSpaces(mapId: ID!): [Space]
@@ -11,7 +11,7 @@ type Mutation {
 	addMapSpaceGroup(mapId: ID!, group: SpaceGroupInput!): SpaceGroup
 	connectSpaces(space1Id: ID!, space2Id: ID!): Boolean
 	disconnectSpaces(space1Id: ID!, space2Id: ID!): Boolean
-	createMap(title: String): Map
+	createMap(title: String!, email: String!): Map
 	deleteMapSpaceGroup(mapId: ID, groupId: ID): Boolean
 	deleteSpace(mapId: ID!, spaceId: ID!): Boolean
 	renameMap(mapId: ID!, mapName: String!): String

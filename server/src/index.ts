@@ -15,11 +15,6 @@ import { initDBCache } from './utils/cache';
 
 dotenv.config();
 
-const checkJwt = auth({
-	audience: process.env.OAUTH_AUDIENCE_URL,
-	issuerBaseURL: `https://www.thestiflingdark.com/`,
-});
-
 const connectionString = process.env.DB_CONNECTION_URL;
 export const pool = new Pool({
 	connectionString,
@@ -43,6 +38,7 @@ const startExpressServer = async () => {
 };
 
 const startApolloServer = async () => {
+	console.log('Start server!');
 	await server.start();
 	app.use(
 		cors<cors.CorsRequest>({
@@ -56,9 +52,15 @@ const startApolloServer = async () => {
 		}),
 		express.json(),
 		expressMiddleware(server, {
-			context: async ({ req }) => ({ token: req.headers }),
+			context: async ({ req }) => {
+				return { token: req.headers };
+			},
 		}),
-		bodyParser.json()
+		bodyParser.json(),
+		auth({
+			issuerBaseURL: process.env.OAUTH_DOMAIN,
+			audience: process.env.OAUTH_AUDIENCE_URL,
+		})
 		/*expressJwt({
 		secret: jwtSecret,
 		credentialsRequired: false,
@@ -66,7 +68,11 @@ const startApolloServer = async () => {
 	);
 };
 
-startApolloServer().then(() => {
-	initDBCache();
+try {
 	startExpressServer();
-});
+	startApolloServer().then(() => {
+		initDBCache();
+	});
+} catch (e) {
+	console.log('ERROR | Starting Server: ', e);
+}

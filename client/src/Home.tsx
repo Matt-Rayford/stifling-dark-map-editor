@@ -10,18 +10,29 @@ import {
 export const Home = () => {
 	const [maps, setMaps] = useState<Pick<SDMap, 'id' | 'title'>[]>([]);
 	const navigate = useNavigate();
+	const { isLoading, error, user, loginWithRedirect } = useAuth0();
 
-	const { data, loading } = useQuery(LoadMapsDocument);
+	const skipQuery = !user?.email;
+	const email = user?.email;
 
-	const { isLoading, error, user, loginWithRedirect, getAccessTokenSilently } =
-		useAuth0();
+	const { data, loading } = useQuery(LoadMapsDocument, {
+		variables: {
+			email: email!,
+		},
+		skip: skipQuery,
+	});
 
-	const isBeta = true;
-
+	/*
 	useEffect(() => {
 		const getUserToken = async () => {
 			try {
-				const accessToken = await getAccessTokenSilently();
+				const accessToken = await getAccessTokenSilently({
+					authorizationParams: {
+						audience: `https://${'dev-gd8kgt1al3ostlru.us.auth0.com'}/api/v2/`,
+						scope: 'read:current_user',
+					},
+				});
+				console.log('Access token: ', accessToken);
 				document.cookie = `access_token=${accessToken}`;
 			} catch (e) {
 				console.log(e);
@@ -30,6 +41,7 @@ export const Home = () => {
 
 		getUserToken();
 	}, [getAccessTokenSilently, user?.sub]);
+	*/
 
 	useEffect(() => {
 		if (!loading) {
@@ -49,7 +61,7 @@ export const Home = () => {
 
 	return (
 		<>
-			{!user && !isBeta && (
+			{!user && (
 				<div>
 					<h1>Create an Account to use the Stifling Dark Map Editor</h1>
 					<p>
@@ -62,7 +74,7 @@ export const Home = () => {
 					</p>
 				</div>
 			)}
-			{(user || isBeta) && (
+			{user && (
 				<div>
 					<h1>Your Maps</h1>
 					{maps.map((mapData: any) => {
