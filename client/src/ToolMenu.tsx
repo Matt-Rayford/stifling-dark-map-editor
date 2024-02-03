@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import Settings from './Settings';
 import SpaceGroupSettings from './SpaceGroupSettings';
 import SpaceSettings from './SpaceSettings';
 import { renumberSpaces, updateSpaceColor } from './utils/canvas';
 import { Space } from './models/space';
-import { SDMap } from './models/map';
+import { LoadMapQuery, Map as SDMap } from './graphql/__generated__/graphql';
 
 let isDragging = false;
 const mousePos = { x: 0, y: 0 };
@@ -72,7 +72,9 @@ const ToolMenu = ({
 	}, [map]);
 
 	const updateGroup = () => {
-		renumberSpaces(spaceMap, map.spaceGroups);
+		if (map.spaceGroups) {
+			renumberSpaces(spaceMap, map.spaceGroups);
+		}
 	};
 
 	const getSpaceLabel = (space: Space) => {

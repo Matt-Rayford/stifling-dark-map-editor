@@ -1,0 +1,6 @@
+mutation CreateMap($title: String!, $email: String!) {
+	map: createMap(title: $title, email: $email) {
+		id
+		title
+	}
+}

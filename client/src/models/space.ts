@@ -1,22 +1,18 @@
-import { DRAW_CONSTANTS, MAP_CONSTANTS } from '../utils/constants';
+import { MAP_CONSTANTS } from '../utils/constants';
 import { DrawOptions } from './draw-options';
 import { LightLevel } from './light-level';
-import { MapSettings } from './map-settings';
 import { Point } from './map-models';
 import { ObjectType } from './object';
+import {
+	SpaceType,
+	SpaceGroup,
+	MapSettings,
+} from '../graphql/__generated__/graphql';
 
 export interface SpaceTypeDetails {
 	name: string;
 	fontColor: string;
 	image?: string;
-}
-
-export interface SpaceType {
-	id: string;
-	color: string;
-	description: string;
-	iconUrl?: string;
-	name: string;
 }
 
 export interface SpaceInput {
@@ -46,7 +42,7 @@ export class Space {
 	selected: boolean;
 	highlighted: boolean;
 	isDeleted: boolean;
-	group?: SpaceGroup;
+	group?: SpaceGroup | null;
 
 	constructor(
 		id: string,

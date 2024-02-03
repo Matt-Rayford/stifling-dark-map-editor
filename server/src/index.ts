@@ -8,6 +8,7 @@ import bodyParser from 'body-parser';
 import { Pool } from 'pg';
 import http from 'http';
 import dotenv from 'dotenv';
+import { auth } from 'express-oauth2-jwt-bearer';
 
 import { resolvers } from './resolvers';
 import { initDBCache } from './utils/cache';
@@ -22,6 +23,7 @@ export const pool = new Pool({
 const port = process.env.PORT ? parseInt(process.env.PORT) : 9000;
 
 const app = express();
+
 const httpServer = http.createServer(app);
 
 const server = new ApolloServer({
@@ -36,9 +38,11 @@ const startExpressServer = async () => {
 };
 
 const startApolloServer = async () => {
+	console.log('Start server!');
 	await server.start();
 	app.use(
 		cors<cors.CorsRequest>({
+			credentials: true,
 			origin: [
 				'http://localhost:3000',
 				'https://thestiflingdark.com',
@@ -47,8 +51,16 @@ const startApolloServer = async () => {
 			],
 		}),
 		express.json(),
-		expressMiddleware(server),
-		bodyParser.json()
+		expressMiddleware(server, {
+			context: async ({ req }) => {
+				return { token: req.headers };
+			},
+		}),
+		bodyParser.json(),
+		auth({
+			issuerBaseURL: process.env.OAUTH_DOMAIN,
+			audience: process.env.OAUTH_AUDIENCE_URL,
+		})
 		/*expressJwt({
 		secret: jwtSecret,
 		credentialsRequired: false,
@@ -56,7 +68,11 @@ const startApolloServer = async () => {
 	);
 };
 
-startExpressServer();
-startApolloServer().then(() => {
-	initDBCache();
-});
+try {
+	startExpressServer();
+	startApolloServer().then(() => {
+		initDBCache();
+	});
+} catch (e) {
+	console.log('ERROR | Starting Server: ', e);
+}

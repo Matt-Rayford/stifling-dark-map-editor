@@ -30,7 +30,8 @@ export const Mutation = {
 		root,
 		{ space1Id, space2Id }: { space1Id: string; space2Id: string }
 	) => disconnectSpaces(space1Id, space2Id),
-	createMap: (root, { title }) => createMap(title),
+	createMap: (root, { title, email }: { title: string; email: string }) =>
+		createMap(title, email),
 	deleteMapSpaceGroup: async (
 		root,
 		{ mapId, groupId }: { mapId: string; groupId: string }

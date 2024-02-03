@@ -24,12 +24,13 @@ export const getMap = async (mapId: string): Promise<DBMap> => {
 		});
 };
 
-export const getMaps = async (): Promise<DBMap[]> => {
-	const query = 'SELECT * FROM sd_map';
+export const getMaps = async (email: string): Promise<DBMap[]> => {
+	const query = 'SELECT * FROM sd_map WHERE creator_email=$1';
 
 	return pool
 		.query({
 			text: query,
+			values: [email],
 		})
 		.then((r) => {
 			return r.rows;
@@ -40,13 +41,16 @@ export const getMaps = async (): Promise<DBMap[]> => {
 		});
 };
 
-export const createMap = async (mapName: string): Promise<DBMap> => {
-	const query = `SELECT create_map($1)`;
+export const createMap = async (
+	mapName: string,
+	email: string
+): Promise<DBMap> => {
+	const query = `SELECT create_map($1, $2)`;
 
 	return pool
 		.query({
 			text: query,
-			values: [mapName],
+			values: [mapName, email],
 		})
 		.then((r) => {
 			const mapRow = r.rows?.[0];

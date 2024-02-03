@@ -1,18 +1,27 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createMap } from './utils/requests';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useMutation } from '@apollo/client';
+import { CreateMapDocument } from './graphql/__generated__/graphql';
 
 const MapForm = () => {
+	const { user } = useAuth0();
 	const [title, setMapTitle] = useState('');
 	const navigate = useNavigate();
-	const handleSubmit = useCallback(
-		(title: string) => {
-			createMap(title).then(({ id }) => {
-				navigate(`/map/${id}`);
-			});
-		},
-		[navigate]
-	);
+
+	const [createMap, { data }] = useMutation(CreateMapDocument);
+
+	useEffect(() => {
+		if (data?.map) {
+			navigate(`/map/${data.map.id}`);
+		}
+	}, [data]);
+
+	const handleSubmit = useCallback(() => {
+		if (user?.email && title) {
+			createMap({ variables: { title, email: user.email } });
+		}
+	}, []);
 
 	return (
 		<form style={{ padding: '32px 0' }}>
@@ -39,7 +48,7 @@ const MapForm = () => {
 						className='btn btn-primary w-100'
 						type='button'
 						disabled={!title || title.length === 0}
-						onClick={() => handleSubmit(title)}
+						onClick={handleSubmit}
 					>
 						Create
 					</button>

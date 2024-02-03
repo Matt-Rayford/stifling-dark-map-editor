@@ -3,9 +3,9 @@ import AWS from 'aws-sdk';
 import mergeImages from 'merge-images';
 import { updateSpaceColor } from './utils/canvas';
 import { updateMapSettings, uploadMapImage } from './utils/requests';
-import { MapSettings } from './models/map-settings';
 
 import { Space } from './models/space';
+import { MapSettings } from './graphql/__generated__/graphql';
 
 interface Props {
 	name: string;

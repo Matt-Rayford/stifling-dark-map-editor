@@ -1,0 +1,53 @@
+query LoadMaps($email: String!) {
+	maps(email: $email) {
+		id
+		title
+	}
+}
+
+query LoadMap($id: ID!) {
+	map(id: $id) {
+		id
+		title
+		settings {
+			backgroundImageUrl
+			spaceColor
+			horizontalSpacing
+			verticalSpacing
+			indent
+			paddingX
+			paddingY
+			spaceRadius
+		}
+		spaces {
+			id
+			number
+			displayNumber
+			type {
+				id
+				color
+				name
+				description
+			}
+			lightLevel {
+				id
+				name
+				movementPoints
+			}
+			row
+			col
+			connections
+			isDeleted
+			group {
+				id
+				name
+				prefix
+			}
+		}
+		spaceGroups {
+			id
+			name
+			prefix
+		}
+	}
+}

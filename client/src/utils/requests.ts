@@ -1,5 +1,5 @@
+import { MapSettings } from '../graphql/__generated__/graphql';
 import { SDMap } from '../models/map';
-import { MapSettings } from '../models/map-settings';
 import { SpaceInput } from '../models/space';
 
 const endpointURL =
@@ -92,70 +92,6 @@ export async function updateMapSettings(
   `;
 	const { map } = await graphqlRequest(mutation, { id, settings });
 	return map;
-}
-
-export async function loadMap(id: string): Promise<SDMap> {
-	const query = `
-		query LoadMap($id: ID!) {
-			map(id: $id) {
-				id
-				title
-				settings {
-					backgroundImageUrl
-					spaceColor
-					horizontalSpacing
-					verticalSpacing
-					indent
-					paddingX
-					paddingY
-					spaceRadius
-				}
-				spaces {
-          id
-          number
-					displayNumber
-          type {
-						id
-						color
-					}
-          lightLevel {
-						id
-						name
-						movementPoints
-					}
-          row
-          col
-          connections
-					isDeleted
-					group {
-						id
-						name
-						prefix
-					}
-				}
-				spaceGroups {
-					id
-					name
-					prefix
-				}
-			}
-		}
-	`;
-	const { map } = await graphqlRequest(query, { id });
-	return map;
-}
-
-export async function loadMaps(): Promise<Pick<SDMap, 'id' | 'title'>[]> {
-	const query = `
-    query LoadMaps{
-      maps {
-        id
-        title
-      }
-    }
-  `;
-	const { maps } = await graphqlRequest(query);
-	return maps;
 }
 
 export async function updateMapSpaceGroup(
@@ -308,9 +244,12 @@ export async function updateSpace(space: SpaceInput) {
 }
 
 async function graphqlRequest(query: any, variables: any = {}) {
-	const request = {
+	const request: RequestInit = {
 		method: 'POST',
-		headers: { 'content-type': 'application/json' },
+		headers: {
+			'content-type': 'application/json',
+			authorization: `Bearer test`,
+		},
 		body: JSON.stringify({
 			query,
 			variables,
