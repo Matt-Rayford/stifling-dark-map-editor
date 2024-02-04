@@ -11,7 +11,6 @@ const MapForm = () => {
 	const [title, setMapTitle] = useState('');
 	const navigate = useNavigate();
 
-	console.log('User: ', user);
 	const [createMap] = useMutation(CreateMapDocument);
 
 	useEffect(() => {
