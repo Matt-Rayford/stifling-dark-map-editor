@@ -17,7 +17,7 @@ const MapForm = () => {
 		setIsOpen(false);
 	}, []);
 
-	const handleSubmit = useCallback(() => {
+	const handleSubmit = () => {
 		if (user?.email && title) {
 			createMap({
 				variables: { title, email: user.email },
@@ -28,7 +28,7 @@ const MapForm = () => {
 				},
 			});
 		}
-	}, []);
+	};
 
 	return (
 		<form style={{ padding: '32px 0' }}>
