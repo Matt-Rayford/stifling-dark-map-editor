@@ -6,6 +6,7 @@ import SpaceSettings from './SpaceSettings';
 import { renumberSpaces, updateSpaceColor } from './utils/canvas';
 import { Space } from './models/space';
 import { Map as SDMap } from './graphql/__generated__/graphql';
+import { useTour } from '@reactour/tour';
 
 let isDragging = false;
 const mousePos = { x: 0, y: 0 };
@@ -27,11 +28,13 @@ const ToolMenu = ({
 	onGenerateDistances,
 	onDisableDistances,
 }: Props) => {
+	const [currentTab, setCurrentTab] = useState('map-settings');
 	const [spaceGroups, setSpaceGroups] = useState(map.spaceGroups);
+	const { setCurrentStep } = useTour();
 
 	useEffect(() => {
-		const optionsBanner = document.getElementById('options-banner')!;
-		const options = document.getElementById('options')!;
+		const optionsBanner = document.getElementById('settings-banner')!;
+		const options = document.getElementById('settings')!;
 
 		const handleMouseDown = (event: any) => {
 			const { clientX, clientY } = event;
@@ -88,9 +91,18 @@ const ToolMenu = ({
 		setSpaceGroups(map.spaceGroups);
 	};
 
+	const handleTourUpdate = (tabName: string | null) => {
+		if (tabName === 'space') {
+			setCurrentStep(5);
+		}
+		if (tabName === 'tools') {
+			setCurrentStep(10);
+		}
+	};
+
 	return (
 		<div
-			id='options'
+			id='settings'
 			style={{
 				width: '400px',
 				height: 'auto',
@@ -102,23 +114,27 @@ const ToolMenu = ({
 			}}
 		>
 			<h3
-				id='options-banner'
+				id='settings-banner'
 				style={{
 					cursor: 'move',
 					backgroundColor: '#5bc0de',
 					padding: '10px',
 				}}
 			>
-				Options
+				Settings
 			</h3>
-			<Tabs defaultActiveKey='Home' id='settings-tabs'>
+			<Tabs
+				defaultActiveKey='map-settings'
+				id='settings-tabs'
+				onSelect={handleTourUpdate}
+			>
 				{selectedObject && (
 					<Tab eventKey='space' title={getSpaceLabel(selectedObject)}>
 						<SpaceSettings
 							space={selectedObject}
 							mapId={map.id}
 							onGenerateDistances={onGenerateDistances}
-							onUpdateGroup={() => updateGroup()}
+							onUpdateGroup={updateGroup}
 							onDisableDistances={onDisableDistances}
 						/>
 					</Tab>
@@ -132,7 +148,7 @@ const ToolMenu = ({
 						/>
 					</div>
 				</Tab>
-				<Tab eventKey='map' title='Map'>
+				<Tab eventKey='map-settings' title='Map'>
 					<Settings
 						name={map.title}
 						mapId={map.id}

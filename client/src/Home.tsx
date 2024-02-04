@@ -2,24 +2,28 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useQuery } from '@apollo/client';
+import { useTour } from '@reactour/tour';
 import {
 	LoadMapsDocument,
 	Map as SDMap,
 } from './graphql/__generated__/graphql';
+import { useSdUser } from './contexts/user-context';
 
 export const Home = () => {
 	const [maps, setMaps] = useState<Pick<SDMap, 'id' | 'title'>[]>([]);
 	const navigate = useNavigate();
-	const { isLoading, error, user, loginWithRedirect } = useAuth0();
+	const { isLoading, error, loginWithRedirect } = useAuth0();
+	const { setIsOpen } = useTour();
 
-	const skipQuery = !user?.email;
+	const { user } = useSdUser();
 	const email = user?.email;
+	const skipLoad = !user?.email;
 
 	const { data, loading } = useQuery(LoadMapsDocument, {
 		variables: {
 			email: email!,
 		},
-		skip: skipQuery,
+		skip: skipLoad,
 	});
 
 	/*
@@ -59,6 +63,13 @@ export const Home = () => {
 		return <div>Loading...</div>;
 	}
 
+	if (user && !user.viewedSetup) {
+		console.log('Set is open', user.viewedSetup);
+		setIsOpen(true);
+	} else {
+		setIsOpen(false);
+	}
+
 	return (
 		<>
 			{!user && (
@@ -75,7 +86,7 @@ export const Home = () => {
 				</div>
 			)}
 			{user && (
-				<div>
+				<div id='your-maps'>
 					<h1>Your Maps</h1>
 					{maps.map((mapData: any) => {
 						return (

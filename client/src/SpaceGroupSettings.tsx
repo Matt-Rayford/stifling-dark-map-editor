@@ -44,7 +44,7 @@ const SpaceGroupSettings = ({
 	};
 
 	return (
-		<div className='vstack gap-3'>
+		<div id='space-group-settings' className='vstack gap-3'>
 			<h3>Space Groups</h3>
 			<table className='table'>
 				<thead>

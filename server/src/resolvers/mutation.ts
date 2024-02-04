@@ -16,6 +16,7 @@ import {
 	updateSpace,
 } from './space';
 import { updateSpaceGroup } from './space-group';
+import { updateUserSettings } from './user';
 
 export const Mutation = {
 	addMapSpaceGroup: async (
@@ -48,6 +49,17 @@ export const Mutation = {
 		root,
 		{ mapId, group }: { mapId: string; group: SpaceGroup }
 	) => updateSpaceGroup(mapId, group),
+	updateUserSettings: async (
+		root,
+		{
+			settings: { email, viewedSetup },
+		}: {
+			settings: {
+				email: string;
+				viewedSetup: boolean;
+			};
+		}
+	) => updateUserSettings(email, viewedSetup),
 	uploadMapImage: async (
 		root,
 		{ mapId, imageUrl }: { mapId: string; imageUrl: string }

@@ -133,112 +133,118 @@ const SpaceSettings = ({
 
 	return (
 		<div className='vstack gap-2' style={{ padding: '12px' }}>
-			<div className='input-group mb-3'>
-				<div className='input-group-prepend'>
-					<label className='input-group-text'>Space Type</label>
-				</div>
-				<select
-					value={space.type.id}
-					className='form-select'
-					onChange={(e) =>
-						updateSpaceType(
-							spaceTypes.find((spaceType) => spaceType.id === e.target.value)
-						)
-					}
-				>
-					<option value='' disabled>
-						Select Type...
-					</option>
-					{spaceTypes.map((spaceType) => {
-						return (
-							<option key={spaceType.id} value={spaceType.id}>
-								{spaceType.name}
-							</option>
-						);
-					})}
-				</select>
-			</div>
-
-			<div className='input-group mb-3'>
-				<div className='input-group-prepend'>
-					<label className='input-group-text'>Brightness</label>
-				</div>
-				<select
-					value={lightLevel?.id}
-					className='form-select'
-					onChange={(e) =>
-						updateLightLevel(
-							lightLevels.find(
-								(lightLevel) => lightLevel.id === e.target.value
-							)!
-						)
-					}
-				>
-					<option value='' disabled>
-						Select Level...
-					</option>
-					{lightLevels.map((lightLevel: LightLevel) => {
-						return (
-							<option key={lightLevel.id} value={lightLevel.id}>
-								{lightLevel.name}
-							</option>
-						);
-					})}
-				</select>
-			</div>
-
-			<div className='row'>
-				<div className='col-6'>
-					<button
-						type='button'
-						className='btn btn-primary w-100'
-						onClick={() => generateDistances()}
+			<div id='general-space-section' className='vstack gap-2'>
+				<div className='input-group mb-3'>
+					<div className='input-group-prepend'>
+						<label className='input-group-text'>Space Type</label>
+					</div>
+					<select
+						value={space.type.id}
+						className='form-select'
+						onChange={(e) =>
+							updateSpaceType(
+								spaceTypes.find((spaceType) => spaceType.id === e.target.value)
+							)
+						}
 					>
-						Generate Distances
-					</button>
+						<option value='' disabled>
+							Select Type...
+						</option>
+						{spaceTypes.map((spaceType) => {
+							return (
+								<option key={spaceType.id} value={spaceType.id}>
+									{spaceType.name}
+								</option>
+							);
+						})}
+					</select>
 				</div>
-				<div className='col-6'>
-					<button
-						type='button'
-						className='btn btn-danger w-100'
-						onClick={() => onDisableDistances()}
+
+				<div className='input-group mb-3'>
+					<div className='input-group-prepend'>
+						<label className='input-group-text'>Brightness</label>
+					</div>
+					<select
+						value={lightLevel?.id}
+						className='form-select'
+						onChange={(e) =>
+							updateLightLevel(
+								lightLevels.find(
+									(lightLevel) => lightLevel.id === e.target.value
+								)!
+							)
+						}
 					>
-						Disable Distances
-					</button>
+						<option value='' disabled>
+							Select Level...
+						</option>
+						{lightLevels.map((lightLevel: LightLevel) => {
+							return (
+								<option key={lightLevel.id} value={lightLevel.id}>
+									{lightLevel.name}
+								</option>
+							);
+						})}
+					</select>
+				</div>
+
+				<div className='row'>
+					<div className='col-6'>
+						<button
+							type='button'
+							className='btn btn-primary w-100'
+							onClick={() => generateDistances()}
+						>
+							Generate Distances
+						</button>
+					</div>
+					<div className='col-6'>
+						<button
+							type='button'
+							className='btn btn-danger w-100'
+							onClick={() => onDisableDistances()}
+						>
+							Disable Distances
+						</button>
+					</div>
 				</div>
 			</div>
 
-			<h5>Group</h5>
-			{renderGroups()}
+			<div id='groups-section'>
+				<h5>Group</h5>
+				{renderGroups()}
+			</div>
 
-			<h5>Connections</h5>
-			{connections
-				.sort((a, b) => (a.displayNumber < b.displayNumber ? -1 : 1))
-				.map((connection) => {
-					const connectionLabel = connection.group
-						? `${connection.group?.prefix}-${connection.displayNumber}`
-						: connection.displayNumber;
-					return (
-						<div key={connection.id} className='input-group'>
-							<input
-								type='text'
-								className='form-control'
-								disabled
-								value={connectionLabel}
-							/>
+			<div id='connections-section'>
+				<h5>Connections</h5>
+				{connections
+					.sort((a, b) => (a.displayNumber < b.displayNumber ? -1 : 1))
+					.map((connection) => {
+						const connectionLabel = connection.group
+							? `${connection.group?.prefix}-${connection.displayNumber}`
+							: connection.displayNumber;
+						return (
+							<div key={connection.id} className='input-group'>
+								<input
+									type='text'
+									className='form-control'
+									disabled
+									value={connectionLabel}
+								/>
 
-							<div className='input-group-append'>
-								<button
-									className='btn btn-outline-danger'
-									type='button'
-									onClick={() => removeConnection(space, connection)}
-								>
-									{'Delete'}
-								</button>
+								<div className='input-group-append'>
+									<button
+										className='btn btn-outline-danger'
+										type='button'
+										onClick={() => removeConnection(space, connection)}
+									>
+										{'Delete'}
+									</button>
+								</div>
 							</div>
-						</div>
-					);
-				})}
+						);
+					})}
+			</div>
 		</div>
 	);
 };

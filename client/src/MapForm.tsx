@@ -3,13 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useMutation } from '@apollo/client';
 import { CreateMapDocument } from './graphql/__generated__/graphql';
+import { useTour } from '@reactour/tour';
 
 const MapForm = () => {
 	const { user } = useAuth0();
+	const { setIsOpen } = useTour();
 	const [title, setMapTitle] = useState('');
 	const navigate = useNavigate();
 
 	const [createMap, { data }] = useMutation(CreateMapDocument);
+
+	useEffect(() => {
+		setIsOpen(false);
+	}, []);
 
 	useEffect(() => {
 		if (data?.map) {

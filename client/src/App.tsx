@@ -3,10 +3,23 @@ import { Home } from './Home';
 import { MapEditor } from './MapEditor';
 import MapForm from './MapForm';
 import NavBar from './NavBar';
+import { TourProvider } from '@reactour/tour';
+import { newUserSteps } from './tours/new-user-steps';
+import { useSdUser } from './contexts/user-context';
 
 export const App = () => {
+	const { closeSetupGuide } = useSdUser();
+
 	return (
-		<div>
+		<TourProvider
+			defaultOpen={false}
+			steps={newUserSteps}
+			beforeClose={() => {
+				if (closeSetupGuide) {
+					closeSetupGuide();
+				}
+			}}
+		>
 			<NavBar />
 			<section className='section'>
 				<div className='container'>
@@ -17,6 +30,6 @@ export const App = () => {
 					</Routes>
 				</div>
 			</section>
-		</div>
+		</TourProvider>
 	);
 };

@@ -16,6 +16,7 @@ const documents = {
     "mutation CreateMap($title: String!, $email: String!) {\n  map: createMap(title: $title, email: $email) {\n    id\n    title\n  }\n}": types.CreateMapDocument,
     "query LoadMaps($email: String!) {\n  maps(email: $email) {\n    id\n    title\n  }\n}\n\nquery LoadMap($id: ID!) {\n  map(id: $id) {\n    id\n    title\n    settings {\n      backgroundImageUrl\n      spaceColor\n      horizontalSpacing\n      verticalSpacing\n      indent\n      paddingX\n      paddingY\n      spaceRadius\n    }\n    spaces {\n      id\n      number\n      displayNumber\n      type {\n        id\n        color\n        name\n        description\n      }\n      lightLevel {\n        id\n        name\n        movementPoints\n      }\n      row\n      col\n      connections\n      isDeleted\n      group {\n        id\n        name\n        prefix\n      }\n    }\n    spaceGroups {\n      id\n      name\n      prefix\n    }\n  }\n}": types.LoadMapsDocument,
     "query SpaceGroups($mapId: ID!) {\n  spaceGroups: mapSpaceGroups(mapId: $mapId) {\n    id\n    name\n    prefix\n  }\n}": types.SpaceGroupsDocument,
+    "query User($email: String!) {\n  user(email: $email) {\n    id\n    email\n    viewedSetup\n  }\n}\n\nmutation UpdateUserSettings($userSettings: UserSettingsInput!) {\n  user: updateUserSettings(settings: $userSettings) {\n    id\n    email\n    viewedSetup\n  }\n}": types.UserDocument,
 };
 
 /**
@@ -44,6 +45,10 @@ export function gql(source: "query LoadMaps($email: String!) {\n  maps(email: $e
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "query SpaceGroups($mapId: ID!) {\n  spaceGroups: mapSpaceGroups(mapId: $mapId) {\n    id\n    name\n    prefix\n  }\n}"): (typeof documents)["query SpaceGroups($mapId: ID!) {\n  spaceGroups: mapSpaceGroups(mapId: $mapId) {\n    id\n    name\n    prefix\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "query User($email: String!) {\n  user(email: $email) {\n    id\n    email\n    viewedSetup\n  }\n}\n\nmutation UpdateUserSettings($userSettings: UserSettingsInput!) {\n  user: updateUserSettings(settings: $userSettings) {\n    id\n    email\n    viewedSetup\n  }\n}"): (typeof documents)["query User($email: String!) {\n  user(email: $email) {\n    id\n    email\n    viewedSetup\n  }\n}\n\nmutation UpdateUserSettings($userSettings: UserSettingsInput!) {\n  user: updateUserSettings(settings: $userSettings) {\n    id\n    email\n    viewedSetup\n  }\n}"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
