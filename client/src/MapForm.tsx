@@ -22,7 +22,6 @@ const MapForm = () => {
 			createMap({
 				variables: { title, email: user.email },
 				onCompleted: (data) => {
-					console.log('Create new map');
 					if (data?.map) {
 						navigate(`/map/${data.map.id}`);
 					}
