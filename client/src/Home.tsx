@@ -16,6 +16,7 @@ export const Home = () => {
 	const { setIsOpen } = useTour();
 
 	const { user } = useSdUser();
+
 	const email = user?.email;
 	const skipLoad = !user?.email;
 
@@ -64,7 +65,6 @@ export const Home = () => {
 	}
 
 	if (user && !user.viewedSetup) {
-		console.log('Set is open', user.viewedSetup);
 		setIsOpen(true);
 	} else {
 		setIsOpen(false);
