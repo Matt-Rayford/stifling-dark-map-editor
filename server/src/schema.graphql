@@ -5,6 +5,7 @@ type Query {
 	mapSpaceGroups(mapId: ID!): [SpaceGroup!]
 	mapSpaces(mapId: ID!): [Space]
 	spaceTypes: [SpaceType]
+	user(email: String!): User!
 }
 
 type Mutation {
@@ -16,6 +17,7 @@ type Mutation {
 	deleteSpace(mapId: ID!, spaceId: ID!): Boolean
 	renameMap(mapId: ID!, mapName: String!): String
 	updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
+	updateUserSettings(settings: UserSettingsInput!): User
 	updateSpace(space: SpaceInput!): Space
 	updateMapSpaceGroup(mapId: ID!, group: SpaceGroupInput!): SpaceGroup
 	uploadMapImage(mapId: ID!, imageUrl: String!): String
@@ -77,20 +79,26 @@ type Space {
 }
 
 type SpaceSetting {
-	id: String!
+	id: ID!
 	name: String!
 	imageUrl: String
 	fontColor: String
 	spaceColor: String
 }
 
-input CreateMapInput {
-	title: String
+type User {
+	id: ID!
+	email: ID!
+	viewedSetup: Boolean!
 }
 
 ################################
 #         INPUT TYPES          #
 ################################
+input CreateMapInput {
+	title: String
+}
+
 input MapSettingsInput {
 	backgroundImageUrl: String
 	spaceColor: String
@@ -115,4 +123,9 @@ input SpaceGroupInput {
 	id: ID
 	name: String!
 	prefix: String!
+}
+
+input UserSettingsInput {
+	email: String!
+	viewedSetup: Boolean
 }

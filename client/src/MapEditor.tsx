@@ -20,6 +20,7 @@ import { loadImage, toDataURL } from './utils/image';
 import { useQuery } from '@apollo/client';
 import { LoadMapDocument, LoadMapQuery } from './graphql/__generated__/graphql';
 import { useTour } from '@reactour/tour';
+import { useSdUser } from './contexts/user-context';
 
 export const MapEditor = () => {
 	const [map, setMap] = useState<LoadMapQuery['map']>();
@@ -36,6 +37,7 @@ export const MapEditor = () => {
 	const selectedObject = useRef<Space>();
 	const highlightedObject = useRef<Space>();
 
+	const { user } = useSdUser();
 	const { mapId } = useParams();
 	const { setIsOpen, setCurrentStep } = useTour();
 
@@ -59,7 +61,6 @@ export const MapEditor = () => {
 	useEffect(() => {
 		if (map) {
 			setCurrentStep(1);
-			setIsOpen(true);
 			const { spaceMap, objects } = setupSpaces(map.spaces, map.settings);
 
 			setObjects(objects);

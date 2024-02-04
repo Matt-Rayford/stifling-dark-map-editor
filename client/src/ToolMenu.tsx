@@ -6,6 +6,7 @@ import SpaceSettings from './SpaceSettings';
 import { renumberSpaces, updateSpaceColor } from './utils/canvas';
 import { Space } from './models/space';
 import { Map as SDMap } from './graphql/__generated__/graphql';
+import { useTour } from '@reactour/tour';
 
 let isDragging = false;
 const mousePos = { x: 0, y: 0 };
@@ -29,6 +30,7 @@ const ToolMenu = ({
 }: Props) => {
 	const [currentTab, setCurrentTab] = useState('map-settings');
 	const [spaceGroups, setSpaceGroups] = useState(map.spaceGroups);
+	const { setCurrentStep } = useTour();
 
 	useEffect(() => {
 		const optionsBanner = document.getElementById('settings-banner')!;
@@ -89,6 +91,15 @@ const ToolMenu = ({
 		setSpaceGroups(map.spaceGroups);
 	};
 
+	const handleTourUpdate = (tabName: string | null) => {
+		if (tabName === 'space') {
+			setCurrentStep(5);
+		}
+		if (tabName === 'tools') {
+			setCurrentStep(10);
+		}
+	};
+
 	return (
 		<div
 			id='settings'
@@ -112,14 +123,18 @@ const ToolMenu = ({
 			>
 				Settings
 			</h3>
-			<Tabs defaultActiveKey='map-settings' id='settings-tabs'>
+			<Tabs
+				defaultActiveKey='map-settings'
+				id='settings-tabs'
+				onSelect={handleTourUpdate}
+			>
 				{selectedObject && (
 					<Tab eventKey='space' title={getSpaceLabel(selectedObject)}>
 						<SpaceSettings
 							space={selectedObject}
 							mapId={map.id}
 							onGenerateDistances={onGenerateDistances}
-							onUpdateGroup={() => updateGroup()}
+							onUpdateGroup={updateGroup}
 							onDisableDistances={onDisableDistances}
 						/>
 					</Tab>

@@ -3,6 +3,7 @@ import { getMap, getMaps } from './map';
 import { getMapSpaces } from './space';
 import { getMapSpaceGroups } from './space-group';
 import { getSpaceTypes } from './space-type';
+import { getUser } from './user';
 
 export const Query = {
 	lightLevels: () => getLightLevels(),
@@ -12,4 +13,5 @@ export const Query = {
 		getMapSpaceGroups(mapId),
 	mapSpaces: (root, { mapId }: { mapId: string }) => getMapSpaces(mapId),
 	spaceTypes: () => getSpaceTypes(),
+	user: (root, { email }: { email: string }) => getUser(email),
 };

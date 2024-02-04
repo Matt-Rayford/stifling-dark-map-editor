@@ -1,0 +1,15 @@
+query User($email: String!) {
+	user(email: $email) {
+		id
+		email
+		viewedSetup
+	}
+}
+
+mutation UpdateUserSettings($userSettings: UserSettingsInput!) {
+	user: updateUserSettings(settings: $userSettings) {
+		id
+		email
+		viewedSetup
+	}
+}

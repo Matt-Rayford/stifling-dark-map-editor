@@ -7,21 +7,23 @@ import {
 	LoadMapsDocument,
 	Map as SDMap,
 } from './graphql/__generated__/graphql';
+import { useSdUser } from './contexts/user-context';
 
 export const Home = () => {
 	const [maps, setMaps] = useState<Pick<SDMap, 'id' | 'title'>[]>([]);
 	const navigate = useNavigate();
-	const { isLoading, error, user, loginWithRedirect } = useAuth0();
+	const { isLoading, error, loginWithRedirect } = useAuth0();
 	const { setIsOpen } = useTour();
 
-	const skipQuery = !user?.email;
+	const { user } = useSdUser();
 	const email = user?.email;
+	const skipLoad = !user?.email;
 
 	const { data, loading } = useQuery(LoadMapsDocument, {
 		variables: {
 			email: email!,
 		},
-		skip: skipQuery,
+		skip: skipLoad,
 	});
 
 	/*
@@ -61,8 +63,11 @@ export const Home = () => {
 		return <div>Loading...</div>;
 	}
 
-	if (user) {
+	if (user && !user.viewedSetup) {
+		console.log('Set is open', user.viewedSetup);
 		setIsOpen(true);
+	} else {
+		setIsOpen(false);
 	}
 
 	return (

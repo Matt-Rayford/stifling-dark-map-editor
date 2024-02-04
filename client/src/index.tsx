@@ -9,8 +9,7 @@ import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
-import { TourProvider } from '@reactour/tour';
-import { newUserSteps } from './tours/new-user-steps';
+import { UserProvider } from './contexts/user-context';
 
 const link = createHttpLink({
 	uri: process.env.REACT_APP_GRAPHQL_ENDPOINT_URL,
@@ -35,11 +34,11 @@ const root = createRoot(document.getElementById('root')!);
 root.render(
 	<Auth0Provider {...oAuthProviderConfig}>
 		<ApolloProvider client={apollClient}>
-			<TourProvider steps={newUserSteps}>
+			<UserProvider>
 				<BrowserRouter>
 					<App />
 				</BrowserRouter>
-			</TourProvider>
+			</UserProvider>
 		</ApolloProvider>
 	</Auth0Provider>
 );

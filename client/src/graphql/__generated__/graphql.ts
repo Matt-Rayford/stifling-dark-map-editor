@@ -73,6 +73,7 @@ export type Mutation = {
   updateMapSettings?: Maybe<Map>;
   updateMapSpaceGroup?: Maybe<SpaceGroup>;
   updateSpace?: Maybe<Space>;
+  updateUserSettings?: Maybe<User>;
   uploadMapImage?: Maybe<Scalars['String']['output']>;
 };
 
@@ -136,6 +137,11 @@ export type MutationUpdateSpaceArgs = {
 };
 
 
+export type MutationUpdateUserSettingsArgs = {
+  settings: UserSettingsInput;
+};
+
+
 export type MutationUploadMapImageArgs = {
   imageUrl: Scalars['String']['input'];
   mapId: Scalars['ID']['input'];
@@ -149,6 +155,7 @@ export type Query = {
   mapSpaces?: Maybe<Array<Maybe<Space>>>;
   maps: Array<Map>;
   spaceTypes?: Maybe<Array<Maybe<SpaceType>>>;
+  user: User;
 };
 
 
@@ -168,6 +175,11 @@ export type QueryMapSpacesArgs = {
 
 
 export type QueryMapsArgs = {
+  email: Scalars['String']['input'];
+};
+
+
+export type QueryUserArgs = {
   email: Scalars['String']['input'];
 };
 
@@ -210,7 +222,7 @@ export type SpaceInput = {
 export type SpaceSetting = {
   __typename?: 'SpaceSetting';
   fontColor?: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   imageUrl?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
   spaceColor?: Maybe<Scalars['String']['output']>;
@@ -223,6 +235,18 @@ export type SpaceType = {
   iconUrl?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+};
+
+export type User = {
+  __typename?: 'User';
+  email: Scalars['ID']['output'];
+  id: Scalars['ID']['output'];
+  viewedSetup: Scalars['Boolean']['output'];
+};
+
+export type UserSettingsInput = {
+  email: Scalars['String']['input'];
+  viewedSetup?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type CreateMapMutationVariables = Exact<{
@@ -254,8 +278,24 @@ export type SpaceGroupsQueryVariables = Exact<{
 
 export type SpaceGroupsQuery = { __typename?: 'Query', spaceGroups?: Array<{ __typename?: 'SpaceGroup', id: string, name: string, prefix: string }> | null };
 
+export type UserQueryVariables = Exact<{
+  email: Scalars['String']['input'];
+}>;
+
+
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, email: string, viewedSetup: boolean } };
+
+export type UpdateUserSettingsMutationVariables = Exact<{
+  userSettings: UserSettingsInput;
+}>;
+
+
+export type UpdateUserSettingsMutation = { __typename?: 'Mutation', user?: { __typename?: 'User', id: string, email: string, viewedSetup: boolean } | null };
+
 
 export const CreateMapDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMap"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"map"},"name":{"kind":"Name","value":"createMap"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<CreateMapMutation, CreateMapMutationVariables>;
 export const LoadMapsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LoadMaps"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"maps"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<LoadMapsQuery, LoadMapsQueryVariables>;
 export const LoadMapDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LoadMap"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"map"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"settings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"backgroundImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"spaceColor"}},{"kind":"Field","name":{"kind":"Name","value":"horizontalSpacing"}},{"kind":"Field","name":{"kind":"Name","value":"verticalSpacing"}},{"kind":"Field","name":{"kind":"Name","value":"indent"}},{"kind":"Field","name":{"kind":"Name","value":"paddingX"}},{"kind":"Field","name":{"kind":"Name","value":"paddingY"}},{"kind":"Field","name":{"kind":"Name","value":"spaceRadius"}}]}},{"kind":"Field","name":{"kind":"Name","value":"spaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"number"}},{"kind":"Field","name":{"kind":"Name","value":"displayNumber"}},{"kind":"Field","name":{"kind":"Name","value":"type"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lightLevel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"movementPoints"}}]}},{"kind":"Field","name":{"kind":"Name","value":"row"}},{"kind":"Field","name":{"kind":"Name","value":"col"}},{"kind":"Field","name":{"kind":"Name","value":"connections"}},{"kind":"Field","name":{"kind":"Name","value":"isDeleted"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"prefix"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"spaceGroups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"prefix"}}]}}]}}]}}]} as unknown as DocumentNode<LoadMapQuery, LoadMapQueryVariables>;
 export const SpaceGroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SpaceGroups"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mapId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"spaceGroups"},"name":{"kind":"Name","value":"mapSpaceGroups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"mapId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mapId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"prefix"}}]}}]}}]} as unknown as DocumentNode<SpaceGroupsQuery, SpaceGroupsQueryVariables>;
+export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"viewedSetup"}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
+export const UpdateUserSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUserSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userSettings"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserSettingsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"updateUserSettings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"settings"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userSettings"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"viewedSetup"}}]}}]}}]} as unknown as DocumentNode<UpdateUserSettingsMutation, UpdateUserSettingsMutationVariables>;
