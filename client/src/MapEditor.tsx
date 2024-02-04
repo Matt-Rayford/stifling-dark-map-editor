@@ -60,7 +60,10 @@ export const MapEditor = () => {
 
 	useEffect(() => {
 		if (map) {
-			setCurrentStep(1);
+			if (!user?.viewedSetup) {
+				setCurrentStep(1);
+				setIsOpen(true);
+			}
 			const { spaceMap, objects } = setupSpaces(map.spaces, map.settings);
 
 			setObjects(objects);

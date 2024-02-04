@@ -25,6 +25,7 @@ export const Home = () => {
 			email: email!,
 		},
 		skip: skipLoad,
+		pollInterval: 5000,
 	});
 
 	/*

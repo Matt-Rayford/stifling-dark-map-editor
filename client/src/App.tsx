@@ -14,7 +14,8 @@ export const App = () => {
 		<TourProvider
 			defaultOpen={false}
 			steps={newUserSteps}
-			beforeClose={() => {
+			onClickClose={({ setIsOpen }) => {
+				setIsOpen(false);
 				if (closeSetupGuide) {
 					closeSetupGuide();
 				}
