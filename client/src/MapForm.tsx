@@ -1,31 +1,34 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
 import { useMutation } from '@apollo/client';
 import { CreateMapDocument } from './graphql/__generated__/graphql';
 import { useTour } from '@reactour/tour';
+import { useSdUser } from './contexts/user-context';
 
 const MapForm = () => {
-	const { user } = useAuth0();
+	const { user } = useSdUser();
 	const { setIsOpen } = useTour();
 	const [title, setMapTitle] = useState('');
 	const navigate = useNavigate();
 
-	const [createMap, { data }] = useMutation(CreateMapDocument);
+	console.log('User: ', user);
+	const [createMap] = useMutation(CreateMapDocument);
 
 	useEffect(() => {
 		setIsOpen(false);
 	}, []);
 
-	useEffect(() => {
-		if (data?.map) {
-			navigate(`/map/${data.map.id}`);
-		}
-	}, [data]);
-
 	const handleSubmit = useCallback(() => {
 		if (user?.email && title) {
-			createMap({ variables: { title, email: user.email } });
+			createMap({
+				variables: { title, email: user.email },
+				onCompleted: (data) => {
+					console.log('Create new map');
+					if (data?.map) {
+						navigate(`/map/${data.map.id}`);
+					}
+				},
+			});
 		}
 	}, []);
 

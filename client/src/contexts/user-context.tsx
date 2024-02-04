@@ -33,7 +33,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		},
 		skip,
 		onCompleted: (data) => {
-			console.log('Trigger new user doc');
 			if (data.user) {
 				setSdUser(data.user);
 			}
