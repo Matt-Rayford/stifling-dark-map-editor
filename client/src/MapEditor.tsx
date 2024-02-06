@@ -76,7 +76,6 @@ export const MapEditor = () => {
 				setCurrentStep(1);
 				setIsOpen(true);
 			}
-			console.log('Setup spaces: ', map.spaces);
 			const { spaceMap, objects } = setupSpaces(map.spaces, map.settings);
 
 			setObjects(objects);
