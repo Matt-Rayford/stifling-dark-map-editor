@@ -6,6 +6,7 @@ import { NewConnection } from '../models/connection';
 import { MousePos } from '../models/mouse-pos';
 import { Space } from '../models/space';
 import { MAP_CONSTANTS } from './constants';
+import { imageUrlMap } from './image';
 
 export const setupSpaces = (
 	existingSpaces: DBSpace[] = [],
@@ -266,18 +267,18 @@ export const drawSpaces = (
 				ctx.strokeStyle = '#1600BA';
 			}*/
 
-			/*
-			if (space.type.image) {
+			if (space.type.iconUrl && imageUrlMap.has(space.type.iconUrl)) {
 				drawImage(
-				ctx,
-				space.center.x - space.radius,
-				space.center.y - space.radius,
-				imageMap.get(space.spaceType.image)
-			);
+					ctx,
+					space.center.x - space.radius,
+					space.center.y - space.radius,
+					space.radius * 2,
+					space.radius * 2,
+					imageUrlMap.get(space.type.iconUrl) as CanvasImageSource
+				);
+			} else {
+				drawCircle(ctx, space.center.x, space.center.y, space.radius);
 			}
-			*/
-
-			drawCircle(ctx, space.center.x, space.center.y, space.radius);
 
 			let spaceText = `${space.displayNumber}`;
 			if (space.group) {

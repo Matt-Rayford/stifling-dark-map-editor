@@ -1,0 +1,6 @@
+query SpaceTypes {
+	spaceTypes {
+		id
+		iconUrl
+	}
+}

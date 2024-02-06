@@ -25,6 +25,7 @@ query LoadMap($id: ID!) {
 			displayNumber
 			type {
 				id
+				iconUrl
 				color
 				name
 				description

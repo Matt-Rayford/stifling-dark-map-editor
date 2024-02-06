@@ -114,6 +114,7 @@ input SpaceInput {
 	id: ID!
 	isDeleted: Boolean
 	groupId: ID
+	typeId: ID
 	lightLevelId: ID
 	spaceGroupId: ID
 	connections: [Int]

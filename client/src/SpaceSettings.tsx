@@ -141,11 +141,11 @@ const SpaceSettings = ({
 					<select
 						value={space.type.id}
 						className='form-select'
-						onChange={(e) =>
+						onChange={(e) => {
 							updateSpaceType(
 								spaceTypes.find((spaceType) => spaceType.id === e.target.value)
-							)
-						}
+							);
+						}}
 					>
 						<option value='' disabled>
 							Select Type...

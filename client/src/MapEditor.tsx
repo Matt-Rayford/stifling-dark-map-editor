@@ -15,12 +15,16 @@ import { connectSpaces, deleteSpace } from './utils/requests';
 import { Space } from './models/space';
 import { MousePos } from './models/mouse-pos';
 import { NewConnection } from './models/connection';
-//import { SDMap } from './models/map';
 import { loadImage, toDataURL } from './utils/image';
 import { useQuery } from '@apollo/client';
-import { LoadMapDocument, LoadMapQuery } from './graphql/__generated__/graphql';
+import {
+	LoadMapDocument,
+	LoadMapQuery,
+	SpaceTypesDocument,
+} from './graphql/__generated__/graphql';
 import { useTour } from '@reactour/tour';
 import { useSdUser } from './contexts/user-context';
+import { initializeSpaceTypes } from './utils/space-types';
 
 export const MapEditor = () => {
 	const [map, setMap] = useState<LoadMapQuery['map']>();
@@ -46,6 +50,8 @@ export const MapEditor = () => {
 		skip: !mapId,
 	});
 
+	const { data: spaceTypesData } = useQuery(SpaceTypesDocument);
+
 	useEffect(() => {
 		return () => {
 			clearInterval(timer);
@@ -59,11 +65,18 @@ export const MapEditor = () => {
 	}, [data]);
 
 	useEffect(() => {
+		if (spaceTypesData?.spaceTypes && map?.settings.spaceRadius) {
+			initializeSpaceTypes(spaceTypesData.spaceTypes, map.settings.spaceRadius);
+		}
+	}, [map, spaceTypesData]);
+
+	useEffect(() => {
 		if (map) {
 			if (user && !user?.viewedSetup) {
 				setCurrentStep(1);
 				setIsOpen(true);
 			}
+			console.log('Setup spaces: ', map.spaces);
 			const { spaceMap, objects } = setupSpaces(map.spaces, map.settings);
 
 			setObjects(objects);
