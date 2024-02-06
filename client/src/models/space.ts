@@ -158,4 +158,8 @@ export class Space {
 		this.selected = false;
 		this.highlighted = false;
 	}
+
+	revive() {
+		this.isDeleted = false;
+	}
 }

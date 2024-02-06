@@ -60,7 +60,7 @@ export const MapEditor = () => {
 
 	useEffect(() => {
 		if (map) {
-			if (!user?.viewedSetup) {
+			if (user && !user?.viewedSetup) {
 				setCurrentStep(1);
 				setIsOpen(true);
 			}
@@ -151,19 +151,17 @@ export const MapEditor = () => {
 			mousePos.current = { x: newMousePos.x, y: newMousePos.y };
 
 			for (let curObject of objects) {
-				if (!curObject.isDeleted) {
-					curObject.unHighlight();
-					if (curObject.objectType == ObjectType.SPACE) {
-						if (isMouseInObject(newMousePos, curObject)) {
-							if (highlightedObject.current?.id !== curObject.id) {
-								highlightedObject.current = curObject;
-								curObject.highlight();
-								break;
-							}
-						} else {
-							if (highlightedObject.current) {
-								highlightedObject.current = undefined;
-							}
+				curObject.unHighlight();
+				if (curObject.objectType == ObjectType.SPACE) {
+					if (isMouseInObject(newMousePos, curObject)) {
+						if (highlightedObject.current?.id !== curObject.id) {
+							highlightedObject.current = curObject;
+							curObject.highlight();
+							break;
+						}
+					} else {
+						if (highlightedObject.current) {
+							highlightedObject.current = undefined;
 						}
 					}
 				}
@@ -237,6 +235,19 @@ export const MapEditor = () => {
 						newConnection.current.fromSpace.id,
 						highlightedObject.current.id
 					);
+					if (
+						(highlightedObject.current.isDeleted ||
+							newConnection.current.fromSpace.isDeleted) &&
+						spaceMap
+					) {
+						if (highlightedObject.current.isDeleted) {
+							highlightedObject.current.revive();
+						}
+						if (newConnection.current.fromSpace.isDeleted) {
+							newConnection.current.fromSpace.revive();
+						}
+						renumberSpaces(spaceMap, map?.spaceGroups ?? []);
+					}
 				}
 				newConnection.current = undefined;
 			} else {
