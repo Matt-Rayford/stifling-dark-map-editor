@@ -17,6 +17,7 @@
 		"@reactour/tour": "^3.6.1",
 		"aws-sdk": "^2.1536.0",
 		"bootstrap": "^5.3.2",
+		"bootstrap-icons": "^1.11.3",
 		"graphql": "^16.8.1",
 		"jquery": "^3.7.1",
 		"merge-images": "^2.0.0",
