@@ -25,6 +25,7 @@ import {
 import { useTour } from '@reactour/tour';
 import { useSdUser } from './contexts/user-context';
 import { initializeSpaceTypes } from './utils/space-types';
+import { ToolsDrawer } from './ToolsDrawer';
 
 export const MapEditor = () => {
 	const [map, setMap] = useState<LoadMapQuery['map']>();
@@ -311,6 +312,18 @@ export const MapEditor = () => {
 
 	return (
 		<div>
+			<ToolsDrawer
+				activeSpace={selectedSpace}
+				map={map}
+				spaceMap={spaceMap!}
+				onUpdateBackgroundImage={(backgroundImageUrl: string) =>
+					drawMap(backgroundImageUrl)
+				}
+				onGenerateDistances={(newDistances: Map<number, number>) =>
+					updateDistances(newDistances)
+				}
+				onDisableDistances={() => disableDistances()}
+			/>
 			<ToolMenu
 				map={map}
 				spaceMap={spaceMap!}

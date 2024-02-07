@@ -12,7 +12,10 @@ const NavBar = () => {
 		});
 
 	return (
-		<nav className='navbar navbar-expand-lg navbar-dark bg-dark px-2'>
+		<nav
+			className='navbar navbar-expand-lg navbar-dark bg-dark px-2'
+			style={{ zIndex: 100 }}
+		>
 			<Link className='navbar-brand' to='/'>
 				Map Editor
 			</Link>

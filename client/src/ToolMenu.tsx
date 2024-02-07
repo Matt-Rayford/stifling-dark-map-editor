@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import Settings from './Settings';
+import Settings from './MapSettings';
 import SpaceGroupSettings from './SpaceGroupSettings';
 import SpaceSettings from './SpaceSettings';
 import { renumberSpaces, updateSpaceColor } from './utils/canvas';
