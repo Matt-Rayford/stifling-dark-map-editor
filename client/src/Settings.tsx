@@ -38,20 +38,39 @@ const Settings = ({
 	};
 
 	const onDownload = () => {
-		const backgroundCanvas = document.getElementById('mapLayer');
-		// @ts-expect-error toDataURL exists on the canvas
+		const backgroundCanvas = document.getElementById(
+			'mapLayer'
+		) as HTMLCanvasElement;
 		const backgroundImage = backgroundCanvas.toDataURL();
 
-		const canvas = document.getElementById('canvasEditor');
-		// @ts-expect-error toDataURL exists on the canvas
-		const canvasImage = canvas.toDataURL();
+		const canvas = document.getElementById('canvasEditor') as HTMLCanvasElement;
 
-		mergeImages([backgroundImage, canvasImage]).then((b64) => {
-			const downloadLink = document.createElement('a');
-			downloadLink.download = `${name ?? 'map'}.png`;
-			downloadLink.href = b64;
-			downloadLink.click();
-		});
+		if (canvas && backgroundCanvas) {
+			canvas.width = 7000;
+			canvas.height = 7000;
+			backgroundCanvas.width = 7000;
+			backgroundCanvas.height = 7000;
+
+			const ctx = canvas.getContext('2d')! as CanvasRenderingContext2D;
+			const backgroundCtx = backgroundCanvas.getContext(
+				'2d'
+			)! as CanvasRenderingContext2D;
+
+			const canvasImage = canvas.toDataURL();
+			ctx.scale(1.5, 1.5);
+
+			/*mergeImages([backgroundImage, canvasImage]).then((b64) => {
+				const downloadLink = document.createElement('a');
+				downloadLink.download = `${name ?? 'map'}.png`;
+				downloadLink.href = b64;
+				downloadLink.click();
+
+				canvas.width = 1310;
+				canvas.height = 1310;
+				backgroundCanvas.width = 1310;
+				backgroundCanvas.height = 1310;
+			});*/
+		}
 	};
 
 	const handleImageUpdate = async (file?: File) => {

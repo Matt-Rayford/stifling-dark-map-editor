@@ -4,12 +4,10 @@ import { useParams } from 'react-router-dom';
 import { ObjectType } from './models/object';
 import ToolMenu from './ToolMenu';
 import {
-	getMousePos,
 	redraw,
-	redrawMap,
 	setupSpaces,
-	clearCanvas,
 	renumberSpaces,
+	updateMousePos,
 } from './utils/canvas';
 import { connectSpaces, deleteSpace } from './utils/requests';
 import { Space } from './models/space';
@@ -25,25 +23,38 @@ import {
 import { useTour } from '@reactour/tour';
 import { useSdUser } from './contexts/user-context';
 import { initializeSpaceTypes } from './utils/space-types';
+import { useMapContext } from './utils/map-context';
 
 export const MapEditor = () => {
 	const [map, setMap] = useState<LoadMapQuery['map']>();
-	const [spaceMap, setSpaceMap] = useState<Map<number, Space>>();
 	const [timer, setTimer] = useState<NodeJS.Timeout>();
 	const [selectedSpace, setSelectedSpace] = useState<Space>();
 	const [canvas, setCanvas] = useState<HTMLCanvasElement>();
 	const [objects, setObjects] = useState<any[]>([]);
 	const [isDragging, setIsDragging] = useState(false);
 
-	const distanceMap = useRef<Map<number, number>>();
-	const newConnection = useRef<NewConnection>();
-	const mousePos = useRef<MousePos>();
 	const selectedObject = useRef<Space>();
 	const highlightedObject = useRef<Space>();
 
 	const { user } = useSdUser();
 	const { mapId } = useParams();
 	const { setIsOpen, setCurrentStep } = useTour();
+	const {
+		canvasWidth,
+		canvasHeight,
+		distanceMap,
+		mapCanvas,
+		mapCtx,
+		mousePos,
+		newConnection,
+		spaceMap,
+		clearBackground,
+		setBackgroundImage,
+		setBackgroundCanvas,
+		setMapCanvas,
+		setSpaceColor,
+		setSpaceMap,
+	} = useMapContext();
 
 	const { data } = useQuery(LoadMapDocument, {
 		variables: { id: mapId! },
@@ -71,7 +82,26 @@ export const MapEditor = () => {
 	}, [map, spaceTypesData]);
 
 	useEffect(() => {
-		if (map) {
+		const backgroundCanvas = document.getElementById(
+			'mapLayer'
+		) as HTMLCanvasElement;
+
+		const mapCanvas = document.getElementById(
+			'canvasEditor'
+		) as HTMLCanvasElement;
+
+		if (mapCanvas && backgroundCanvas) {
+			setBackgroundCanvas(backgroundCanvas);
+			setMapCanvas(mapCanvas);
+		}
+
+		if (map?.settings.spaceColor) {
+			setSpaceColor(map.settings.spaceColor);
+		}
+	}, [map]);
+
+	useEffect(() => {
+		if (map && mapCanvas && mapCtx) {
 			if (user && !user?.viewedSetup) {
 				setCurrentStep(1);
 				setIsOpen(true);
@@ -84,30 +114,13 @@ export const MapEditor = () => {
 				renumberSpaces(spaceMap, map.spaceGroups);
 			}
 
-			//@ts-ignore
-			const canvas: HTMLCanvasElement =
-				document.getElementById('canvasEditor')!;
-			const ctx = canvas.getContext('2d')!;
-
 			if (map.settings.backgroundImageUrl) {
-				drawMap(map.settings.backgroundImageUrl);
+				generateMapImage(map.settings.backgroundImageUrl);
 			}
-			const animationTimer = setInterval(() => {
-				redraw(
-					canvas,
-					ctx,
-					spaceMap,
-					map.settings.spaceColor,
-					mousePos.current ?? { x: 0, y: 0 },
-					newConnection.current,
-					distanceMap.current
-				);
-			}, 30);
 
-			setTimer(animationTimer);
 			setMap(map);
 			setSpaceMap(spaceMap);
-			setCanvas(canvas);
+			setCanvas(mapCanvas);
 
 			document.addEventListener('keyup', (event) => {
 				var key = event.key.toLowerCase();
@@ -155,17 +168,17 @@ export const MapEditor = () => {
 				}
 			});
 		}
-	}, [map]);
+	}, [map, mapCanvas, mapCtx]);
 
 	if (canvas) {
 		canvas.addEventListener('mousemove', (event) => {
-			const newMousePos = getMousePos(event, canvas);
-			mousePos.current = { x: newMousePos.x, y: newMousePos.y };
+			const newMousePos = updateMousePos(event, canvas, mousePos.current);
+			//mousePos.current.x = { x: newMousePos.x, y: newMousePos.y };
 
 			for (let curObject of objects) {
 				curObject.unHighlight();
 				if (curObject.objectType == ObjectType.SPACE) {
-					if (isMouseInObject(newMousePos, curObject)) {
+					if (isMouseInObject(mousePos.current, curObject)) {
 						if (highlightedObject.current?.id !== curObject.id) {
 							highlightedObject.current = curObject;
 							curObject.highlight();
@@ -181,10 +194,9 @@ export const MapEditor = () => {
 		});
 
 		canvas.addEventListener('mousedown', (event) => {
-			const newMousePos = getMousePos(event, canvas);
-			mousePos.current = { x: newMousePos.x, y: newMousePos.y };
+			updateMousePos(event, canvas, mousePos.current);
 
-			if (isMouseInObject(newMousePos, highlightedObject.current)) {
+			if (isMouseInObject(mousePos.current, highlightedObject.current)) {
 				if (newConnection.current) {
 					if (
 						highlightedObject.current &&
@@ -226,8 +238,7 @@ export const MapEditor = () => {
 		});
 
 		canvas.addEventListener('mouseup', (event) => {
-			const newMousePos = getMousePos(event, canvas);
-			mousePos.current = { x: newMousePos.x, y: newMousePos.y };
+			updateMousePos(event, canvas, mousePos.current);
 
 			if (
 				newConnection &&
@@ -281,18 +292,15 @@ export const MapEditor = () => {
 		);
 	};
 
-	const drawMap = (backgroundImageUrl: string) => {
-		//@ts-ignore
-		const canvas: HTMLCanvasElement = document.getElementById('mapLayer')!;
-		const ctx = canvas.getContext('2d')!;
+	const generateMapImage = (backgroundImageUrl: string) => {
 		toDataURL(backgroundImageUrl, (b64Image) => {
-			loadImage(String(b64Image), canvas.width, canvas.height)
+			loadImage(String(b64Image), canvasWidth, canvasHeight)
 				.then((image) => {
-					redrawMap(canvas, ctx, image as CanvasImageSource);
+					setBackgroundImage(image);
 				})
 				.catch((err) => {
 					console.log(err);
-					clearCanvas(canvas, ctx);
+					clearBackground();
 				});
 		});
 	};
@@ -315,7 +323,7 @@ export const MapEditor = () => {
 				map={map}
 				spaceMap={spaceMap!}
 				onUpdateBackgroundImage={(backgroundImageUrl: string) =>
-					drawMap(backgroundImageUrl)
+					generateMapImage(backgroundImageUrl)
 				}
 				selectedObject={selectedSpace}
 				onGenerateDistances={(newDistances: Map<number, number>) =>

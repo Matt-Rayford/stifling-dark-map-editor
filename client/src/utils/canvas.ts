@@ -494,15 +494,20 @@ const drawImage = (
 	ctx.restore();
 };
 
-export const getMousePos = (
+export const updateMousePos = (
 	event: any,
-	canvas: HTMLCanvasElement
-): MousePos => {
+	canvas: HTMLCanvasElement,
+	mousePos: MousePos
+): void => {
 	var rect = canvas.getBoundingClientRect();
+	mousePos.x = event.clientX - rect.left;
+	mousePos.y = event.clientY - rect.top;
+	/*
 	return {
 		x: event.clientX - rect.left,
 		y: event.clientY - rect.top,
 	};
+	*/
 };
 
 export const renumberSpaces = (
