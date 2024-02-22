@@ -6,6 +6,7 @@ import NavBar from './NavBar';
 import { TourProvider } from '@reactour/tour';
 import { newUserSteps } from './tours/new-user-steps';
 import { useSdUser } from './contexts/user-context';
+import { MapContextProvider } from './utils/map-context';
 
 export const App = () => {
 	const { closeSetupGuide } = useSdUser();
@@ -21,16 +22,18 @@ export const App = () => {
 				}
 			}}
 		>
-			<NavBar />
-			<section className='section'>
-				<div className='container'>
-					<Routes>
-						<Route path='/' element={<Home />} />
-						<Route path='/map/:mapId' element={<MapEditor />} />
-						<Route path='/maps/new' element={<MapForm />} />
-					</Routes>
-				</div>
-			</section>
+			<MapContextProvider>
+				<NavBar />
+				<section className='section'>
+					<div className='container'>
+						<Routes>
+							<Route path='/' element={<Home />} />
+							<Route path='/map/:mapId' element={<MapEditor />} />
+							<Route path='/maps/new' element={<MapForm />} />
+						</Routes>
+					</div>
+				</section>
+			</MapContextProvider>
 		</TourProvider>
 	);
 };
