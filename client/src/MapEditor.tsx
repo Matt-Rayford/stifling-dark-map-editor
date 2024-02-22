@@ -52,6 +52,7 @@ export const MapEditor = () => {
 		setBackgroundImage,
 		setBackgroundCanvas,
 		setMapCanvas,
+		setOutputCanvas,
 		setSpaceColor,
 		setSpaceMap,
 	} = useMapContext();
@@ -90,9 +91,14 @@ export const MapEditor = () => {
 			'canvasEditor'
 		) as HTMLCanvasElement;
 
-		if (mapCanvas && backgroundCanvas) {
+		const outputCanvas = document.getElementById(
+			'outputImage'
+		) as HTMLCanvasElement;
+
+		if (mapCanvas && backgroundCanvas && outputCanvas) {
 			setBackgroundCanvas(backgroundCanvas);
 			setMapCanvas(mapCanvas);
+			setOutputCanvas(outputCanvas);
 		}
 
 		if (map?.settings.spaceColor) {
@@ -334,20 +340,32 @@ export const MapEditor = () => {
 			<h1>{map.title}</h1>
 			<div style={{ position: 'relative' }}>
 				<canvas
+					id='outputImage'
+					width='7200'
+					height='7200'
+					style={{
+						position: 'absolute',
+						top: '0',
+						zIndex: '0',
+						visibility: 'hidden',
+						display: 'none',
+					}}
+				/>
+				<canvas
 					id='mapLayer'
-					width='1310'
-					height='1310'
+					width={canvasWidth}
+					height={canvasHeight}
 					style={{
 						position: 'absolute',
 						top: '0',
 						border: '2px solid #000',
-						zIndex: '0',
+						zIndex: '5',
 					}}
 				/>
 				<canvas
 					id='canvasEditor'
-					width='1310'
-					height='1310'
+					width={canvasWidth}
+					height={canvasHeight}
 					style={{
 						position: 'absolute',
 						top: '0',

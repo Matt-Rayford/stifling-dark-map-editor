@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import AWS from 'aws-sdk';
-import mergeImages from 'merge-images';
 import { updateSpaceColor } from './utils/canvas';
 import { updateMapSettings, uploadMapImage } from './utils/requests';
 
 import { Space } from './models/space';
 import { MapSettings } from './graphql/__generated__/graphql';
-import { useTour } from '@reactour/tour';
+import { useMapContext } from './utils/map-context';
 
 interface Props {
 	name: string;
@@ -23,9 +22,12 @@ const Settings = ({
 	mapSettings,
 	onUpdateBackgroundImage,
 }: Props) => {
+	const [downloading, setIsDownloading] = useState(false);
 	const [origSettings, setOrigSettings] = useState<MapSettings>(mapSettings);
 	const [curMapSettings, setCurMapSettings] =
 		useState<MapSettings>(mapSettings);
+
+	const { outputCanvas, generateMapImage } = useMapContext();
 
 	const onSave = () => {
 		updateMapSettings(mapId, curMapSettings);
@@ -37,39 +39,18 @@ const Settings = ({
 		handleColorUpdate(origSettings.spaceColor);
 	};
 
-	const onDownload = () => {
-		const backgroundCanvas = document.getElementById(
-			'mapLayer'
-		) as HTMLCanvasElement;
-		const backgroundImage = backgroundCanvas.toDataURL();
-
-		const canvas = document.getElementById('canvasEditor') as HTMLCanvasElement;
-
-		if (canvas && backgroundCanvas) {
-			canvas.width = 7000;
-			canvas.height = 7000;
-			backgroundCanvas.width = 7000;
-			backgroundCanvas.height = 7000;
-
-			const ctx = canvas.getContext('2d')! as CanvasRenderingContext2D;
-			const backgroundCtx = backgroundCanvas.getContext(
-				'2d'
-			)! as CanvasRenderingContext2D;
-
-			const canvasImage = canvas.toDataURL();
-			ctx.scale(1.5, 1.5);
-
-			/*mergeImages([backgroundImage, canvasImage]).then((b64) => {
-				const downloadLink = document.createElement('a');
-				downloadLink.download = `${name ?? 'map'}.png`;
-				downloadLink.href = b64;
-				downloadLink.click();
-
-				canvas.width = 1310;
-				canvas.height = 1310;
-				backgroundCanvas.width = 1310;
-				backgroundCanvas.height = 1310;
-			});*/
+	const onDownload = async () => {
+		setIsDownloading(true);
+		if (outputCanvas) {
+			generateMapImage().then((imageUrl) => {
+				if (imageUrl) {
+					const downloadLink = document.createElement('a');
+					downloadLink.download = `${name ?? 'map'}.png`;
+					downloadLink.href = imageUrl;
+					downloadLink.click();
+					setIsDownloading(false);
+				}
+			});
 		}
 	};
 
@@ -209,6 +190,7 @@ const Settings = ({
 						id='download-button'
 						type='button'
 						className='btn btn-secondary w-100'
+						disabled={downloading}
 						onClick={onDownload}
 					>
 						Download

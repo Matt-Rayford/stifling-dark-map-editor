@@ -6,6 +6,7 @@ import {
 	useEffect,
 	useRef,
 	MutableRefObject,
+	useMemo,
 } from 'react';
 
 import { clearCanvas, redraw, redrawMap } from './canvas';
@@ -19,16 +20,19 @@ interface MapContextProps {
 	backgroundCtx?: CanvasRenderingContext2D;
 	canvasWidth: number;
 	canvasHeight: number;
+	distanceMap: MutableRefObject<Map<number, number> | undefined>;
 	mapCanvas?: HTMLCanvasElement;
 	mapCtx?: CanvasRenderingContext2D;
 	spaceMap?: Map<number, Space>;
 	mousePos: MutableRefObject<MousePos>;
 	newConnection: MutableRefObject<NewConnection | undefined>;
-	distanceMap: MutableRefObject<Map<number, number> | undefined>;
+	outputCanvas?: HTMLCanvasElement;
 	clearBackground: () => void;
+	generateMapImage: () => Promise<string | undefined>;
 	setBackgroundImage: (image: HTMLImageElement) => void;
 	setBackgroundCanvas: (canvas: HTMLCanvasElement) => void;
 	setMapCanvas: (canvas: HTMLCanvasElement) => void;
+	setOutputCanvas: (canvas: HTMLCanvasElement) => void;
 	setSpaceMap: (spaceMap: Map<number, Space>) => void;
 	setSpaceColor: (color: string) => void;
 }
@@ -36,13 +40,15 @@ interface MapContextProps {
 const MapContext = createContext<MapContextProps>({
 	canvasWidth: 0,
 	canvasHeight: 0,
+	distanceMap: { current: undefined },
 	mousePos: { current: { x: 0, y: 0 } },
 	newConnection: { current: undefined },
-	distanceMap: { current: undefined },
 	clearBackground: () => {},
+	generateMapImage: () => new Promise((resolve, reject) => {}),
 	setBackgroundImage: () => {},
 	setBackgroundCanvas: () => {},
 	setMapCanvas: () => {},
+	setOutputCanvas: () => {},
 	setSpaceColor: () => {},
 	setSpaceMap: () => {},
 });
@@ -53,10 +59,6 @@ export const MapContextProvider = ({ children }: { children: ReactNode }) => {
 	const [spaceColor, setSpaceColor] = useState('#FFFFFF');
 	const [timer, setTimer] = useState<NodeJS.Timeout>();
 
-	const mousePos = useRef<MousePos>({ x: 0, y: 0 });
-	const newConnection = useRef<NewConnection>();
-	const distanceMap = useRef<Map<number, number>>();
-
 	const [backgroundCanvas, setBackgroundCanvas] = useState<HTMLCanvasElement>();
 	const [backgroundCtx, setBackgroundCtx] =
 		useState<CanvasRenderingContext2D>();
@@ -64,9 +66,15 @@ export const MapContextProvider = ({ children }: { children: ReactNode }) => {
 	const [mapCanvas, setMapCanvas] = useState<HTMLCanvasElement>();
 	const [mapCtx, setMapCtx] = useState<CanvasRenderingContext2D>();
 
+	const [outputCanvas, setOutputCanvas] = useState<HTMLCanvasElement>();
+	const [outputCtx, setOutputCtx] = useState<CanvasRenderingContext2D>();
+
+	const mousePos = useRef<MousePos>({ x: 0, y: 0 });
+	const newConnection = useRef<NewConnection>();
+	const distanceMap = useRef<Map<number, number>>();
+
 	useEffect(() => {
 		if (mapCanvas && mapCtx && spaceMap && spaceColor) {
-			console.log('initialize animation');
 			const animationTimer = setInterval(() => {
 				redraw(
 					mapCanvas,
@@ -92,23 +100,61 @@ export const MapContextProvider = ({ children }: { children: ReactNode }) => {
 			setBackgroundCtx(backgroundCanvas.getContext('2d')!);
 		}
 	}, [backgroundCanvas]);
-
 	useEffect(() => {
 		if (mapCanvas) {
 			setMapCtx(mapCanvas.getContext('2d')!);
 		}
 	}, [mapCanvas]);
+	useEffect(() => {
+		if (outputCanvas) {
+			setOutputCtx(outputCanvas?.getContext('2d')!);
+		}
+	}, [outputCanvas]);
 
 	useEffect(() => {
-		if (backgroundImage && backgroundCanvas && backgroundCtx) {
+		if (
+			backgroundImage &&
+			backgroundCanvas &&
+			backgroundCtx &&
+			outputCanvas &&
+			outputCtx
+		) {
 			redrawMap(backgroundCanvas, backgroundCtx, backgroundImage);
+			redrawMap(outputCanvas, outputCtx, backgroundImage);
 		}
-	}, [backgroundImage]);
+	}, [
+		backgroundImage,
+		backgroundCanvas,
+		backgroundCtx,
+		outputCanvas,
+		outputCtx,
+	]);
 
 	const clearBackground = () => {
 		if (backgroundCanvas && backgroundCtx) {
 			clearCanvas(backgroundCanvas, backgroundCtx);
 		}
+	};
+
+	const generateMapImage = async () => {
+		if (outputCanvas && outputCtx && spaceMap && spaceColor) {
+			console.log('Generate Download Image');
+			redraw(
+				//@ts-ignore
+				outputCanvas,
+				outputCtx,
+				spaceMap,
+				spaceColor,
+				mousePos.current,
+				newConnection.current,
+				distanceMap.current,
+				5.496,
+				true
+			);
+			const canvasImage = outputCanvas.toDataURL();
+			return canvasImage;
+		}
+		return undefined;
 	};
 
 	const providerVal: MapContextProps = {
@@ -122,11 +168,14 @@ export const MapContextProvider = ({ children }: { children: ReactNode }) => {
 		mapCtx,
 		mousePos,
 		newConnection,
+		outputCanvas,
 		spaceMap,
 		clearBackground,
+		generateMapImage,
 		setBackgroundImage,
 		setBackgroundCanvas,
 		setMapCanvas,
+		setOutputCanvas,
 		setSpaceColor,
 		setSpaceMap,
 	};

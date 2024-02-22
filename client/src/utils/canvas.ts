@@ -213,9 +213,15 @@ export const redraw = (
 	baseColor: string,
 	mousePos: MousePos,
 	newConnection?: NewConnection,
-	distanceMap?: Map<number, number>
+	distanceMap?: Map<number, number>,
+	scale = 1,
+	shouldRetainState = false
 ) => {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.save();
+	if (!shouldRetainState) {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	}
+	ctx.scale(scale, scale);
 	drawSpaces(ctx, spaceMap, distanceMap);
 
 	/*
@@ -235,6 +241,7 @@ export const redraw = (
 			newConnection.isTwoWay
 		);
 	}
+	ctx.restore();
 };
 
 export const drawSpaces = (
