@@ -331,7 +331,7 @@ export const MapEditor = () => {
 				map={map}
 				spaceMap={spaceMap!}
 				onUpdateBackgroundImage={(backgroundImageUrl: string) =>
-					drawMap(backgroundImageUrl)
+					generateMapImage(backgroundImageUrl)
 				}
 				onGenerateDistances={(newDistances: Map<number, number>) =>
 					updateDistances(newDistances)
