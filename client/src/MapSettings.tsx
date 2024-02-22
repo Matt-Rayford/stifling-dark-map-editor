@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import AWS from 'aws-sdk';
-import mergeImages from 'merge-images';
 import { updateSpaceColor } from './utils/canvas';
 import { updateMapSettings, uploadMapImage } from './utils/requests';
 
 import { Space } from './models/space';
 import { MapSettings } from './graphql/__generated__/graphql';
-import { useTour } from '@reactour/tour';
+import { useMapContext } from './utils/map-context';
 
 interface Props {
 	name: string;
@@ -23,9 +22,12 @@ const Settings = ({
 	mapSettings,
 	onUpdateBackgroundImage,
 }: Props) => {
+	const [downloading, setIsDownloading] = useState(false);
 	const [origSettings, setOrigSettings] = useState<MapSettings>(mapSettings);
 	const [curMapSettings, setCurMapSettings] =
 		useState<MapSettings>(mapSettings);
+
+	const { outputCanvas, generateMapImage } = useMapContext();
 
 	const onSave = () => {
 		updateMapSettings(mapId, curMapSettings);
@@ -37,21 +39,19 @@ const Settings = ({
 		handleColorUpdate(origSettings.spaceColor);
 	};
 
-	const onDownload = () => {
-		const backgroundCanvas = document.getElementById('mapLayer');
-		// @ts-expect-error toDataURL exists on the canvas
-		const backgroundImage = backgroundCanvas.toDataURL();
-
-		const canvas = document.getElementById('canvasEditor');
-		// @ts-expect-error toDataURL exists on the canvas
-		const canvasImage = canvas.toDataURL();
-
-		mergeImages([backgroundImage, canvasImage]).then((b64) => {
-			const downloadLink = document.createElement('a');
-			downloadLink.download = `${name ?? 'map'}.png`;
-			downloadLink.href = b64;
-			downloadLink.click();
-		});
+	const onDownload = async () => {
+		setIsDownloading(true);
+		if (outputCanvas) {
+			generateMapImage().then((imageUrl) => {
+				if (imageUrl) {
+					const downloadLink = document.createElement('a');
+					downloadLink.download = `${name ?? 'map'}.png`;
+					downloadLink.href = imageUrl;
+					downloadLink.click();
+					setIsDownloading(false);
+				}
+			});
+		}
 	};
 
 	const handleImageUpdate = async (file?: File) => {
@@ -190,6 +190,7 @@ const Settings = ({
 						id='download-button'
 						type='button'
 						className='btn btn-secondary w-100'
+						disabled={downloading}
 						onClick={onDownload}
 					>
 						Download
