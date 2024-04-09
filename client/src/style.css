@@ -1,9 +1,30 @@
 :root {
 	--infinite-scroll-time: 60s;
+	--bg-dark: #212529;
+}
+
+/* width */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background-color: transparent;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
 }
 
 body {
-	background-color: #212529;
+	background-color: var(--bg-dark);
 	color: #fff;
 }
 
@@ -219,7 +240,6 @@ canvas {
 	left: 0;
 	background-image: url('/public/images/games/the-stifling-dark/maps/sawmill-section.png');
 	background-repeat: no-repeat;
-
 	background-size: 100% 100%;
 }
 
