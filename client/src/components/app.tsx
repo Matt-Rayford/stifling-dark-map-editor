@@ -8,6 +8,7 @@ import { newUserSteps } from '../tours/new-user-steps';
 import { useSdUser } from '../contexts/user-context';
 import { MapContextProvider } from '../utils/map-context';
 import { OurGames } from './games/our-games';
+import { TheStiflingDarkPage } from './games/the-stifling-dark/the-stifling-dark';
 
 export const App = () => {
 	const { closeSetupGuide } = useSdUser();
@@ -31,6 +32,10 @@ export const App = () => {
 						<Route path='/map/:mapId' element={<MapEditor />} />
 						<Route path='/maps/new' element={<MapForm />} />
 						<Route path='/games' element={<OurGames />} />
+						<Route
+							path='/games/the-stifling-dark'
+							element={<TheStiflingDarkPage />}
+						/>
 					</Routes>
 				</div>
 			</MapContextProvider>

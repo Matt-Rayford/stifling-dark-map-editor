@@ -7,15 +7,15 @@ const gamesList: GameInfo[] = [
 		description:
 			'Enter the terrifying realm of The Stifling Dark: a one-vs-many hidden movement game with flashlights.',
 		href: '/games/the-stifling-dark',
-		imageUrl: 'images/games/the-stifling-dark-cover.png',
+		imageUrl: '/images/games/the-stifling-dark/box-cover.png',
 		imageAlt: 'The Stifling Dark Box Art',
 	},
 	{
 		title: 'Sprocketforge',
 		description:
 			'The artificers of Sprocketforge need a new court artifcer. Build your machine in this mana-producing engine builder.',
-		href: '/games/sprocketforge',
-		imageUrl: 'images/games/sprocketforge.jpg',
+		href: '/games/sprocketforge-cover',
+		imageUrl: '/images/games/sprocketforge/box-cover.png',
 		imageAlt: 'Sprocketforge Box Art',
 	},
 ];
