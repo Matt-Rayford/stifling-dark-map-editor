@@ -1,23 +1,17 @@
-import { RefObject, createRef, useEffect, useRef, useState } from 'react';
-import { MousePos } from '../../../models/mouse-pos';
+import { createRef, useEffect } from 'react';
 
 export const FlashlightViewer = () => {
-	const mousePos = useState<MousePos>({ x: 0, y: 0 });
-
 	const flashlightViewerRef = createRef<HTMLDivElement>();
 
 	useEffect(() => {
 		if (flashlightViewerRef.current) {
 			flashlightViewerRef.current.addEventListener(
 				'mousemove',
-				({ offsetX, offsetY, target }) => {
-					//@ts-ignore
+				({ offsetX, offsetY, target: eventTarget }) => {
+					const target = eventTarget as HTMLDivElement;
 					const x = offsetX / target.clientWidth;
-					//@ts-ignore
 					const y = offsetY / target.clientHeight;
-					//@ts-ignore
 					target.style.setProperty('--x', `${x * 100}%`);
-					//@ts-ignore
 					target.style.setProperty('--y', `${y * 100}%`);
 				}
 			);
@@ -29,8 +23,10 @@ export const FlashlightViewer = () => {
 			<h2>Illuminate the Darkness</h2>
 			<p>
 				Use your flashlights to find hidden evidence and items on the map. If
-				you're lucky, you'll even find the Adversary
+				you're lucky, you'll even reveal the Adversary and force them to
+				retreat!
 			</p>
+
 			<div className='flashlight-viewer' ref={flashlightViewerRef}></div>
 		</div>
 	);

@@ -10,47 +10,47 @@ export const investigators: InvestigatorDetails[] = [
 		imageSrc: '/images/games/the-stifling-dark/investigators/aira.png',
 	},
 	{
-		name: 'Asher',
+		name: 'Asher Palacios',
 		imageSrc: '/images/games/the-stifling-dark/investigators/asher.png',
 	},
 	{
-		name: 'Brielle',
+		name: 'Brielle Easton',
 		imageSrc: '/images/games/the-stifling-dark/investigators/brielle.png',
 	},
 	{
-		name: 'Dylan',
+		name: 'Dylan J. Lee',
 		imageSrc: '/images/games/the-stifling-dark/investigators/dylan.png',
 	},
 	{
-		name: 'Ibraheem',
+		name: 'Ibraheem Hess',
 		imageSrc: '/images/games/the-stifling-dark/investigators/ibraheem.png',
 	},
 	{
-		name: 'Kya',
+		name: 'Kya Prosser',
 		imageSrc: '/images/games/the-stifling-dark/investigators/kya.png',
 	},
 	{
-		name: 'Lucy',
+		name: 'Lucy Belle',
 		imageSrc: '/images/games/the-stifling-dark/investigators/lucy.png',
 	},
 	{
-		name: 'Mada',
+		name: 'Mada K. Rorrim',
 		imageSrc: '/images/games/the-stifling-dark/investigators/mada.png',
 	},
 	{
-		name: 'Marci',
+		name: 'Marci Jo',
 		imageSrc: '/images/games/the-stifling-dark/investigators/marci.png',
 	},
 	{
-		name: 'Mitchell',
+		name: 'Mitchell Carter',
 		imageSrc: '/images/games/the-stifling-dark/investigators/mitchell.png',
 	},
 	{
-		name: 'Vincent',
+		name: 'Vincent Campbell',
 		imageSrc: '/images/games/the-stifling-dark/investigators/vincent.png',
 	},
 	{
-		name: 'Winston',
+		name: 'Winston Pitts',
 		imageSrc: '/images/games/the-stifling-dark/investigators/winston.png',
 	},
 ];
