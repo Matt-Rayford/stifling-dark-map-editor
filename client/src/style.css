@@ -10,12 +10,13 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background: #f1f1f1;
+	background: var(--bg-dark);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background-color: transparent;
+	background-color: #aaa;
+	border-radius: 8px;
 }
 
 /* Handle on hover */
@@ -216,10 +217,17 @@ canvas {
 	filter: drop-shadow(0 0 10px #fff);
 }
 
-.flashlight-viewer {
+.flashlight-viewer-container {
 	width: 100%;
-	height: 500px;
+	display: flex;
+	justify-content: center;
+}
+
+.flashlight-viewer {
+	width: 1000px;
+	height: 400px;
 	position: relative;
+	cursor: none;
 	/*mask-image: radial-gradient(
 		circle at center,
 		#fff,
@@ -228,7 +236,6 @@ canvas {
 		transparent 85%
 	);*/
 }
-
 .flashlight-viewer::before,
 .flashlight-viewer::after {
 	content: '';
@@ -240,7 +247,6 @@ canvas {
 	left: 0;
 	background-image: url('/public/images/games/the-stifling-dark/maps/sawmill-section.png');
 	background-repeat: no-repeat;
-	background-size: 100% 100%;
 }
 
 .flashlight-viewer::before {
@@ -248,7 +254,7 @@ canvas {
 }
 
 .flashlight-viewer::after {
-	clip-path: circle(10% at var(--x, 50%) var(--y, 50%));
+	clip-path: circle(50px at var(--x, 50%) var(--y, 50%));
 	z-index: 1;
 }
 

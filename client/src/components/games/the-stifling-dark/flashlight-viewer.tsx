@@ -27,7 +27,9 @@ export const FlashlightViewer = () => {
 				retreat!
 			</p>
 
-			<div className='flashlight-viewer' ref={flashlightViewerRef}></div>
+			<div className='flashlight-viewer-container'>
+				<div className='flashlight-viewer' ref={flashlightViewerRef}></div>
+			</div>
 		</div>
 	);
 };
