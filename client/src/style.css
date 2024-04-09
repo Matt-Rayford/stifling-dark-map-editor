@@ -117,3 +117,10 @@ canvas {
 	cursor: pointer;
 	box-shadow: 0 0 10px 5px #fff;
 }
+
+.investigator-viewer {
+	display: flex;
+	width: inherit;
+	overflow: hidden;
+	flex-wrap: nowrap;
+}
