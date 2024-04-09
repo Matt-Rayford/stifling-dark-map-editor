@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
-import { Space } from './models/space';
-import { calculateAllPaths } from './utils/canvas';
+import { Space } from '../../models/space';
+import { calculateAllPaths } from '../../utils/canvas';
 import {
 	disconnectSpaces,
 	getLightLevels,
 	getSpaceTypes,
 	updateSpace,
-} from './utils/requests';
-import { LightLevel } from './models/light-level';
+} from '../../utils/requests';
+import { LightLevel } from '../../models/light-level';
 import {
 	SpaceGroupsDocument,
 	SpaceType,
-} from './graphql/__generated__/graphql';
+} from '../../graphql/__generated__/graphql';
 import { useQuery } from '@apollo/client';
 
 interface Props {
-	space: Space;
+	space?: Space;
 	mapId: string;
 	onGenerateDistances: (distanceMap: Map<number, number>) => void;
 	onUpdateGroup: () => void;
@@ -30,12 +30,14 @@ const SpaceSettings = ({
 	onDisableDistances,
 }: Props) => {
 	const [connections, setSpaceConnections] = useState<Space[]>(
-		space.connections
+		space?.connections ?? []
 	);
 	const [lightLevels, setLightLevels] = useState<LightLevel[]>([]);
 	const [lightLevel, setLightLevel] = useState<LightLevel>();
 	const [spaceTypes, setSpaceTypes] = useState<SpaceType[]>([]);
-	const [spaceType, setSpaceType] = useState<SpaceType>(space.type);
+	const [spaceType, setSpaceType] = useState<SpaceType | undefined>(
+		space?.type ?? undefined
+	);
 	const [spaceGroupId, setSpaceGroupId] = useState<string>('-');
 
 	const { data } = useQuery(SpaceGroupsDocument, {
@@ -61,6 +63,10 @@ const SpaceSettings = ({
 			setSpaceConnections(space.connections);
 		}
 	}, [space]);
+
+	if (!space) {
+		return null;
+	}
 
 	const updateLightLevel = (lightLevel: LightLevel) => {
 		updateSpace({ id: space.id, lightLevelId: lightLevel.id });
@@ -132,8 +138,16 @@ const SpaceSettings = ({
 	};
 
 	return (
-		<div className='vstack gap-2' style={{ padding: '12px' }}>
-			<div id='general-space-section' className='vstack gap-2'>
+		<div
+			id='general-space-section'
+			style={{
+				padding: '12px',
+				display: 'flex',
+				flexDirection: 'column',
+				gap: '24px',
+			}}
+		>
+			<div className='vstack'>
 				<div className='input-group mb-3'>
 					<div className='input-group-prepend'>
 						<label className='input-group-text'>Space Type</label>
@@ -187,35 +201,16 @@ const SpaceSettings = ({
 						})}
 					</select>
 				</div>
+			</div>
 
-				<div className='row'>
-					<div className='col-6'>
-						<button
-							type='button'
-							className='btn btn-primary w-100'
-							onClick={() => generateDistances()}
-						>
-							Generate Distances
-						</button>
-					</div>
-					<div className='col-6'>
-						<button
-							type='button'
-							className='btn btn-danger w-100'
-							onClick={() => onDisableDistances()}
-						>
-							Disable Distances
-						</button>
-					</div>
+			<div className='vstack gap-2'>
+				<div id='groups-section'>
+					<h5>Group</h5>
+					{renderGroups()}
 				</div>
 			</div>
 
-			<div id='groups-section'>
-				<h5>Group</h5>
-				{renderGroups()}
-			</div>
-
-			<div id='connections-section'>
+			<div id='connections-section' className='vstack gap-2'>
 				<h5>Connections</h5>
 				{connections
 					.sort((a, b) => (a.displayNumber < b.displayNumber ? -1 : 1))
@@ -244,6 +239,23 @@ const SpaceSettings = ({
 							</div>
 						);
 					})}
+			</div>
+
+			<div className='vstack gap-2'>
+				<button
+					type='button'
+					className='btn btn-primary w-100'
+					onClick={() => generateDistances()}
+				>
+					Generate Distances
+				</button>
+				<button
+					type='button'
+					className='btn btn-danger w-100'
+					onClick={() => onDisableDistances()}
+				>
+					Disable Distances
+				</button>
 			</div>
 		</div>
 	);

@@ -132,9 +132,9 @@ export const newUserSteps: StepType[] = [
 		content: (
 			<div style={{ marginTop: TOP_MARGIN }}>
 				<p>
-					From here, you can add and update your space groups. When add a new
-					group, give it a name and a prefix. The prefix will be applied to any
-					spaces in this group, such as "T-1."
+					From here, you can add and update your space groups. When you add a
+					new group, give it a name and a prefix. The prefix will be applied to
+					any spaces in this group, such as "T-1."
 				</p>
 				<p>And that's all there is to it! Enjoy creating your maps!</p>
 			</div>
