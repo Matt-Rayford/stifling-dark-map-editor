@@ -15,7 +15,7 @@ interface Props {
 	onUpdateBackgroundImage: (imageUrl: string) => void;
 }
 
-const Settings = ({
+export const Settings = ({
 	name,
 	mapId,
 	spaceMap,
@@ -175,5 +175,3 @@ const Settings = ({
 		</div>
 	) : null;
 };
-
-export default Settings;

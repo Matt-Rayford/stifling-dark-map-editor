@@ -6,7 +6,7 @@ import {
 	createHttpLink,
 } from '@apollo/client';
 import { createRoot } from 'react-dom/client';
-import { App } from './App';
+import { App } from './components/app';
 import { BrowserRouter } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { UserProvider } from './contexts/user-context';

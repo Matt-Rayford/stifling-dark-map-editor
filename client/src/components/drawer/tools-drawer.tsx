@@ -8,9 +8,9 @@ import {
 import '../../style.css';
 import { Space } from '../../models/space';
 import { Map as SDMap } from '../../graphql/__generated__/graphql';
-import Settings from './map-settings';
-import SpaceGroupSettings from './group-settings';
-import SpaceSettings from './space-settings';
+import { Settings } from './map-settings';
+import { SpaceGroupSettings } from './group-settings';
+import { SpaceSettings } from './space-settings';
 import { renumberSpaces } from '../../utils/canvas';
 
 const ICON_SIZE = 28;

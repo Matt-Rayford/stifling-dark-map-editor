@@ -1,5 +1,6 @@
 body {
-	background-color: #f8f9fa;
+	background-color: #212529;
+	color: #fff;
 }
 
 canvas {
@@ -98,4 +99,21 @@ canvas {
 	position: absolute;
 	font-size: 10pt;
 	text-align: center;
+}
+
+.games-list {
+	display: flex;
+	gap: 2rem;
+	flex-wrap: wrap;
+}
+.game-card {
+	width: 18rem;
+	background-color: #434951;
+	color: #fff;
+	border: 0;
+	transition: all ease-in 0.25s;
+}
+.game-card:hover {
+	cursor: pointer;
+	box-shadow: 0 0 10px 5px #fff;
 }

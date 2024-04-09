@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import SpaceGroupRow from '../../SpaceGroupRow';
+import { SpaceGroupRow } from './space-group-row';
 import { SpaceGroup } from '../../graphql/__generated__/graphql';
 import { addMapSpaceGroup } from '../../utils/requests';
 
@@ -9,7 +9,7 @@ interface Props {
 	onUpdateSpaceGroups: () => void;
 }
 
-const SpaceGroupSettings = ({
+export const SpaceGroupSettings = ({
 	mapId,
 	existingGroups,
 	onUpdateSpaceGroups,
@@ -107,5 +107,3 @@ const SpaceGroupSettings = ({
 		</div>
 	);
 };
-
-export default SpaceGroupSettings;

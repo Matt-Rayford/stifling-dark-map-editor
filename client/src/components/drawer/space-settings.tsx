@@ -22,7 +22,7 @@ interface Props {
 	onDisableDistances: () => void;
 }
 
-const SpaceSettings = ({
+export const SpaceSettings = ({
 	space,
 	mapId,
 	onGenerateDistances,
@@ -260,5 +260,3 @@ const SpaceSettings = ({
 		</div>
 	);
 };
-
-export default SpaceSettings;
