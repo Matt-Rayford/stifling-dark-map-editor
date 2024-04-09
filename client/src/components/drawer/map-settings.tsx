@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AWS from 'aws-sdk';
-import { updateSpaceColor } from './utils/canvas';
-import { updateMapSettings, uploadMapImage } from './utils/requests';
+import { updateSpaceColor } from '../../utils/canvas';
+import { updateMapSettings, uploadMapImage } from '../../utils/requests';
 
-import { Space } from './models/space';
-import { MapSettings } from './graphql/__generated__/graphql';
-import { useMapContext } from './utils/map-context';
+import { Space } from '../../models/space';
+import { MapSettings } from '../../graphql/__generated__/graphql';
+import { useMapContext } from '../../utils/map-context';
 
 interface Props {
 	name: string;
@@ -26,8 +26,13 @@ const Settings = ({
 	const [origSettings, setOrigSettings] = useState<MapSettings>(mapSettings);
 	const [curMapSettings, setCurMapSettings] =
 		useState<MapSettings>(mapSettings);
+	const [renderComponent, setRenderComponent] = useState(false);
 
 	const { outputCanvas, generateMapImage } = useMapContext();
+
+	useEffect(() => {
+		setTimeout(() => setRenderComponent(true), 400);
+	}, []);
 
 	const onSave = () => {
 		updateMapSettings(mapId, curMapSettings);
@@ -107,15 +112,9 @@ const Settings = ({
 		setCurMapSettings(settings);
 	};
 
-	const handleOptionsUpdate = (property: string, value: string) => {
-		const settings = { ...curMapSettings };
-		//@ts-ignore
-		settings[property] = value ? parseFloat(value) : '';
-		setCurMapSettings(settings);
-		for (let space of spaceMap.values()) {
-			space.updateDrawOptions(settings);
-		}
-	};
+	if (!renderComponent) {
+		return null;
+	}
 
 	return curMapSettings ? (
 		<div id='map-settings' style={{ padding: '5px' }}>
@@ -130,10 +129,8 @@ const Settings = ({
 					onChange={(e) => handleColorUpdate(e.target.value)}
 				/>
 			</div>
-			<div className='input-group mb-3'>
-				<div className='input-group-prepend'>
-					<span className='input-group-text'>Background Image</span>
-				</div>
+			<div className='mb-3'>
+				<span className='input-group-text'>Background Image</span>
 				<input
 					type='file'
 					className='form-control'
@@ -141,29 +138,7 @@ const Settings = ({
 					onChange={(e) => handleImageUpdate(e.target.files?.[0])}
 				/>
 			</div>
-			{Object.keys(curMapSettings).map((settingKey) => {
-				if (
-					settingKey === 'spaceColor' ||
-					settingKey === 'backgroundImageUrl' ||
-					settingKey === '__typename'
-				)
-					return null;
-				return (
-					<div className='input-group mb-3' key={settingKey}>
-						<div className='input-group-prepend'>
-							<span className='input-group-text'>{settingKey}</span>
-						</div>
-						<input
-							type='number'
-							step='0.1'
-							className='form-control'
-							//@ts-ignore
-							value={curMapSettings[settingKey]}
-							onChange={(e) => handleOptionsUpdate(settingKey, e.target.value)}
-						/>
-					</div>
-				);
-			})}
+
 			<div className='row'>
 				<div className='col-6'>
 					<button

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import SpaceGroupRow from './SpaceGroupRow';
-import { SpaceGroup } from './graphql/__generated__/graphql';
-import { addMapSpaceGroup } from './utils/requests';
+import SpaceGroupRow from '../../SpaceGroupRow';
+import { SpaceGroup } from '../../graphql/__generated__/graphql';
+import { addMapSpaceGroup } from '../../utils/requests';
 
 interface Props {
 	mapId: string;
@@ -17,6 +17,11 @@ const SpaceGroupSettings = ({
 	const [name, setName] = useState('');
 	const [prefix, setPrefix] = useState('');
 	const [groups, setGroups] = useState<SpaceGroup[]>([]);
+	const [renderComponent, setRenderComponent] = useState(false);
+
+	useEffect(() => {
+		setTimeout(() => setRenderComponent(true), 400);
+	}, []);
 
 	useEffect(() => {
 		if (existingGroups) {
@@ -43,8 +48,12 @@ const SpaceGroupSettings = ({
 		onUpdateSpaceGroups();
 	};
 
+	if (!renderComponent) {
+		return null;
+	}
+
 	return (
-		<div id='space-group-settings' className='vstack gap-3'>
+		<div id='space-group-settings' style={{ padding: '12px' }}>
 			<h3>Space Groups</h3>
 			<table className='table'>
 				<thead>

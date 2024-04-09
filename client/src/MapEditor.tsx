@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ObjectType } from './models/object';
-import ToolMenu from './ToolMenu';
 import {
 	redraw,
 	setupSpaces,
@@ -12,7 +11,6 @@ import {
 import { connectSpaces, deleteSpace } from './utils/requests';
 import { Space } from './models/space';
 import { MousePos } from './models/mouse-pos';
-import { NewConnection } from './models/connection';
 import { loadImage, toDataURL } from './utils/image';
 import { useQuery } from '@apollo/client';
 import {
@@ -23,8 +21,8 @@ import {
 import { useTour } from '@reactour/tour';
 import { useSdUser } from './contexts/user-context';
 import { initializeSpaceTypes } from './utils/space-types';
-import { ToolsDrawer } from './ToolsDrawer';
 import { useMapContext } from './utils/map-context';
+import { ToolsDrawer } from './components/drawer/tools-drawer';
 
 export const MapEditor = () => {
 	const [map, setMap] = useState<LoadMapQuery['map']>();
@@ -338,18 +336,7 @@ export const MapEditor = () => {
 				}
 				onDisableDistances={() => disableDistances()}
 			/>
-			<ToolMenu
-				map={map}
-				spaceMap={spaceMap!}
-				onUpdateBackgroundImage={(backgroundImageUrl: string) =>
-					generateMapImage(backgroundImageUrl)
-				}
-				selectedObject={selectedSpace}
-				onGenerateDistances={(newDistances: Map<number, number>) =>
-					updateDistances(newDistances)
-				}
-				onDisableDistances={() => disableDistances()}
-			/>
+
 			<h1>{map.title}</h1>
 			<div style={{ position: 'relative' }}>
 				<canvas

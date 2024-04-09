@@ -32,7 +32,7 @@ canvas {
 	float: right;
 }
 
-.tools-sidebar {
+.tools-drawer {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -42,7 +42,7 @@ canvas {
 	grid-template-columns: 0 48px;
 	transition: all 0.5s ease-in-out;
 }
-.tools-sidebar-show {
+.tools-drawer-show {
 	grid-template-columns: 348px 48px;
 	transition: all 0.5s ease-in-out;
 	opacity: 0.85;
@@ -72,8 +72,10 @@ canvas {
 .tools-content {
 	width: inherit;
 	display: flex;
-	align-items: center;
+	flex-direction: column;
+	justify-content: center;
 	padding: 0 5px;
+	row-gap: 24px;
 }
 
 .tools-nav-space {
