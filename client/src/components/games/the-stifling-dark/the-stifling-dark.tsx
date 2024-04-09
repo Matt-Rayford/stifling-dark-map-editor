@@ -1,8 +1,9 @@
+import { FlashlightViewer } from './flashlight-viewer';
 import { InvestigatorViewer } from './investigator-viewer';
 
 export const TheStiflingDarkPage = () => {
 	return (
-		<div>
+		<div className='tsd-page'>
 			<h1>The Stifling Dark</h1>
 
 			<p>
@@ -41,6 +42,8 @@ export const TheStiflingDarkPage = () => {
 			</p>
 
 			<InvestigatorViewer />
+
+			<FlashlightViewer />
 		</div>
 	);
 };

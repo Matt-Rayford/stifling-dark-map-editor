@@ -1,6 +1,9 @@
 import { investigators } from './investigators';
 
 export const InvestigatorViewer = () => {
+	const width = 200;
+	const height = 300;
+
 	return (
 		<>
 			<h2>Meet the Investigators</h2>
@@ -9,8 +12,8 @@ export const InvestigatorViewer = () => {
 					{investigators.map((investigator) => (
 						<img
 							key={`${investigator.name}-1`}
-							width={300}
-							height={450}
+							width={width}
+							height={height}
 							src={investigator.imageSrc}
 							alt={`Portrait of ${investigator.name}`}
 						/>
@@ -20,8 +23,8 @@ export const InvestigatorViewer = () => {
 					{investigators.map((investigator) => (
 						<img
 							key={`${investigator.name}-2`}
-							width={300}
-							height={450}
+							width={width}
+							height={height}
 							src={investigator.imageSrc}
 							alt={`Portrait of ${investigator.name}`}
 						/>

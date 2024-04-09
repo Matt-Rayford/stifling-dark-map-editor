@@ -122,9 +122,40 @@ canvas {
 	box-shadow: 0 0 10px 5px #fff;
 }
 
+.isometric-headers h2 {
+	position: relative;
+	transform: skewY(-1.5deg);
+}
+.isometric-headers h2::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -20px;
+	width: 20px;
+	height: 100%;
+	background-color: grey;
+	transform-origin: right;
+	transform: skewY(45deg);
+}
+.isometric-headers h2::after {
+	content: '';
+	position: absolute;
+	top: -20px;
+	left: 0;
+	width: 100%;
+	height: 20px;
+	background-color: lightgrey;
+	transform-origin: bottom;
+	transform: skewX(45deg);
+}
+
 /*
-	Investigator Page
+	The Stifling Dark Page
 */
+
+.tsd-page {
+	padding-bottom: 5rem;
+}
 
 .scroll-viewer {
 	position: relative;
@@ -132,6 +163,7 @@ canvas {
 	width: inherit;
 	overflow: hidden;
 	flex-wrap: nowrap;
+	padding: 1rem 0;
 	transition: 0.5s;
 	mask-image: linear-gradient(
 		90deg,
@@ -141,6 +173,7 @@ canvas {
 		transparent
 	);
 }
+
 .scroll-viewer div {
 	white-space: nowrap;
 	animation: infinite-scroll var(--infinite-scroll-time) linear infinite;
@@ -150,6 +183,9 @@ canvas {
 	animation: infinite-scroll-2 var(--infinite-scroll-time) linear infinite;
 	animation-delay: calc(var(--infinite-scroll-time) / -2);
 }
+.scroll-viewer:hover div {
+	animation-play-state: paused;
+}
 .scroll-viewer div img {
 	transition: 0.5s;
 }
@@ -158,6 +194,37 @@ canvas {
 	background-color: transparent;
 	filter: drop-shadow(0 0 10px #fff);
 }
+
+.flashlight-viewer {
+	width: 100%;
+	height: 500px;
+	position: relative;
+}
+
+.flashlight-viewer::before,
+.flashlight-viewer::after {
+	content: '';
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-image: url('/public/images/games/the-stifling-dark/maps/sawmill-section.png');
+}
+
+.flashlight-viewer::before {
+	filter: brightness(0.3);
+}
+
+.flashlight-viewer::after {
+	clip-path: circle(10% at var(--x, 50%) var(--y, 50%));
+	z-index: 1;
+}
+
+/*
+	Animations
+*/
 
 @keyframes infinite-scroll {
 	0% {
