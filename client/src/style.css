@@ -154,8 +154,8 @@ canvas {
 	transition: 0.5s;
 }
 .scroll-viewer div img:hover {
+	cursor: pointer;
 	background-color: transparent;
-
 	filter: drop-shadow(0 0 10px #fff);
 }
 
