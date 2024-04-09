@@ -15,7 +15,7 @@ const gamesList: GameInfo[] = [
 		description:
 			'The artificers of Sprocketforge need a new court artifcer. Build your machine in this mana-producing engine builder.',
 		href: '/games/sprocketforge-cover',
-		imageUrl: '/images/games/sprocketforge/box-cover.jpg',
+		imageUrl: '/images/games/sprocketforge/box-cover.png',
 		imageAlt: 'Sprocketforge Box Art',
 	},
 ];
