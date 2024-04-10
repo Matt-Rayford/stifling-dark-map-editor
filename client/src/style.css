@@ -179,6 +179,46 @@ canvas {
 	padding-bottom: 5rem;
 }
 
+.adversary-viewer {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.adversary-viewer div {
+	overflow: hidden;
+	position: relative;
+}
+.adversary-viewer div img {
+	transition: 0.3s;
+}
+.adversary-viewer div:hover {
+	cursor: pointer;
+}
+.adversary-viewer div:hover img {
+	transform: scale(1.1);
+}
+.adversary-viewer div .blur-block {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	box-shadow: 0 0 12px 8px var(--bg-dark) inset;
+	top: 0;
+	bottom: 0;
+}
+
+.play-now-images {
+	display: flex;
+	justify-content: center;
+	gap: 2rem;
+	flex-wrap: wrap;
+}
+.play-now-images img {
+	transition: 0.3s;
+}
+.play-now-images img:hover {
+	filter: drop-shadow(0 0 10px #fff);
+}
+
 .scroll-viewer {
 	position: relative;
 	display: flex;
@@ -225,7 +265,7 @@ canvas {
 
 .flashlight-viewer {
 	width: 1000px;
-	height: 400px;
+	height: 356px;
 	position: relative;
 	cursor: none;
 	/*mask-image: radial-gradient(
