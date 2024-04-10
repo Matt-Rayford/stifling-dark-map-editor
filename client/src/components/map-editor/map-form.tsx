@@ -31,7 +31,7 @@ export const MapForm = () => {
 	};
 
 	return (
-		<form style={{ padding: '32px 0' }}>
+		<form style={{ padding: '32px 0' }} className='content-container'>
 			<h1>Create a New Map</h1>
 			<div className='form-row'>
 				<div className='col-md-4'>

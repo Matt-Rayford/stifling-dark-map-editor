@@ -1,6 +1,8 @@
 :root {
 	--infinite-scroll-time: 60s;
 	--bg-dark: #212529;
+	--tsd-green-dark: #283f39;
+	--width-xl: 1200px;
 }
 
 /* width */
@@ -25,6 +27,8 @@
 }
 
 body {
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+		'Lucida Sans', Arial, sans-serif;
 	background-color: var(--bg-dark);
 	color: #fff;
 }
@@ -47,6 +51,7 @@ canvas {
 #info-pane #info {
 	clear: both;
 }
+
 .spaceType img:hover {
 	cursor: pointer;
 	box-shadow: 0 0 5px 0 hsl(0, 0%, 62%);
@@ -171,12 +176,74 @@ canvas {
 	transform: skewX(45deg);
 }
 
+.content-container {
+	position: relative;
+	max-width: var(--width-xl);
+	width: 100%;
+	margin: 0 auto;
+}
+
 /*
 	The Stifling Dark Page
 */
 
+.tsd-header {
+	padding: 2rem 0;
+	position: relative;
+	background-position-y: bottom;
+	background: url('/public/images/games/the-stifling-dark/adversaries/morgonnod-section.png');
+}
+
 .tsd-page {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
 	padding-bottom: 5rem;
+}
+
+.adversary-viewer {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.adversary-viewer div {
+	overflow: hidden;
+	position: relative;
+}
+.adversary-viewer div img {
+	transition: 0.3s;
+}
+.adversary-viewer div:hover {
+	cursor: pointer;
+}
+.adversary-viewer div:hover img {
+	transform: scale(1.1);
+}
+.adversary-viewer div .blur-block {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	box-shadow: 0 0 12px 8px var(--tsd-green-dark) inset;
+	top: 0;
+	bottom: 0;
+}
+
+.tsd-green-wrapper {
+	padding: 2rem 0;
+	background-color: var(--tsd-green-dark);
+}
+
+.play-now-images {
+	display: flex;
+	justify-content: center;
+	gap: 2rem;
+	flex-wrap: wrap;
+}
+.play-now-images img {
+	transition: 0.3s;
+}
+.play-now-images img:hover {
+	filter: drop-shadow(0 0 10px #fff);
 }
 
 .scroll-viewer {
@@ -225,7 +292,7 @@ canvas {
 
 .flashlight-viewer {
 	width: 1000px;
-	height: 400px;
+	height: 356px;
 	position: relative;
 	cursor: none;
 	/*mask-image: radial-gradient(
@@ -254,7 +321,7 @@ canvas {
 }
 
 .flashlight-viewer::after {
-	clip-path: circle(50px at var(--x, 50%) var(--y, 50%));
+	clip-path: circle(60px at var(--x, 50%) var(--y, 50%));
 	z-index: 1;
 }
 

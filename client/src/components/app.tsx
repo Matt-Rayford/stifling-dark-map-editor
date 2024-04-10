@@ -8,7 +8,7 @@ import { newUserSteps } from '../tours/new-user-steps';
 import { useSdUser } from '../contexts/user-context';
 import { MapContextProvider } from '../utils/map-context';
 import { OurGames } from './games/our-games';
-import { TheStiflingDarkPage } from './games/the-stifling-dark/the-stifling-dark';
+import { TheStiflingDarkPage } from './games/the-stifling-dark/the-stifling-dark-page';
 
 export const App = () => {
 	const { closeSetupGuide } = useSdUser();
@@ -26,7 +26,7 @@ export const App = () => {
 		>
 			<MapContextProvider>
 				<NavBar />
-				<div className='container'>
+				<div className='soph-cerb-container'>
 					<Routes>
 						<Route path='/' element={<Home />} />
 						<Route path='/map/:mapId' element={<MapEditor />} />

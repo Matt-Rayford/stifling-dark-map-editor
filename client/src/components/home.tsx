@@ -87,7 +87,7 @@ export const Home = () => {
 				</div>
 			)}
 			{user && (
-				<div id='your-maps'>
+				<div id='your-maps' className='content-container'>
 					<h1>Your Maps</h1>
 					{maps.map((mapData: any) => {
 						return (

@@ -1,11 +1,7 @@
-import { FlashlightViewer } from './flashlight-viewer';
-import { InvestigatorViewer } from './investigator-viewer';
-
-export const TheStiflingDarkPage = () => {
+export const Overview = () => {
 	return (
-		<div className='tsd-page'>
+		<div className='content-container'>
 			<h1>The Stifling Dark</h1>
-
 			<p>
 				The Stifling Dark is a one-vs-many hidden-movement horror board game
 				with an innovative line-of-sight mechanic for 2-5 players. One player
@@ -13,10 +9,6 @@ export const TheStiflingDarkPage = () => {
 				players (the investigators) from escaping through a variety of unique
 				actions. As an investigator, your only goals are to survive and escape
 			</p>
-
-			<InvestigatorViewer />
-
-			<FlashlightViewer />
 		</div>
 	);
 };

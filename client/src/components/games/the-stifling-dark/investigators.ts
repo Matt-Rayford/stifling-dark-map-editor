@@ -6,6 +6,7 @@ export interface InvestigatorDetails {
 
 export const investigators: InvestigatorDetails[] = [
 	{
+		description: '',
 		name: 'Aira Wilson',
 		imageSrc: '/images/games/the-stifling-dark/investigators/aira.png',
 	},

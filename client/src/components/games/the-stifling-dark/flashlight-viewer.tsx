@@ -19,7 +19,7 @@ export const FlashlightViewer = () => {
 	}, [flashlightViewerRef.current]);
 
 	return (
-		<div>
+		<div className='content-container'>
 			<h2>Illuminate the Darkness</h2>
 			<p>
 				Use your flashlights to find hidden evidence and items on the map. If

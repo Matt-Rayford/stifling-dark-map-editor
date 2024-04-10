@@ -337,42 +337,44 @@ export const MapEditor = () => {
 				onDisableDistances={() => disableDistances()}
 			/>
 
-			<h1>{map.title}</h1>
-			<div style={{ position: 'relative' }}>
-				<canvas
-					id='outputImage'
-					width='7200'
-					height='7200'
-					style={{
-						position: 'absolute',
-						top: '0',
-						zIndex: '0',
-						visibility: 'hidden',
-						display: 'none',
-					}}
-				/>
-				<canvas
-					id='mapLayer'
-					width={canvasWidth}
-					height={canvasHeight}
-					style={{
-						position: 'absolute',
-						top: '0',
-						border: '2px solid #000',
-						zIndex: '5',
-					}}
-				/>
-				<canvas
-					id='canvasEditor'
-					width={canvasWidth}
-					height={canvasHeight}
-					style={{
-						position: 'absolute',
-						top: '0',
-						border: '2px solid #000',
-						zIndex: '10',
-					}}
-				/>
+			<div className='content-container'>
+				<h1>{map.title}</h1>
+				<div style={{ position: 'relative' }}>
+					<canvas
+						id='outputImage'
+						width='7200'
+						height='7200'
+						style={{
+							position: 'absolute',
+							top: '0',
+							zIndex: '0',
+							visibility: 'hidden',
+							display: 'none',
+						}}
+					/>
+					<canvas
+						id='mapLayer'
+						width={canvasWidth}
+						height={canvasHeight}
+						style={{
+							position: 'absolute',
+							top: '0',
+							border: '2px solid #000',
+							zIndex: '5',
+						}}
+					/>
+					<canvas
+						id='canvasEditor'
+						width={canvasWidth}
+						height={canvasHeight}
+						style={{
+							position: 'absolute',
+							top: '0',
+							border: '2px solid #000',
+							zIndex: '10',
+						}}
+					/>
+				</div>
 			</div>
 		</div>
 	);
