@@ -22,7 +22,7 @@ const gamesList: GameInfo[] = [
 
 export const OurGames = () => {
 	return (
-		<div>
+		<div className='content-container'>
 			<h1>Our Games</h1>
 
 			<div className='games-list'>
