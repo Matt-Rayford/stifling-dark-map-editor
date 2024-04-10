@@ -1,6 +1,6 @@
 export const PlayNow = () => {
 	return (
-		<>
+		<div className='content-container'>
 			<h2>Play Now Online</h2>
 			<p>
 				You can play The Stifling Dark online for free! It is available on both
@@ -26,6 +26,6 @@ export const PlayNow = () => {
 					/>
 				</a>
 			</div>
-		</>
+		</div>
 	);
 };

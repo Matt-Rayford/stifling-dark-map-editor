@@ -5,7 +5,7 @@ export const AdversaryViewer = () => {
 	const height = 400;
 
 	return (
-		<>
+		<div className='content-container'>
 			<h2>The Adversaries</h2>
 			<div className='adversary-viewer'>
 				{adversaries.map((adversary) => (
@@ -20,6 +20,6 @@ export const AdversaryViewer = () => {
 					</div>
 				))}
 			</div>
-		</>
+		</div>
 	);
 };

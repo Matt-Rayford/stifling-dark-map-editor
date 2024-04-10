@@ -5,7 +5,7 @@ export const InvestigatorViewer = () => {
 	const height = 300;
 
 	return (
-		<>
+		<div className='content-container'>
 			<h2>Meet the Investigators</h2>
 
 			<p>
@@ -41,6 +41,6 @@ export const InvestigatorViewer = () => {
 					))}
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };

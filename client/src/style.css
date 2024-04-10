@@ -1,6 +1,7 @@
 :root {
 	--infinite-scroll-time: 60s;
 	--bg-dark: #212529;
+	--width-xl: 1200px;
 }
 
 /* width */
@@ -47,6 +48,7 @@ canvas {
 #info-pane #info {
 	clear: both;
 }
+
 .spaceType img:hover {
 	cursor: pointer;
 	box-shadow: 0 0 5px 0 hsl(0, 0%, 62%);
@@ -171,11 +173,27 @@ canvas {
 	transform: skewX(45deg);
 }
 
+.content-container {
+	position: relative;
+	max-width: var(--width-xl);
+	width: 100%;
+	margin: 0 auto;
+}
+
 /*
 	The Stifling Dark Page
 */
 
+.tsd-header {
+	position: relative;
+	background-position-y: bottom;
+	background: url('/public/images/games/the-stifling-dark/adversaries/morgonnod-section.png');
+}
+
 .tsd-page {
+	display: flex;
+	flex-direction: column;
+	gap: 5rem;
 	padding-bottom: 5rem;
 }
 
