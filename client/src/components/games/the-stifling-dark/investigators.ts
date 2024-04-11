@@ -1,57 +1,118 @@
+import { InvestigatorPlaystyle } from './investigator-playstyles';
+
 export interface InvestigatorDetails {
-	name: string;
 	description?: string;
 	imageSrc: string;
+	name: string;
+	minorAbility: string;
+	majorAbility: string;
+	playstyle: InvestigatorPlaystyle;
 }
 
 export const investigators: InvestigatorDetails[] = [
 	{
-		description: '',
-		name: 'Aira Wilson',
+		description:
+			'When people meet Aira, the first thing they realize is how perceptive she is...',
 		imageSrc: '/images/games/the-stifling-dark/investigators/aira.png',
+		name: 'Aira Wilson',
+		minorAbility: 'Inolved Action Mitigation',
+		majorAbility: 'Finding the Adversary',
+		playstyle: InvestigatorPlaystyle.Objectives,
 	},
 	{
-		name: 'Asher Palacios',
+		description:
+			'Pain is just a sign to keep going, and Asher only knows how to push himself harder...',
 		imageSrc: '/images/games/the-stifling-dark/investigators/asher.png',
+		name: 'Asher Palacios',
+		minorAbility: 'Wound Management',
+		majorAbility: 'Increased Movement',
+		playstyle: InvestigatorPlaystyle.Survival,
 	},
 	{
-		name: 'Brielle Easton',
+		description: 'Living on the streets makes a person grow up fast...',
 		imageSrc: '/images/games/the-stifling-dark/investigators/brielle.png',
+		name: 'Brielle Easton',
+		minorAbility: 'Area Control - Alarms',
+		majorAbility: 'Event Mitigation',
+		playstyle: InvestigatorPlaystyle.Support,
 	},
 	{
-		name: 'Dylan J. Lee',
+		description: 'Dylan has an exceptional knack for navigating in the dark...',
 		imageSrc: '/images/games/the-stifling-dark/investigators/dylan.png',
+		name: 'Dylan J. Lee',
+		minorAbility: 'Increased Movement',
+		majorAbility: 'Reposition',
+		playstyle: InvestigatorPlaystyle.Objectives,
 	},
 	{
-		name: 'Ibraheem Hess',
+		description:
+			"Ibraheem's whole life has revolved around working hard to climb to the top...",
 		imageSrc: '/images/games/the-stifling-dark/investigators/ibraheem.png',
+		name: 'Ibraheem Hess',
+		minorAbility: 'Sustained Movement',
+		majorAbility: 'Enhanced Trade',
+		playstyle: InvestigatorPlaystyle.Objectives,
 	},
 	{
-		name: 'Kya Prosser',
+		description:
+			'Most people only understand the basics of focus and mental concentration...',
 		imageSrc: '/images/games/the-stifling-dark/investigators/kya.png',
+		name: 'Kya Prosser',
+		minorAbility: 'Swap Stamina and Charge',
+		majorAbility: 'Invert Light Levels',
+		playstyle: InvestigatorPlaystyle.Survival,
 	},
 	{
-		name: 'Lucy Belle',
+		description:
+			'An indomitable will and relentless resolve make quick work of whatever life brings...',
 		imageSrc: '/images/games/the-stifling-dark/investigators/lucy.png',
+		name: 'Lucy Belle',
+		minorAbility: 'Increased Movement',
+		majorAbility: 'Area Control - Barriers',
+		playstyle: InvestigatorPlaystyle.Survival,
 	},
 	{
-		name: 'Mada K. Rorrim',
+		description: "Time and time again luck continues to work in Mada's favor.",
 		imageSrc: '/images/games/the-stifling-dark/investigators/mada.png',
+		name: 'Mada K. Rorrim',
+		minorAbility: 'Ability Mitigation',
+		majorAbility: 'Increased Movement',
+		playstyle: InvestigatorPlaystyle.Support,
 	},
 	{
-		name: 'Marci Jo',
+		description:
+			'Marci knows  it takes to everyone to succeed, gladly lifting others up...',
 		imageSrc: '/images/games/the-stifling-dark/investigators/marci.png',
+		name: 'Marci Jo',
+		minorAbility: 'Sustained Sprint',
+		majorAbility: 'Move Investigators',
+		playstyle: InvestigatorPlaystyle.Support,
 	},
 	{
-		name: 'Mitchell Carter',
+		description:
+			'Being an experienced woodsman, Mitchell always keeps his head on a swivel...',
 		imageSrc: '/images/games/the-stifling-dark/investigators/mitchell.png',
+		name: 'Mitchell Carter',
+		minorAbility: 'Finding the Adversary',
+		majorAbility: 'Finding the Adversary',
+		playstyle: InvestigatorPlaystyle.Scout,
 	},
 	{
-		name: 'Vincent Campbell',
+		description:
+			'Some kids are blessed with physical ability; others use their aptitude for knowledge...',
 		imageSrc: '/images/games/the-stifling-dark/investigators/vincent.png',
+		name: 'Vincent Campbell',
+		minorAbility: 'Finding Items',
+		majorAbility: 'Finding Cursed Items',
+		playstyle: InvestigatorPlaystyle.Support,
 	},
 	{
-		name: 'Winston Pitts',
+		description:
+			'Winston always felt at home in the woods, and how to make the most out of every situation...',
 		imageSrc: '/images/games/the-stifling-dark/investigators/winston.png',
+		name: 'Winston Pitts',
+		minorAbility: 'Sustained Flashlight',
+		majorAbility: 'Stamina Recharge',
+		playstyle: InvestigatorPlaystyle.Support,
 	},
 ];
