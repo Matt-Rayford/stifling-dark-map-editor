@@ -10,14 +10,26 @@ export const AdversaryViewer = () => {
 				<h2>The Adversaries</h2>
 				<div className='adversary-viewer'>
 					{adversaries.map((adversary) => (
-						<div key={`${adversary.name}`} style={{ width, height }}>
-							<img
-								width={width}
-								height={height}
-								src={adversary.imageSrc}
-								alt={`Portrait of ${adversary.name}`}
-							/>
-							<div className='blur-block' />
+						<div
+							className='flip-card'
+							key={`${adversary.name}`}
+							style={{ width, height }}
+						>
+							<div className='flip-card-inner'>
+								<div className='flip-card-front overflow-hide'>
+									<img
+										width={width}
+										height={height}
+										src={adversary.imageSrc}
+										alt={`Portrait of ${adversary.name}`}
+									/>
+								</div>
+								<div className='flip-card-back bg-dark p-2'>
+									<h3>{adversary.name}</h3>
+									<p className='italic'>{adversary.description}</p>
+								</div>
+								<div className='blur-block' />
+							</div>
 						</div>
 					))}
 				</div>
