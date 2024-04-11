@@ -4,11 +4,24 @@ import { InvestigatorDetails, investigators } from './investigators';
 import { InvestigatorDetailsDrawer } from './investigator-details-drawer';
 
 export const InvestigatorViewer = () => {
+	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [activeInvestigator, setActiveInvestigator] =
 		useState<InvestigatorDetails>();
 
 	const width = 200;
 	const height = 300;
+
+	const getNextInvestigator = () => {
+		const nextIndex = (activeIndex + 1) % investigators.length;
+		setActiveInvestigator(investigators[nextIndex]);
+		setActiveIndex(nextIndex);
+	};
+	const getPrevInvestigator = () => {
+		const nextIndex =
+			activeIndex - 1 < 0 ? investigators.length - 1 : activeIndex - 1;
+		setActiveInvestigator(investigators[nextIndex]);
+		setActiveIndex(nextIndex);
+	};
 
 	return (
 		<div className='tsd-green-wrapper relative'>
@@ -26,26 +39,32 @@ export const InvestigatorViewer = () => {
 
 				<div className='scroll-viewer'>
 					<div>
-						{investigators.map((investigator) => (
+						{investigators.map((investigator, i) => (
 							<img
 								key={`${investigator.name}-1`}
 								width={width}
 								height={height}
 								src={investigator.imageSrc}
 								alt={`Portrait of ${investigator.name}`}
-								onClick={() => setActiveInvestigator(investigator)}
+								onClick={() => {
+									setActiveInvestigator(investigator);
+									setActiveIndex(i);
+								}}
 							/>
 						))}
 					</div>
 					<div>
-						{investigators.map((investigator) => (
+						{investigators.map((investigator, i) => (
 							<img
 								key={`${investigator.name}-2`}
 								width={width}
 								height={height}
 								src={investigator.imageSrc}
 								alt={`Portrait of ${investigator.name}`}
-								onClick={() => setActiveInvestigator(investigator)}
+								onClick={() => {
+									setActiveInvestigator(investigator);
+									setActiveIndex(i);
+								}}
 							/>
 						))}
 					</div>
@@ -55,6 +74,8 @@ export const InvestigatorViewer = () => {
 				<InvestigatorDetailsDrawer
 					investigator={activeInvestigator}
 					onClose={() => setActiveInvestigator(undefined)}
+					onNext={getNextInvestigator}
+					onPrev={getPrevInvestigator}
 				/>
 			)}
 		</div>

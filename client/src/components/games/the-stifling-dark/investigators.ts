@@ -6,7 +6,7 @@ export interface InvestigatorDetails {
 	name: string;
 	minorAbility: string;
 	majorAbility: string;
-	playstyle: string;
+	playstyle: InvestigatorPlaystyle;
 }
 
 export const investigators: InvestigatorDetails[] = [
@@ -20,7 +20,8 @@ export const investigators: InvestigatorDetails[] = [
 		playstyle: InvestigatorPlaystyle.Objectives,
 	},
 	{
-		description: 'Pain is just a sign to keep going...',
+		description:
+			'Pain is just a sign to keep going, and Asher only knows how to push himself harder...',
 		imageSrc: '/images/games/the-stifling-dark/investigators/asher.png',
 		name: 'Asher Palacios',
 		minorAbility: 'Wound Management',
