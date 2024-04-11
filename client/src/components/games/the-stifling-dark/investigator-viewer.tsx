@@ -41,6 +41,7 @@ export const InvestigatorViewer = () => {
 					<div>
 						{investigators.map((investigator, i) => (
 							<img
+								className='tsd-glow'
 								key={`${investigator.name}-1`}
 								width={width}
 								height={height}
@@ -56,6 +57,7 @@ export const InvestigatorViewer = () => {
 					<div>
 						{investigators.map((investigator, i) => (
 							<img
+								className='tsd-glow'
 								key={`${investigator.name}-2`}
 								width={width}
 								height={height}

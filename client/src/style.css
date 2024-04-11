@@ -1,6 +1,7 @@
 :root {
 	--infinite-scroll-time: 60s;
 	--bg-dark: #212529;
+	--tsd-glow: #fff;
 	--tsd-green-dark: #283f39;
 	--width-xl: 1200px;
 }
@@ -117,6 +118,17 @@ canvas {
 }
 .gap-2 {
 	gap: 2rem !important;
+}
+
+.link {
+	color: inherit;
+}
+.link:hover {
+	font-weight: bold;
+}
+.link:visited {
+	cursor: pointer;
+	color: inherit;
 }
 
 .m-0 {
@@ -308,6 +320,37 @@ canvas {
 	The Stifling Dark Page
 */
 
+.tsd-box {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.tsd-box:hover {
+	transition: 0.3s;
+}
+.tsd-box:hover img {
+	transform: translate3d(1);
+}
+
+.tsd-box-order {
+	opacity: 0;
+	font-size: 24pt;
+	color: white;
+	text-align: center;
+	position: absolute;
+	top: 136px;
+	left: 80px;
+	width: 280px;
+	height: 50px;
+	transform: skewY(-6.5deg);
+	transition: 0.3s;
+	border-radius: 4px;
+	backdrop-filter: blur(5px);
+}
+.tsd-box:hover .tsd-box-order {
+	opacity: 1;
+}
+
 .tsd-header {
 	padding: 2rem 0;
 	position: relative;
@@ -315,10 +358,19 @@ canvas {
 	background: url('/public/images/games/the-stifling-dark/adversaries/morgonnod-section.png');
 }
 
+.tsd-glow {
+	transition: 0.3s;
+}
+.tsd-glow:hover {
+	filter: drop-shadow(0 0 10px #fff);
+}
+
 .tsd-page {
 	display: flex;
 	flex-direction: column;
 	gap: 3rem;
+}
+.tsd-page > div:last-child {
 	padding-bottom: 5rem;
 }
 
@@ -364,12 +416,6 @@ canvas {
 	gap: 2rem;
 	flex-wrap: wrap;
 }
-.play-now-images img {
-	transition: 0.3s;
-}
-.play-now-images img:hover {
-	filter: drop-shadow(0 0 10px #fff);
-}
 
 .scroll-viewer {
 	position: relative;
@@ -400,13 +446,10 @@ canvas {
 .scroll-viewer:hover div {
 	animation-play-state: paused;
 }
-.scroll-viewer div img {
-	transition: 0.5s;
-}
+
 .scroll-viewer div img:hover {
 	cursor: pointer;
 	background-color: transparent;
-	filter: drop-shadow(0 0 10px #fff);
 }
 
 .flashlight-viewer-container {

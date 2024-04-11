@@ -12,6 +12,7 @@ export const PlayNow = () => {
 					target='_blank'
 				>
 					<img
+						className='tsd-glow'
 						src='/images/third-party/tabletop-simulator.png'
 						alt='Tabletop Simulator Logo'
 					/>
@@ -21,6 +22,7 @@ export const PlayNow = () => {
 					target='_blank'
 				>
 					<img
+						className='tsd-glow'
 						src='/images/third-party/tabletop-playground.png'
 						alt='Tabletop Playground Logo'
 					/>
