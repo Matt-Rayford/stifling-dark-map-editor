@@ -1,11 +1,17 @@
-import { investigators } from './investigators';
+import { useState } from 'react';
+
+import { InvestigatorDetails, investigators } from './investigators';
+import { InvestigatorDetailsDrawer } from './investigator-details-drawer';
 
 export const InvestigatorViewer = () => {
+	const [activeInvestigator, setActiveInvestigator] =
+		useState<InvestigatorDetails>();
+
 	const width = 200;
 	const height = 300;
 
 	return (
-		<div className='tsd-green-wrapper'>
+		<div className='tsd-green-wrapper relative'>
 			<div className='content-container'>
 				<h2>Meet the Investigators</h2>
 
@@ -27,6 +33,7 @@ export const InvestigatorViewer = () => {
 								height={height}
 								src={investigator.imageSrc}
 								alt={`Portrait of ${investigator.name}`}
+								onClick={() => setActiveInvestigator(investigator)}
 							/>
 						))}
 					</div>
@@ -38,11 +45,18 @@ export const InvestigatorViewer = () => {
 								height={height}
 								src={investigator.imageSrc}
 								alt={`Portrait of ${investigator.name}`}
+								onClick={() => setActiveInvestigator(investigator)}
 							/>
 						))}
 					</div>
 				</div>
 			</div>
+			{!!activeInvestigator && (
+				<InvestigatorDetailsDrawer
+					investigator={activeInvestigator}
+					onClose={() => setActiveInvestigator(undefined)}
+				/>
+			)}
 		</div>
 	);
 };

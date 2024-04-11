@@ -52,16 +52,69 @@ canvas {
 	clear: both;
 }
 
-.spaceType img:hover {
-	cursor: pointer;
-	box-shadow: 0 0 5px 0 hsl(0, 0%, 62%);
+/*
+	Composable classes
+*/
+
+.bold {
+	font-weight: bold;
 }
 
+.dialog-header {
+	display: flex;
+	justify-content: space-between;
+}
+
+.icon-button {
+	background: none;
+	border: 0;
+	transition: 0.25s;
+}
+.icon-button:hover {
+	transform: scale(1.5);
+}
+
+.italic {
+	font-style: italic;
+}
+
+.flex-fluid {
+	display: flex;
+	flex-wrap: wrap;
+}
 .float-left {
 	float: left;
 }
 .float-right {
 	float: right;
+}
+
+.gap-1 {
+	gap: 1rem !important;
+}
+.gap-2 {
+	gap: 2rem !important;
+}
+
+.m-0 {
+	margin: 0;
+}
+
+.p-0 {
+	padding: 0;
+}
+
+.relative {
+	position: relative;
+}
+
+/*
+	Specific Classes
+*/
+
+.spaceType img:hover {
+	cursor: pointer;
+	box-shadow: 0 0 5px 0 hsl(0, 0%, 62%);
 }
 
 .tools-drawer {
@@ -226,6 +279,22 @@ canvas {
 	box-shadow: 0 0 12px 8px var(--tsd-green-dark) inset;
 	top: 0;
 	bottom: 0;
+}
+
+.investigator-details-dialog {
+	position: absolute;
+	left: calc(50% - 200px);
+	bottom: 50px;
+	padding: 1rem 2rem;
+	z-index: 20;
+	background-color: grey;
+	height: 300px;
+	max-width: 420px;
+
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 16px;
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(5px);
 }
 
 .tsd-green-wrapper {
