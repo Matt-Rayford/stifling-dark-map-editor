@@ -1,4 +1,3 @@
-import { clerkClient } from '@clerk/clerk-sdk-node';
 import { getLightLevels } from './light-level';
 import { getMap, getMaps } from './map';
 import { getMapSpaces } from './space';

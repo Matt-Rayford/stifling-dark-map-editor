@@ -57,7 +57,14 @@ const startApolloServer = async () => {
 		expressMiddleware(server, {
 			context: async ({ req }) => {
 				const sessionToken = req.cookies.__session;
-				return { token: sessionToken };
+				console.log('Session token: ', sessionToken);
+				console.log('Cookies: ', req.cookies);
+				if (typeof sessionToken === 'string') {
+					return { token: sessionToken };
+				} else if (Array.isArray(sessionToken)) {
+					return { token: sessionToken[0] };
+				}
+				return { token: undefined };
 			},
 		}),
 		bodyParser.json()
