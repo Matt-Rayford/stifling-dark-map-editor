@@ -21,7 +21,7 @@ export const Query = {
 			const email = await verifyTokenAndGetUserEmail(context.token);
 			return getMaps(email);
 		}
-		return null;
+		throw new Error('Cannot retrieve user maps, no token');
 	},
 	mapSpaceGroups: (root, { mapId }: { mapId: string }) =>
 		getMapSpaceGroups(mapId),
