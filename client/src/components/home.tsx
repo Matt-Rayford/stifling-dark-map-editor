@@ -7,67 +7,30 @@ import {
 	Map as SDMap,
 } from '../graphql/__generated__/graphql';
 import { useSdUser } from '../contexts/user-context';
+import { SignInButton, useAuth, useUser } from '@clerk/clerk-react';
 
 export const Home = () => {
 	const [maps, setMaps] = useState<Pick<SDMap, 'id' | 'title'>[]>([]);
 	const navigate = useNavigate();
-	const { isLoading, error, loginWithRedirect } = {
-		isLoading: false,
-		error: null,
-		loginWithRedirect: () => {},
-	};
+
 	const { setIsOpen } = useTour();
 
+	const { isSignedIn } = useUser();
 	const { user } = useSdUser();
 
 	const email = user?.email;
-	const skipLoad = !user?.email;
 
-	const { data, loading } = useQuery(LoadMapsDocument, {
-		variables: {
-			email: email!,
-		},
-		skip: skipLoad,
+	const { data, loading: mapsLoading } = useQuery(LoadMapsDocument, {
 		nextFetchPolicy: 'network-only',
 	});
 
-	/*
 	useEffect(() => {
-		const getUserToken = async () => {
-			try {
-				const accessToken = await getAccessTokenSilently({
-					authorizationParams: {
-						audience: `https://${'dev-gd8kgt1al3ostlru.us.auth0.com'}/api/v2/`,
-						scope: 'read:current_user',
-					},
-				});
-				console.log('Access token: ', accessToken);
-				document.cookie = `access_token=${accessToken}`;
-			} catch (e) {
-				console.log(e);
-			}
-		};
-
-		getUserToken();
-	}, [getAccessTokenSilently, user?.sub]);
-	*/
-
-	useEffect(() => {
-		if (!loading) {
+		if (!mapsLoading && isSignedIn) {
 			if (data?.maps) {
 				setMaps(data.maps.filter((m) => !!m));
 			}
 		}
-	}, [data, loading]);
-
-	/*
-	if (error) {
-		return <div>Failed to load auth: {error.message}</div>;
-	}*/
-
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
+	}, [data, mapsLoading, isSignedIn]);
 
 	if (user && !user.viewedSetup) {
 		setIsOpen(true);
@@ -76,21 +39,18 @@ export const Home = () => {
 	}
 
 	return (
-		<>
-			{!user && (
+		<div className='content-container'>
+			{!isSignedIn && (
 				<div>
 					<h1>Create an Account to use the Stifling Dark Map Editor</h1>
 					<p>
-						<button
-							className='btn btn-primary'
-							onClick={() => loginWithRedirect()}
-						>
-							Create Account
-						</button>
+						<SignInButton>
+							<button className='btn btn-primary'>Create Account</button>
+						</SignInButton>
 					</p>
 				</div>
 			)}
-			{user && (
+			{isSignedIn && (
 				<div id='your-maps' className='content-container'>
 					<h1>Your Maps</h1>
 					{maps.map((mapData: any) => {
@@ -108,6 +68,6 @@ export const Home = () => {
 					})}
 				</div>
 			)}
-		</>
+		</div>
 	);
 };

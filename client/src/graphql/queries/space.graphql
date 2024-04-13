@@ -1,0 +1,17 @@
+mutation DeleteSpace($mapId: ID!, $spaceId: ID!) {
+	deleteSpace(mapId: $mapId, spaceId: $spaceId)
+}
+
+mutation ConnectSpaces($space1Id: ID!, $space2Id: ID!) {
+	connectSpaces(space1Id: $space1Id, space2Id: $space2Id)
+}
+
+mutation DisconnectSpaces($space1Id: ID!, $space2Id: ID!) {
+	disconnectSpaces(space1Id: $space1Id, space2Id: $space2Id)
+}
+
+mutation UpdateSpace($space: SpaceInput!) {
+	updateSpace(space: $space) {
+		id
+	}
+}

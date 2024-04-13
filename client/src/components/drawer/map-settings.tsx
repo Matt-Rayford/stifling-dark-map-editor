@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import AWS from 'aws-sdk';
 import { updateSpaceColor } from '../../utils/canvas';
-import { updateMapSettings, uploadMapImage } from '../../utils/requests';
 
 import { Space } from '../../models/space';
-import { MapSettings } from '../../graphql/__generated__/graphql';
+import {
+	MapSettings,
+	UpdateMapSettingsDocument,
+	UploadMapImageDocument,
+} from '../../graphql/__generated__/graphql';
 import { useMapContext } from '../../utils/map-context';
+import { useMutation } from '@apollo/client';
 
 interface Props {
 	name: string;
@@ -28,14 +32,31 @@ export const Settings = ({
 		useState<MapSettings>(mapSettings);
 	const [renderComponent, setRenderComponent] = useState(false);
 
+	const [updateMapSettings] = useMutation(UpdateMapSettingsDocument);
+	const [uploadMapImage] = useMutation(UploadMapImageDocument);
+
 	const { outputCanvas, generateMapImage } = useMapContext();
 
 	useEffect(() => {
-		setTimeout(() => setRenderComponent(true), 400);
+		const timeout = setTimeout(() => setRenderComponent(true), 200);
+		return () => {
+			if (timeout) {
+				clearTimeout(timeout);
+			}
+		};
 	}, []);
 
 	const onSave = () => {
-		updateMapSettings(mapId, curMapSettings);
+		updateMapSettings({
+			variables: {
+				id: mapId,
+				settings: {
+					backgroundImageUrl: curMapSettings.backgroundImageUrl,
+					spaceColor: curMapSettings.spaceColor,
+				},
+			},
+		});
+
 		setOrigSettings({ ...curMapSettings });
 	};
 
@@ -93,7 +114,7 @@ export const Settings = ({
 						} else {
 							const imageUrl = `${process.env.REACT_APP_AWS_S3_URL}${imageName}`;
 							const settings = { ...curMapSettings };
-							await uploadMapImage(mapId, imageUrl);
+							await uploadMapImage({ variables: { mapId, imageUrl } });
 							settings.backgroundImageUrl = imageUrl;
 							onUpdateBackgroundImage(imageUrl);
 							setCurMapSettings(settings);

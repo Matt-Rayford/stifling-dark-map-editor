@@ -1,10 +1,10 @@
 type Query {
-	lightLevels: [LightLevel]
-	maps(email: String!): [Map!]!
+	lightLevels: [LightLevel!]
+	maps: [Map!]!
 	map(id: ID!): Map
 	mapSpaceGroups(mapId: ID!): [SpaceGroup!]
 	mapSpaces(mapId: ID!): [Space]
-	spaceTypes: [SpaceType]
+	spaceTypes: [SpaceType!]
 	user(email: String!): User!
 }
 
@@ -102,12 +102,6 @@ input CreateMapInput {
 input MapSettingsInput {
 	backgroundImageUrl: String
 	spaceColor: String
-	horizontalSpacing: Float
-	verticalSpacing: Float
-	indent: Float
-	paddingX: Float
-	paddingY: Float
-	spaceRadius: Float
 }
 
 input SpaceInput {

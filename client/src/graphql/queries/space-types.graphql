@@ -1,6 +1,9 @@
 query SpaceTypes {
 	spaceTypes {
 		id
+		color
 		iconUrl
+		description
+		name
 	}
 }

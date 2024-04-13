@@ -3,17 +3,17 @@ import { useParams } from 'react-router-dom';
 
 import { ObjectType } from '../../models/object';
 import {
-	redraw,
 	setupSpaces,
 	renumberSpaces,
 	updateMousePos,
 } from '../../utils/canvas';
-import { connectSpaces, deleteSpace } from '../../utils/requests';
 import { Space } from '../../models/space';
 import { MousePos } from '../../models/mouse-pos';
 import { loadImage, toDataURL } from '../../utils/image';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
+	ConnectSpacesDocument,
+	DeleteSpaceDocument,
 	LoadMapDocument,
 	LoadMapQuery,
 	SpaceTypesDocument,
@@ -26,7 +26,6 @@ import { ToolsDrawer } from '../drawer/tools-drawer';
 
 export const MapEditor = () => {
 	const [map, setMap] = useState<LoadMapQuery['map']>();
-	const [timer, setTimer] = useState<NodeJS.Timeout>();
 	const [selectedSpace, setSelectedSpace] = useState<Space>();
 	const [canvas, setCanvas] = useState<HTMLCanvasElement>();
 	const [objects, setObjects] = useState<any[]>([]);
@@ -59,21 +58,16 @@ export const MapEditor = () => {
 	const { data } = useQuery(LoadMapDocument, {
 		variables: { id: mapId! },
 		skip: !mapId,
+		onCompleted: (data) => {
+			if (data.map) {
+				setMap(data.map);
+			}
+		},
 	});
-
 	const { data: spaceTypesData } = useQuery(SpaceTypesDocument);
 
-	useEffect(() => {
-		return () => {
-			clearInterval(timer);
-		};
-	}, [timer]);
-
-	useEffect(() => {
-		if (data?.map) {
-			setMap(data.map);
-		}
-	}, [data]);
+	const [deleteSpace] = useMutation(DeleteSpaceDocument);
+	const [connectSpaces] = useMutation(ConnectSpacesDocument);
 
 	useEffect(() => {
 		if (spaceTypesData?.spaceTypes && map?.settings.spaceRadius) {
@@ -145,7 +139,8 @@ export const MapEditor = () => {
 						if (map.spaceGroups) {
 							renumberSpaces(spaceMap, map.spaceGroups);
 						}
-						deleteSpace(map.id, obj.id);
+						map.id, obj.id;
+						deleteSpace({ variables: { mapId: map.id, spaceId: obj.id } });
 					}
 				}
 				if (key == 'a') {
@@ -259,10 +254,12 @@ export const MapEditor = () => {
 					highlightedObject.current.connections.push(
 						newConnection.current.fromSpace
 					);
-					connectSpaces(
-						newConnection.current.fromSpace.id,
-						highlightedObject.current.id
-					);
+					connectSpaces({
+						variables: {
+							space1Id: newConnection.current.fromSpace.id,
+							space2Id: highlightedObject.current.id,
+						},
+					});
 					if (
 						(highlightedObject.current.isDeleted ||
 							newConnection.current.fromSpace.isDeleted) &&

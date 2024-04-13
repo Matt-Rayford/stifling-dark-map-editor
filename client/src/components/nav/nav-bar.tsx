@@ -4,11 +4,13 @@ import {
 	SignedOut,
 	SignInButton,
 	UserButton,
+	useUser,
 } from '@clerk/clerk-react';
 
 import { useSdUser } from '../../contexts/user-context';
 
 export const NavBar = () => {
+	const { isSignedIn } = useUser();
 	const { user } = useSdUser();
 
 	return (
@@ -51,12 +53,12 @@ export const NavBar = () => {
 					</Link>
 				</div>
 			</div>
-			<SignedOut>
-				<SignInButton />
-			</SignedOut>
-			<SignedIn>
-				<UserButton />
-			</SignedIn>
+			{!isSignedIn && (
+				<SignInButton>
+					<button className='btn btn-primary'>Log in</button>
+				</SignInButton>
+			)}
+			{isSignedIn && <UserButton />}
 		</nav>
 	);
 };
