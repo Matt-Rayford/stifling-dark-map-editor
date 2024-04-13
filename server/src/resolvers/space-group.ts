@@ -3,7 +3,7 @@ import { DBSpaceGroup, SpaceGroup } from '../types/space-group';
 import { getMap } from './map';
 
 export const updateSpaceGroup = async (mapId: string, group: SpaceGroup) => {
-	getMap(mapId);
+	//getMap(mapId);
 
 	const query =
 		'UPDATE sd_map_space_group SET name=$1, prefix=$2 WHERE id=$3 RETURNING *';

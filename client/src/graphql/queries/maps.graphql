@@ -1,5 +1,5 @@
-query LoadMaps($email: String!) {
-	maps(email: $email) {
+query LoadMaps {
+	maps {
 		id
 		title
 	}

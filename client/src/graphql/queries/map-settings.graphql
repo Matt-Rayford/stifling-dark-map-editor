@@ -1,0 +1,14 @@
+mutation UpdateMapSettings($id: ID, $settings: MapSettingsInput) {
+	map: updateMapSettings(mapId: $id, settings: $settings) {
+		settings {
+			backgroundImageUrl
+			spaceColor
+			horizontalSpacing
+			verticalSpacing
+			indent
+			paddingX
+			paddingY
+			spaceRadius
+		}
+	}
+}

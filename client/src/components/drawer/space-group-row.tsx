@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { deleteMapSpaceGroup, updateMapSpaceGroup } from '../../utils/requests';
+import { useMutation } from '@apollo/client';
+import {
+	DeleteMapSpaceGroupDocument,
+	UpdateMapSpaceGroupDocument,
+} from '../../graphql/__generated__/graphql';
 
 interface Props {
 	mapId: string;
@@ -12,27 +16,39 @@ export const SpaceGroupRow = ({ mapId, group, onDelete }: Props) => {
 	const [prefix, setPrefix] = useState(group.prefix);
 	const [origState, setOrigState] = useState(group);
 
+	const [deleteMapSpaceGroup] = useMutation(DeleteMapSpaceGroupDocument);
+	const [updateMapSpaceGroup] = useMutation(UpdateMapSpaceGroupDocument);
+
 	const updateGroup = () => {
 		if (mapId) {
-			updateMapSpaceGroup(mapId, {
-				id: group.id,
-				name,
-				prefix,
-			}).then((updatedGroup) => {
-				setOrigState(updatedGroup);
+			updateMapSpaceGroup({
+				variables: {
+					mapId,
+					group: {
+						id: group.id,
+						name,
+						prefix,
+					},
+				},
+			}).then((result) => {
+				if (result.data?.updatedGroup) {
+					setOrigState(result.data.updatedGroup);
+				}
 			});
 		}
 	};
 
 	const deleteGroup = () => {
 		if (mapId) {
-			deleteMapSpaceGroup(mapId, group.id).then((success) => {
-				if (success) {
-					onDelete(group.id);
-				} else {
-					//TODO: Error logic
+			deleteMapSpaceGroup({ variables: { mapId, groupId: group.id } }).then(
+				(success) => {
+					if (success) {
+						onDelete(group.id);
+					} else {
+						//TODO: Error logic
+					}
 				}
-			});
+			);
 		}
 	};
 

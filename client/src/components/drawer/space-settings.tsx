@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Space } from '../../models/space';
 import { calculateAllPaths } from '../../utils/canvas';
-import {
-	disconnectSpaces,
-	getLightLevels,
-	getSpaceTypes,
-	updateSpace,
-} from '../../utils/requests';
 import { LightLevel } from '../../models/light-level';
 import {
+	DisconnectSpacesDocument,
+	LightLevelsDocument,
+	LightLevelsQuery,
 	SpaceGroupsDocument,
+	SpaceGroupsQuery,
 	SpaceType,
+	SpaceTypesDocument,
+	SpaceTypesQuery,
+	UpdateSpaceDocument,
 } from '../../graphql/__generated__/graphql';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 
 interface Props {
 	space?: Space;
@@ -32,29 +33,47 @@ export const SpaceSettings = ({
 	const [connections, setSpaceConnections] = useState<Space[]>(
 		space?.connections ?? []
 	);
-	const [lightLevels, setLightLevels] = useState<LightLevel[]>([]);
+	const [lightLevels, setLightLevels] = useState<
+		LightLevelsQuery['lightLevels']
+	>([]);
 	const [lightLevel, setLightLevel] = useState<LightLevel>();
-	const [spaceTypes, setSpaceTypes] = useState<SpaceType[]>([]);
+	const [spaceTypes, setSpaceTypes] = useState<SpaceTypesQuery['spaceTypes']>(
+		[]
+	);
 	const [spaceType, setSpaceType] = useState<SpaceType | undefined>(
 		space?.type ?? undefined
 	);
+	const [spaceGroups, setSpaceGroups] = useState<
+		SpaceGroupsQuery['spaceGroups']
+	>([]);
 	const [spaceGroupId, setSpaceGroupId] = useState<string>('-');
 
-	const { data } = useQuery(SpaceGroupsDocument, {
+	useQuery(LightLevelsDocument, {
+		onCompleted: (data) => {
+			if (data.lightLevels) {
+				setLightLevels(data.lightLevels);
+			}
+		},
+	});
+	useQuery(SpaceTypesDocument, {
+		onCompleted: (data) => {
+			if (data.spaceTypes) {
+				setSpaceTypes(data.spaceTypes);
+			}
+		},
+	});
+	useQuery(SpaceGroupsDocument, {
 		variables: { mapId: mapId },
 		pollInterval: 500,
+		onCompleted: (data) => {
+			if (data.spaceGroups) {
+				setSpaceGroups(data.spaceGroups);
+			}
+		},
 	});
 
-	const spaceGroups = data?.spaceGroups ?? [];
-
-	useEffect(() => {
-		getLightLevels().then((lightLevels: LightLevel[]) => {
-			setLightLevels(lightLevels);
-		});
-		getSpaceTypes().then((spaceTypes: SpaceType[]) => {
-			setSpaceTypes(spaceTypes);
-		});
-	}, []);
+	const [disconnectSpaces] = useMutation(DisconnectSpacesDocument);
+	const [updateSpace] = useMutation(UpdateSpaceDocument);
 
 	useEffect(() => {
 		if (space) {
@@ -69,14 +88,22 @@ export const SpaceSettings = ({
 	}
 
 	const updateLightLevel = (lightLevel: LightLevel) => {
-		updateSpace({ id: space.id, lightLevelId: lightLevel.id });
+		updateSpace({
+			variables: {
+				space: { id: space.id, lightLevelId: lightLevel.id },
+			},
+		});
 		space.updateLightLevel(lightLevel);
 		setLightLevel(lightLevel);
 	};
 
 	const updateSpaceType = (spaceType?: SpaceType) => {
 		if (spaceType) {
-			updateSpace({ id: space.id, typeId: spaceType.id });
+			updateSpace({
+				variables: {
+					space: { id: space.id, typeId: spaceType.id },
+				},
+			});
 			space.updateType(spaceType);
 			setSpaceType(spaceType);
 		}
@@ -84,11 +111,19 @@ export const SpaceSettings = ({
 
 	const updateGroup = (spaceGroupId?: string) => {
 		if (!spaceGroupId) {
-			updateSpace({ id: space.id, groupId: null });
+			updateSpace({
+				variables: {
+					space: { id: space.id, groupId: null },
+				},
+			});
 			space.removeGroup();
 			setSpaceGroupId('-');
 		} else {
-			updateSpace({ id: space.id, groupId: spaceGroupId });
+			updateSpace({
+				variables: {
+					space: { id: space.id, groupId: spaceGroupId },
+				},
+			});
 			space.updateGroup(spaceGroups?.find((g) => g.id === spaceGroupId)!);
 			setSpaceGroupId(spaceGroupId);
 		}
@@ -96,7 +131,12 @@ export const SpaceSettings = ({
 	};
 
 	const removeConnection = (space: Space, connection: Space) => {
-		disconnectSpaces(space.id, connection.id);
+		disconnectSpaces({
+			variables: {
+				space1Id: space.id,
+				space2Id: connection.id,
+			},
+		});
 		space.connections = space.connections.filter(
 			(space2) => space2.id !== connection.id
 		);
@@ -157,14 +197,14 @@ export const SpaceSettings = ({
 						className='form-select'
 						onChange={(e) => {
 							updateSpaceType(
-								spaceTypes.find((spaceType) => spaceType.id === e.target.value)
+								spaceTypes?.find((spaceType) => spaceType.id === e.target.value)
 							);
 						}}
 					>
 						<option value='' disabled>
 							Select Type...
 						</option>
-						{spaceTypes.map((spaceType) => {
+						{spaceTypes?.map((spaceType) => {
 							return (
 								<option key={spaceType.id} value={spaceType.id}>
 									{spaceType.name}
@@ -183,7 +223,7 @@ export const SpaceSettings = ({
 						className='form-select'
 						onChange={(e) =>
 							updateLightLevel(
-								lightLevels.find(
+								lightLevels?.find(
 									(lightLevel) => lightLevel.id === e.target.value
 								)!
 							)
@@ -192,7 +232,7 @@ export const SpaceSettings = ({
 						<option value='' disabled>
 							Select Level...
 						</option>
-						{lightLevels.map((lightLevel: LightLevel) => {
+						{lightLevels?.map((lightLevel: LightLevel) => {
 							return (
 								<option key={lightLevel.id} value={lightLevel.id}>
 									{lightLevel.name}

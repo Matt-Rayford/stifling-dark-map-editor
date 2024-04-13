@@ -1,14 +1,28 @@
+import { clerkClient } from '@clerk/clerk-sdk-node';
 import { getLightLevels } from './light-level';
 import { getMap, getMaps } from './map';
 import { getMapSpaces } from './space';
 import { getMapSpaceGroups } from './space-group';
 import { getSpaceTypes } from './space-type';
 import { getUser } from './user';
+import { verifyTokenAndGetUserEmail } from '../utils/clerk';
 
 export const Query = {
 	lightLevels: () => getLightLevels(),
-	map: (root, { id }: { id: string }) => getMap(id),
-	maps: (root, { email }: { email: string }) => getMaps(email),
+	map: async (root, { id }: { id: string }, context) => {
+		if (context.token) {
+			const email = await verifyTokenAndGetUserEmail(context.token);
+			return getMap(id, email);
+		}
+		return null;
+	},
+	maps: async (root, _, context) => {
+		if (context.token) {
+			const email = await verifyTokenAndGetUserEmail(context.token);
+			return getMaps(email);
+		}
+		return null;
+	},
 	mapSpaceGroups: (root, { mapId }: { mapId: string }) =>
 		getMapSpaceGroups(mapId),
 	mapSpaces: (root, { mapId }: { mapId: string }) => getMapSpaces(mapId),

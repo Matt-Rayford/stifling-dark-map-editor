@@ -4,3 +4,7 @@ mutation CreateMap($title: String!, $email: String!) {
 		title
 	}
 }
+
+mutation UploadMapImage($mapId: ID!, $imageUrl: String!) {
+	uploadMapImage(mapId: $mapId, imageUrl: $imageUrl)
+}

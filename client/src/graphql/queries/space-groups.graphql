@@ -5,3 +5,23 @@ query SpaceGroups($mapId: ID!) {
 		prefix
 	}
 }
+
+mutation AddMapSpaceGroup($mapId: ID!, $group: SpaceGroupInput!) {
+	newGroup: addMapSpaceGroup(mapId: $mapId, group: $group) {
+		id
+		name
+		prefix
+	}
+}
+
+mutation DeleteMapSpaceGroup($mapId: ID!, $groupId: ID!) {
+	wasSuccess: deleteMapSpaceGroup(mapId: $mapId, groupId: $groupId)
+}
+
+mutation UpdateMapSpaceGroup($mapId: ID!, $group: SpaceGroupInput!) {
+	updatedGroup: updateMapSpaceGroup(mapId: $mapId, group: $group) {
+		id
+		name
+		prefix
+	}
+}

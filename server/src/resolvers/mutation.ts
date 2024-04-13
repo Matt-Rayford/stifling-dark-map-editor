@@ -1,6 +1,7 @@
 import { MapSettings } from '../types/map-settings';
 import { SpaceInput } from '../types/space';
 import { SpaceGroup } from '../types/space-group';
+import { verifyTokenAndGetUserEmail } from '../utils/clerk';
 import {
 	addMapSpaceGroup,
 	createMap,
@@ -21,8 +22,15 @@ import { updateUserSettings } from './user';
 export const Mutation = {
 	addMapSpaceGroup: async (
 		root,
-		{ mapId, group }: { mapId: string; group: SpaceGroup }
-	) => addMapSpaceGroup(mapId, group),
+		{ mapId, group }: { mapId: string; group: SpaceGroup },
+		context
+	) => {
+		if (context.token) {
+			const email = await verifyTokenAndGetUserEmail(context.token);
+			return addMapSpaceGroup(mapId, email, group);
+		}
+		return null;
+	},
 	connectSpaces: async (
 		root,
 		{ space1Id, space2Id }: { space1Id: string; space2Id: string }
@@ -35,16 +43,39 @@ export const Mutation = {
 		createMap(title, email),
 	deleteMapSpaceGroup: async (
 		root,
-		{ mapId, groupId }: { mapId: string; groupId: string }
-	) => deleteMapSpaceGroup(mapId, groupId),
+		{ mapId, groupId }: { mapId: string; groupId: string },
+		context
+	) => {
+		if (context.token) {
+			const email = await verifyTokenAndGetUserEmail(context.token);
+			return deleteMapSpaceGroup(mapId, email, groupId);
+		}
+		return false;
+	},
 	deleteSpace: (root, { mapId, spaceId }: { mapId: string; spaceId: string }) =>
 		deleteSpace(mapId, spaceId),
-	renameMap: (root, { mapId, mapName }: { mapId: string; mapName: string }) =>
-		renameMap(mapId, mapName),
+	renameMap: async (
+		root,
+		{ mapId, mapName }: { mapId: string; mapName: string },
+		context
+	) => {
+		if (context.token) {
+			const email = await verifyTokenAndGetUserEmail(context.token);
+			return renameMap(mapId, email, mapName);
+		}
+		return null;
+	},
 	updateMapSettings: async (
 		root,
-		{ mapId, settings }: { mapId: string; settings: MapSettings }
-	) => updateMapSettings(mapId, settings),
+		{ mapId, settings }: { mapId: string; settings: MapSettings },
+		context
+	) => {
+		if (context.token) {
+			const email = await verifyTokenAndGetUserEmail(context.token);
+			updateMapSettings(mapId, email, settings);
+		}
+		return null;
+	},
 	updateMapSpaceGroup: async (
 		root,
 		{ mapId, group }: { mapId: string; group: SpaceGroup }
@@ -62,8 +93,15 @@ export const Mutation = {
 	) => updateUserSettings(email, viewedSetup),
 	uploadMapImage: async (
 		root,
-		{ mapId, imageUrl }: { mapId: string; imageUrl: string }
-	) => updateMapImage(mapId, imageUrl),
+		{ mapId, imageUrl }: { mapId: string; imageUrl: string },
+		context
+	) => {
+		if (context.token) {
+			const email = await verifyTokenAndGetUserEmail(context.token);
+			return updateMapImage(mapId, email, imageUrl);
+		}
+		return null;
+	},
 	updateSpace: async (root, { space }: { space: SpaceInput }) =>
 		updateSpace(space),
 };

@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { SpaceGroupRow } from './space-group-row';
-import { SpaceGroup } from '../../graphql/__generated__/graphql';
-import { addMapSpaceGroup } from '../../utils/requests';
+import {
+	AddMapSpaceGroupDocument,
+	SpaceGroup,
+	SpaceGroupsQuery,
+} from '../../graphql/__generated__/graphql';
+import { useMutation } from '@apollo/client';
 
 interface Props {
 	mapId: string;
@@ -16,8 +20,10 @@ export const SpaceGroupSettings = ({
 }: Props) => {
 	const [name, setName] = useState('');
 	const [prefix, setPrefix] = useState('');
-	const [groups, setGroups] = useState<SpaceGroup[]>([]);
+	const [groups, setGroups] = useState<SpaceGroupsQuery['spaceGroups']>([]);
 	const [renderComponent, setRenderComponent] = useState(false);
+
+	const [addMapSpaceGroup] = useMutation(AddMapSpaceGroupDocument);
 
 	useEffect(() => {
 		setTimeout(() => setRenderComponent(true), 400);
@@ -34,9 +40,15 @@ export const SpaceGroupSettings = ({
 			name,
 			prefix,
 		};
-		addMapSpaceGroup(mapId, group).then((result) => {
-			const newGroups = [...groups, result];
-			setGroups(newGroups);
+		addMapSpaceGroup({
+			variables: {
+				mapId,
+				group,
+			},
+		}).then((result) => {
+			if (groups && result.data?.newGroup) {
+				setGroups([...groups, result.data.newGroup]);
+			}
 		});
 
 		setName('');
@@ -44,8 +56,10 @@ export const SpaceGroupSettings = ({
 	};
 
 	const onDelete = (groupId: string) => {
-		setGroups([...groups.filter((g) => g.id !== groupId)]);
-		onUpdateSpaceGroups();
+		if (groups) {
+			setGroups(groups.filter((g) => g.id !== groupId));
+			onUpdateSpaceGroups();
+		}
 	};
 
 	if (!renderComponent) {
@@ -64,7 +78,7 @@ export const SpaceGroupSettings = ({
 					</tr>
 				</thead>
 				<tbody>
-					{groups.map((group) => (
+					{groups?.map((group) => (
 						<SpaceGroupRow
 							key={group.id}
 							mapId={mapId}

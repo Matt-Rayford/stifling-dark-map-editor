@@ -138,7 +138,6 @@ export const MapContextProvider = ({ children }: { children: ReactNode }) => {
 
 	const generateMapImage = async () => {
 		if (outputCanvas && outputCtx && spaceMap && spaceColor) {
-			console.log('Generate Download Image');
 			redraw(
 				//@ts-ignore
 				outputCanvas,

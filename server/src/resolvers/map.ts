@@ -7,13 +7,29 @@ import { getMapSettings } from './map-settings';
 import { getMapSpaces } from './space';
 import { getMapSpaceGroups } from './space-group';
 
-export const getMap = async (mapId: string): Promise<DBMap> => {
-	const query = 'SELECT * FROM sd_map WHERE id=$1';
+const canUserUpdateMap = (mapId: string, email: string) => {
+	const query = 'SELECT COUNT(*) FROM sd_map WHERE id=$1 AND creator_email=$2';
+	return pool
+		.query({
+			text: query,
+			values: [mapId, email],
+		})
+		.then((r) => {
+			return r.rows?.[0];
+		})
+		.catch((e) => {
+			console.error(`ERROR - getMap(${mapId}): `, e);
+			throw new Error(`Error loading map`);
+		});
+};
+
+export const getMap = async (mapId: string, email: string): Promise<DBMap> => {
+	const query = 'SELECT * FROM sd_map WHERE id=$1 AND creator_email=$2';
 
 	return pool
 		.query({
 			text: query,
-			values: [mapId],
+			values: [mapId, email],
 		})
 		.then((r) => {
 			return r.rows?.[0];
@@ -55,7 +71,7 @@ export const createMap = async (
 		.then((r) => {
 			const mapRow = r.rows?.[0];
 			if (mapRow) {
-				return getMap(mapRow.create_map);
+				return getMap(mapRow.create_map, email);
 			} else {
 				throw new Error(`Error creating map`);
 			}
@@ -66,7 +82,13 @@ export const createMap = async (
 		});
 };
 
-export const renameMap = async (mapId: string, mapName: string) => {
+export const renameMap = async (
+	mapId: string,
+	email: string,
+	mapName: string
+) => {
+	canUserUpdateMap(mapId, email);
+
 	const query = 'UPDATE sd_map SET name=$1 where id=$2 RETURNING name';
 	return pool
 		.query({ text: query, values: [mapName, mapId] })
@@ -81,34 +103,20 @@ export const renameMap = async (mapId: string, mapName: string) => {
 
 export const updateMapSettings = async (
 	mapId: string,
+	email: string,
 	settings: MapSettings
 ) => {
-	getMap(mapId);
+	canUserUpdateMap(mapId, email);
 
 	const query =
 		'UPDATE sd_map_settings \
-			SET space_color=$1, \
-			horizontal_spacing=$2, \
-			vertical_spacing=$3, \
-			"indent"=$4, \
-			padding_x=$5, \
-			padding_y=$6, \
-			space_radius=$7 \
-			WHERE map_id=$8 RETURNING *';
+			SET space_color=$1 \
+			WHERE map_id=$2 RETURNING *';
 
 	return await pool
 		.query({
 			text: query,
-			values: [
-				settings.spaceColor,
-				settings.horizontalSpacing,
-				settings.verticalSpacing,
-				settings.indent,
-				settings.paddingX,
-				settings.paddingY,
-				settings.spaceRadius,
-				mapId,
-			],
+			values: [settings.spaceColor, mapId],
 		})
 		.then((r) => {
 			const data = r.rows?.[0];
@@ -120,8 +128,12 @@ export const updateMapSettings = async (
 		});
 };
 
-export const updateMapImage = async (mapId: string, imageUrl: string) => {
-	getMap(mapId);
+export const updateMapImage = async (
+	mapId: string,
+	email: string,
+	imageUrl: string
+) => {
+	canUserUpdateMap(mapId, email);
 
 	const query =
 		'UPDATE sd_map_settings SET background_image_url=$1 WHERE map_id=$2 RETURNING background_image_url';
@@ -138,8 +150,12 @@ export const updateMapImage = async (mapId: string, imageUrl: string) => {
 		});
 };
 
-export const addMapSpaceGroup = async (mapId: string, group: SpaceGroup) => {
-	getMap(mapId);
+export const addMapSpaceGroup = async (
+	mapId: string,
+	email: string,
+	group: SpaceGroup
+) => {
+	canUserUpdateMap(mapId, email);
 
 	const query =
 		'INSERT INTO sd_map_space_group (map_id, name, prefix) VALUES ($1, $2, $3) RETURNING *';
@@ -160,8 +176,12 @@ export const addMapSpaceGroup = async (mapId: string, group: SpaceGroup) => {
 		});
 };
 
-export const deleteMapSpaceGroup = async (mapId: string, groupId: string) => {
-	getMap(mapId);
+export const deleteMapSpaceGroup = async (
+	mapId: string,
+	email: string,
+	groupId: string
+) => {
+	canUserUpdateMap(mapId, email);
 
 	const query = 'DELETE FROM sd_map_space_group WHERE id=$1';
 	return await pool
