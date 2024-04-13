@@ -1,17 +1,15 @@
 import { Link } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
+import {
+	SignedIn,
+	SignedOut,
+	SignInButton,
+	UserButton,
+} from '@clerk/clerk-react';
+
 import { useSdUser } from '../../contexts/user-context';
 
 export const NavBar = () => {
-	const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 	const { user } = useSdUser();
-
-	const logoutWithRedirect = () =>
-		logout({
-			logoutParams: {
-				returnTo: window.location.origin,
-			},
-		});
 
 	return (
 		<nav
@@ -53,26 +51,12 @@ export const NavBar = () => {
 					</Link>
 				</div>
 			</div>
-			{!isAuthenticated && (
-				<div className='navbar-nav float-right'>
-					<button
-						className='btn btn-primary'
-						onClick={() => loginWithRedirect()}
-					>
-						Log in
-					</button>
-				</div>
-			)}
-			{isAuthenticated && (
-				<div className='navbar-nav float-right'>
-					<button
-						className='btn btn-primary'
-						onClick={() => logoutWithRedirect()}
-					>
-						Log Out
-					</button>
-				</div>
-			)}
+			<SignedOut>
+				<SignInButton />
+			</SignedOut>
+			<SignedIn>
+				<UserButton />
+			</SignedIn>
 		</nav>
 	);
 };

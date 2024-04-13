@@ -4,8 +4,9 @@ import {
 	User,
 	UserDocument,
 } from '../graphql/__generated__/graphql';
-import { useAuth0 } from '@auth0/auth0-react';
+
 import { useMutation, useQuery } from '@apollo/client';
+import { useUser } from '@clerk/clerk-react';
 
 interface UserContextType {
 	initialized: boolean;
@@ -22,10 +23,10 @@ const UserContext = createContext<UserContextType>({
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [sdUser, setSdUser] = useState<User>();
-	const { user } = useAuth0();
+	const { user } = useUser();
 
-	const email = user?.email;
-	const skip = !user?.email;
+	const email = user?.emailAddresses[0].emailAddress!;
+	const skip = !user?.emailAddresses;
 
 	useQuery(UserDocument, {
 		variables: {
