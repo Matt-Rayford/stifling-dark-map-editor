@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"scripts": {
 		"compile": "tsc",
-		"start": "npm run compile && node ./dist/index.js --env-file=.env.production --env-file=.env.development"
+		"start": "npm run compile && node ./dist/index.js"
 	},
 	"dependencies": {
 		"@apollo/server": "^4.10.0",
@@ -12,15 +12,11 @@
 		"apollo-server": "^3.13.0",
 		"apollo-server-express": "^3.13.0",
 		"body-parser": "^1.20.2",
-		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
 		"dotenv": "^16.3.1",
 		"express": "^4.18.2",
-		"express-jwt": "^8.4.1",
 		"graphql": "^16.8.1",
 		"http": "^0.0.1-security",
-		"jsonwebtoken": "^9.0.2",
-		"notarealdb": "0.2.2",
 		"pg": "^8.11.3"
 	},
 	"devDependencies": {

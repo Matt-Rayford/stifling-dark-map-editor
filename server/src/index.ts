@@ -3,14 +3,11 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import { expressMiddleware } from '@apollo/server/express4';
 import fs from 'fs';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { Pool } from 'pg';
 import http from 'http';
 import dotenv from 'dotenv';
-import { clerkClient } from '@clerk/clerk-sdk-node';
-import jwt from 'jsonwebtoken';
 
 import { resolvers } from './resolvers';
 import { initDBCache } from './utils/cache';
@@ -25,7 +22,6 @@ export const pool = new Pool({
 const port = process.env.PORT ? parseInt(process.env.PORT) : 9000;
 
 const app = express();
-app.use(cookieParser());
 
 const httpServer = http.createServer(app);
 
@@ -56,26 +52,12 @@ const startApolloServer = async () => {
 		express.json(),
 		expressMiddleware(server, {
 			context: async ({ req }) => {
-				const sessionToken = req.cookies.__session;
-				console.log('Session token: ', sessionToken);
-				console.log('Cookies: ', req.cookies);
-				if (typeof sessionToken === 'string') {
-					return { token: sessionToken };
-				} else if (Array.isArray(sessionToken)) {
-					return { token: sessionToken[0] };
-				}
-				return { token: undefined };
+				const authString = req.headers.authorization;
+				const authToken = authString?.split('Bearer ')?.[1];
+				return { token: authToken };
 			},
 		}),
 		bodyParser.json()
-		/*auth({
-			issuerBaseURL: process.env.OAUTH_DOMAIN,
-			audience: process.env.OAUTH_AUDIENCE_URL,
-		})*/
-		/*expressJwt({
-		secret: jwtSecret,
-		credentialsRequired: false,
-		*/
 	);
 };
 
