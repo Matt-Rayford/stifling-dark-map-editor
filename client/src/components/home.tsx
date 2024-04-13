@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
 import { useQuery } from '@apollo/client';
 import { useTour } from '@reactour/tour';
 import {
@@ -12,7 +11,11 @@ import { useSdUser } from '../contexts/user-context';
 export const Home = () => {
 	const [maps, setMaps] = useState<Pick<SDMap, 'id' | 'title'>[]>([]);
 	const navigate = useNavigate();
-	const { isLoading, error, loginWithRedirect } = useAuth0();
+	const { isLoading, error, loginWithRedirect } = {
+		isLoading: false,
+		error: null,
+		loginWithRedirect: () => {},
+	};
 	const { setIsOpen } = useTour();
 
 	const { user } = useSdUser();
@@ -57,9 +60,10 @@ export const Home = () => {
 		}
 	}, [data, loading]);
 
+	/*
 	if (error) {
 		return <div>Failed to load auth: {error.message}</div>;
-	}
+	}*/
 
 	if (isLoading) {
 		return <div>Loading...</div>;
