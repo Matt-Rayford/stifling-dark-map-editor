@@ -20,7 +20,7 @@ export const NavBar = () => {
 		>
 			<Link className='navbar-brand nav-logo' to='/'>
 				<img
-					src='images/logo/logo-white.png'
+					src='/images/logo/logo-white.png'
 					alt='Company Logo'
 					width='40'
 					height='40'
