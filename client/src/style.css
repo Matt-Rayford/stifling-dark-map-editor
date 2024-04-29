@@ -139,6 +139,12 @@ canvas {
 	overflow: hidden;
 }
 
+.page-tabs {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
 .p-0 {
 	padding: 0 !important;
 }
