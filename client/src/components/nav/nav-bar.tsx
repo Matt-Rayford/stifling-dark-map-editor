@@ -1,11 +1,8 @@
 import { Link } from 'react-router-dom';
 import { SignInButton, UserButton, useUser } from '@clerk/clerk-react';
 
-import { useSdUser } from '../../contexts/user-context';
-
 export const NavBar = () => {
 	const { isSignedIn } = useUser();
-	const { user } = useSdUser();
 
 	return (
 		<nav
