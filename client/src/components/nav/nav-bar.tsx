@@ -1,11 +1,5 @@
 import { Link } from 'react-router-dom';
-import {
-	SignedIn,
-	SignedOut,
-	SignInButton,
-	UserButton,
-	useUser,
-} from '@clerk/clerk-react';
+import { SignInButton, UserButton, useUser } from '@clerk/clerk-react';
 
 import { useSdUser } from '../../contexts/user-context';
 
@@ -39,6 +33,7 @@ export const NavBar = () => {
 			</button>
 			<div className='collapse navbar-collapse' id='navbarNavAltMarkup'>
 				<div className='navbar-nav'>
+					{/*
 					{user && (
 						<>
 							<Link className='nav-item nav-link' to='/'>
@@ -53,6 +48,7 @@ export const NavBar = () => {
 							</Link>
 						</>
 					)}
+				*/}
 					<Link className='nav-item nav-link' to='/games'>
 						Games
 					</Link>
