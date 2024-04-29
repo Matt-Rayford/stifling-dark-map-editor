@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom';
-import { GameCard, GameInfo } from './game-card';
+import { ImageCard, ImageCardProps } from '../cards/image-card';
 
-const gamesList: GameInfo[] = [
+const gamesList: ImageCardProps[] = [
 	{
 		title: 'The Stifling Dark',
 		description:
@@ -22,21 +21,17 @@ const gamesList: GameInfo[] = [
 
 export const OurGames = () => {
 	return (
-		<div className='content-container'>
-			<h1>Our Games</h1>
-
-			<div className='games-list'>
-				{gamesList.map((game) => (
-					<GameCard
-						key={game.title}
-						title={game.title}
-						description={game.description}
-						href={game.href}
-						imageUrl={game.imageUrl}
-						imageAlt={game.imageAlt}
-					/>
-				))}
-			</div>
+		<div className='games-list'>
+			{gamesList.map((game) => (
+				<ImageCard
+					key={game.title}
+					title={game.title}
+					description={game.description}
+					href={game.href}
+					imageUrl={game.imageUrl}
+					imageAlt={game.imageAlt}
+				/>
+			))}
 		</div>
 	);
 };

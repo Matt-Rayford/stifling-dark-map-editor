@@ -1,25 +1,21 @@
 import { Link } from 'react-router-dom';
-import {
-	SignedIn,
-	SignedOut,
-	SignInButton,
-	UserButton,
-	useUser,
-} from '@clerk/clerk-react';
-
-import { useSdUser } from '../../contexts/user-context';
+import { SignInButton, UserButton, useUser } from '@clerk/clerk-react';
 
 export const NavBar = () => {
 	const { isSignedIn } = useUser();
-	const { user } = useSdUser();
 
 	return (
 		<nav
 			className='navbar navbar-expand-lg navbar-dark bg-dark px-2'
 			style={{ zIndex: 100 }}
 		>
-			<Link className='navbar-brand' to='/'>
-				Map Editor
+			<Link className='navbar-brand nav-logo' to='/'>
+				<img
+					src='/images/logo/logo-white.png'
+					alt='Company Logo'
+					width='40'
+					height='40'
+				/>
 			</Link>
 			<button
 				className='navbar-toggler'
@@ -34,6 +30,7 @@ export const NavBar = () => {
 			</button>
 			<div className='collapse navbar-collapse' id='navbarNavAltMarkup'>
 				<div className='navbar-nav'>
+					{/*
 					{user && (
 						<>
 							<Link className='nav-item nav-link' to='/'>
@@ -48,8 +45,9 @@ export const NavBar = () => {
 							</Link>
 						</>
 					)}
-					<Link className='nav-item nav-link' to='/games'>
-						Games
+				*/}
+					<Link className='nav-item nav-link' to='/maps'>
+						Map Editor
 					</Link>
 				</div>
 			</div>

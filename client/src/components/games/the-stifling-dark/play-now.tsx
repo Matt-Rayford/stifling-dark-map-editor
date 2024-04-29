@@ -15,6 +15,7 @@ export const PlayNow = () => {
 						className='tsd-glow'
 						src='/images/third-party/tabletop-simulator.png'
 						alt='Tabletop Simulator Logo'
+						width='90%'
 					/>
 				</a>
 				<a
@@ -25,6 +26,7 @@ export const PlayNow = () => {
 						className='tsd-glow'
 						src='/images/third-party/tabletop-playground.png'
 						alt='Tabletop Playground Logo'
+						width='90%'
 					/>
 				</a>
 			</div>
