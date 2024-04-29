@@ -26,18 +26,16 @@ export const App = () => {
 		>
 			<MapContextProvider>
 				<NavBar />
-				<div className='soph-cerb-container'>
-					<Routes>
-						<Route path='/' element={<Home />} />
-						<Route path='/map/:mapId' element={<MapEditor />} />
-						<Route path='/maps/new' element={<MapForm />} />
-						<Route path='/games' element={<OurGames />} />
-						<Route
-							path='/games/the-stifling-dark'
-							element={<TheStiflingDarkPage />}
-						/>
-					</Routes>
-				</div>
+				<Routes>
+					<Route path='/' element={<Home />} />
+					<Route path='/map/:mapId' element={<MapEditor />} />
+					<Route path='/maps/new' element={<MapForm />} />
+					<Route path='/games' element={<OurGames />} />
+					<Route
+						path='/games/the-stifling-dark'
+						element={<TheStiflingDarkPage />}
+					/>
+				</Routes>
 			</MapContextProvider>
 		</TourProvider>
 	);

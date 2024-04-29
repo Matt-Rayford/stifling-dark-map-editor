@@ -1,7 +1,4 @@
 export const Header = () => {
-	const width = 400;
-	const height = 400;
-
 	return (
 		<div className='tsd-header'>
 			<div className='content-container'>
@@ -12,8 +9,8 @@ export const Header = () => {
 				>
 					<img
 						className='tsd-glow'
-						width={width}
-						height={height}
+						width='100%'
+						height='100%'
 						src='/images/games/the-stifling-dark/box.png'
 						alt='3D image of The Stifling Dark box'
 					/>
