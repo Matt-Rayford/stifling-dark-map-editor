@@ -1,23 +1,17 @@
-import { AdversaryViewer } from './adversary-viewer';
-import { FlashlightViewer } from './flashlight-viewer';
-import { Header } from './header';
-import { InvestigatorViewer } from './investigator-viewer';
-import { OrderNow } from './order-now';
-import { Overview } from './overview';
-import { PlayNow } from './play-now';
-import { TSDTabs } from './tsd-tabs';
+import { useState } from 'react';
+
+import { TSDInformation } from './main-information';
+import { TSDTabOption, TSDTabs } from './tsd-tabs';
+import { TSDRules } from './rules';
 
 export const TheStiflingDarkPage = () => {
+	const [tab, setTab] = useState(TSDTabOption.Information);
+
 	return (
-		<div className='tsd-page'>
-			<TSDTabs />
-			<Header />
-			<Overview />
-			<InvestigatorViewer />
-			<FlashlightViewer />
-			<AdversaryViewer />
-			<PlayNow />
-			<OrderNow />
+		<div>
+			<TSDTabs activeTab={tab} selectTab={setTab} />
+			{tab === TSDTabOption.Information && <TSDInformation />}
+			{tab === TSDTabOption.Rules && <TSDRules />}
 		</div>
 	);
 };

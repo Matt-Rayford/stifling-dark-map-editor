@@ -1,6 +1,6 @@
 export const Overview = () => {
 	return (
-		<div className='content-container'>
+		<div className='content-container '>
 			<h1>The Stifling Dark</h1>
 			<p>
 				The Stifling Dark is a one-vs-many hidden-movement horror board game
