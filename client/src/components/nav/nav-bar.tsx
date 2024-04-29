@@ -46,8 +46,8 @@ export const NavBar = () => {
 						</>
 					)}
 				*/}
-					<Link className='nav-item nav-link' to='/games'>
-						Games
+					<Link className='nav-item nav-link' to='/maps'>
+						Map Editor
 					</Link>
 				</div>
 			</div>
