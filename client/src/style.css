@@ -301,6 +301,7 @@ canvas {
 }
 .game-card {
 	width: 18rem;
+	height: 29rem;
 	background-color: #434951;
 	color: #fff;
 	border: 0;
@@ -309,6 +310,13 @@ canvas {
 .game-card:hover {
 	cursor: pointer;
 	box-shadow: 0 0 10px 5px #fff;
+}
+.game-card .card-text {
+	overflow: hidden;
+	display: -webkit-box;
+	height: 4.5rem;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
 }
 
 .isometric-headers h2 {
