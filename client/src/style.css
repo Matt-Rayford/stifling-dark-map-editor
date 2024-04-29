@@ -178,6 +178,11 @@ canvas {
 	position: relative;
 }
 
+.v-stack {
+	display: flex;
+	flex-direction: column;
+}
+
 /*
 	Specific Classes
 */
