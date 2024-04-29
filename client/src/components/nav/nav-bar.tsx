@@ -18,8 +18,13 @@ export const NavBar = () => {
 			className='navbar navbar-expand-lg navbar-dark bg-dark px-2'
 			style={{ zIndex: 100 }}
 		>
-			<Link className='navbar-brand' to='/'>
-				Map Editor
+			<Link className='navbar-brand nav-logo' to='/'>
+				<img
+					src='images/logo/logo-white.png'
+					alt='Company Logo'
+					width='40'
+					height='40'
+				/>
 			</Link>
 			<button
 				className='navbar-toggler'
