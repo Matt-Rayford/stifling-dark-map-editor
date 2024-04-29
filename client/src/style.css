@@ -120,6 +120,26 @@ canvas {
 	gap: 2rem !important;
 }
 
+.image-card {
+	width: 18rem;
+	height: 29rem;
+	background-color: #434951;
+	color: #fff;
+	border: 0;
+	transition: all ease-in 0.25s;
+}
+.image-card:hover {
+	cursor: pointer;
+	box-shadow: 0 0 10px 5px #fff;
+}
+.image-card .card-text {
+	overflow: hidden;
+	display: -webkit-box;
+	height: 4.5rem;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
 .link {
 	color: inherit;
 }
@@ -303,25 +323,6 @@ canvas {
 	display: flex;
 	gap: 2rem;
 	flex-wrap: wrap;
-}
-.game-card {
-	width: 18rem;
-	height: 29rem;
-	background-color: #434951;
-	color: #fff;
-	border: 0;
-	transition: all ease-in 0.25s;
-}
-.game-card:hover {
-	cursor: pointer;
-	box-shadow: 0 0 10px 5px #fff;
-}
-.game-card .card-text {
-	overflow: hidden;
-	display: -webkit-box;
-	height: 4.5rem;
-	-webkit-line-clamp: 3;
-	-webkit-box-orient: vertical;
 }
 
 .isometric-headers h2 {

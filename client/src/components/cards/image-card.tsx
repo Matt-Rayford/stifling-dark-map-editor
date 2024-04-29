@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export interface GameInfo {
+export interface ImageCardProps {
 	description: string;
 	href: string;
 	imageAlt: string;
@@ -8,16 +8,16 @@ export interface GameInfo {
 	title: string;
 }
 
-export const GameCard = ({
+export const ImageCard = ({
 	description,
 	href,
 	imageAlt,
 	imageUrl,
 	title,
-}: GameInfo) => {
+}: ImageCardProps) => {
 	return (
 		<Link
-			className='link-underline link-underline-opacity-0 card game-card'
+			className='link-underline link-underline-opacity-0 card image-card'
 			to={href}
 		>
 			<img className='card-img-top' src={imageUrl} alt={imageAlt} />

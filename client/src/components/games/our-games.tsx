@@ -1,6 +1,6 @@
-import { GameCard, GameInfo } from './game-card';
+import { ImageCard, ImageCardProps } from '../cards/image-card';
 
-const gamesList: GameInfo[] = [
+const gamesList: ImageCardProps[] = [
 	{
 		title: 'The Stifling Dark',
 		description:
@@ -23,7 +23,7 @@ export const OurGames = () => {
 	return (
 		<div className='games-list'>
 			{gamesList.map((game) => (
-				<GameCard
+				<ImageCard
 					key={game.title}
 					title={game.title}
 					description={game.description}
