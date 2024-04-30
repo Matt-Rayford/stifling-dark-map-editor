@@ -1,8 +1,19 @@
-export const GeneralAdversaryVideos = () => {
+import { useEffect, useRef } from 'react';
+import { VideoProps } from './video-props';
+
+export const GeneralAdversaryVideos = ({ section }: VideoProps) => {
+	const ref = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (section === 'general-adversary') {
+			ref.current?.scrollIntoView();
+		}
+	}, [section]);
+
 	return (
-		<div className='tsd-green-wrapper'>
+		<div className='tsd-green-wrapper' ref={ref}>
 			<div className='content-container'>
-				<h2 id='general-adversary-rules'>General Adversary Rules</h2>
+				<h2>General Adversary Rules</h2>
 				<div className='flex flex-wrap gap-1'>
 					<iframe
 						width='560'

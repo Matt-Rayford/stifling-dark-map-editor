@@ -1,8 +1,19 @@
-export const SetupVideos = () => {
+import { useEffect, useRef } from 'react';
+import { VideoProps } from './video-props';
+
+export const SetupVideos = ({ section }: VideoProps) => {
+	const ref = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (section === 'setup') {
+			ref.current?.scrollIntoView();
+		}
+	}, [section]);
+
 	return (
-		<div className='tsd-green-wrapper'>
+		<div className='tsd-green-wrapper' ref={ref}>
 			<div className='content-container'>
-				<h2 id='setup'>Setup</h2>
+				<h2>Setup</h2>
 				<div className='flex flex-wrap gap-1'>
 					<iframe
 						width='560'

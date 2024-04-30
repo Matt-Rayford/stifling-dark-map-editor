@@ -1,7 +1,18 @@
-export const CultVideos = () => {
+import { useEffect, useRef } from 'react';
+import { VideoProps } from './video-props';
+
+export const CultVideos = ({ section }: VideoProps) => {
+	const ref = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (section === 'the-cult') {
+			ref.current?.scrollIntoView();
+		}
+	}, [section]);
+
 	return (
-		<div className='content-container'>
-			<h2 id='the-cult'>The Cult</h2>
+		<div className='content-container' ref={ref}>
+			<h2>The Cult</h2>
 			<div className='flex flex-wrap gap-1'>
 				<iframe
 					width='560'

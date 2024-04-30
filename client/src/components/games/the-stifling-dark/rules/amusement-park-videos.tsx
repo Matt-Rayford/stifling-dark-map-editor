@@ -1,8 +1,19 @@
-export const AmusementParkVideos = () => {
+import { useEffect, useRef } from 'react';
+import { VideoProps } from './video-props';
+
+export const AmusementParkVideos = ({ section }: VideoProps) => {
+	const ref = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (section === 'amusement-park') {
+			ref.current?.scrollIntoView();
+		}
+	}, [section]);
+
 	return (
-		<div className='tsd-green-wrapper'>
+		<div className='tsd-green-wrapper' ref={ref}>
 			<div className='content-container'>
-				<h2 id='amusement-park'>Amusement Park</h2>
+				<h2>Amusement Park</h2>
 				<div className='flex flex-wrap gap-1'>
 					<iframe
 						width='560'

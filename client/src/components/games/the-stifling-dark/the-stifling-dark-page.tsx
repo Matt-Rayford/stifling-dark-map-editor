@@ -10,15 +10,25 @@ import { Playtesters } from './playtesters/playtesters';
 export const TheStiflingDarkPage = () => {
 	const [tab, setTab] = useState(TSDTabOption.Information);
 
-	const [searchParams, setSearchParams] = useSearchParams();
+	const [searchParams] = useSearchParams();
 
 	useEffect(() => {
-		console.log('Search params: ', searchParams);
+		const tab = searchParams.get('tab');
+		if (tab) {
+			if (tab === TSDTabOption.FAQ) {
+				setTab(TSDTabOption.FAQ);
+			}
+			if (tab === TSDTabOption.Information) {
+				setTab(TSDTabOption.Information);
+			}
+			if (tab === TSDTabOption.Playtesters) {
+				setTab(TSDTabOption.Playtesters);
+			}
+			if (tab === TSDTabOption.Rules) {
+				setTab(TSDTabOption.Rules);
+			}
+		}
 	}, [searchParams]);
-
-	console.log('Search params: ', searchParams);
-
-	setSearchParams();
 
 	return (
 		<div>

@@ -1,7 +1,18 @@
-export const SawmillVideos = () => {
+import { useEffect, useRef } from 'react';
+import { VideoProps } from './video-props';
+
+export const SawmillVideos = ({ section }: VideoProps) => {
+	const ref = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (section === 'sawmill') {
+			ref.current?.scrollIntoView();
+		}
+	}, [section]);
+
 	return (
-		<div className='content-container'>
-			<h2 id='sawmill'>The Sawmill</h2>
+		<div className='content-container' ref={ref}>
+			<h2>The Sawmill</h2>
 			<div className='flex flex-wrap gap-1'>
 				<iframe
 					width='560'

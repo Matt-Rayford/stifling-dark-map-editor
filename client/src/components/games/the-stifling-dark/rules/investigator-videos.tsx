@@ -1,7 +1,18 @@
-export const InvestigatorVideos = () => {
+import { useEffect, useRef } from 'react';
+import { VideoProps } from './video-props';
+
+export const InvestigatorVideos = ({ section }: VideoProps) => {
+	const ref = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (section === 'investigator') {
+			ref.current?.scrollIntoView();
+		}
+	}, [section]);
+
 	return (
-		<div className='content-container'>
-			<h2 id='investigator-turn'>Investigator Turn</h2>
+		<div className='content-container' ref={ref}>
+			<h2>Investigator Turn</h2>
 			<div className='flex flex-wrap gap-1'>
 				<iframe
 					width='560'

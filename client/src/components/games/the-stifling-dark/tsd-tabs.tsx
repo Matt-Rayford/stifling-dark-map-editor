@@ -1,3 +1,5 @@
+import { useSearchParams } from 'react-router-dom';
+
 export enum TSDTabOption {
 	Information = 'information',
 	FAQ = 'faq',
@@ -11,25 +13,32 @@ interface Props {
 }
 
 export const TSDTabs = ({ activeTab, selectTab }: Props) => {
+	const [, setSearchParams] = useSearchParams();
+
+	const updateTab = (tabOption: TSDTabOption) => {
+		setSearchParams(new URLSearchParams({ tab: tabOption }));
+		selectTab(tabOption);
+	};
+
 	return (
 		<div className='page-tabs'>
 			<button
 				className={`chip ${
 					activeTab === TSDTabOption.Information ? 'active' : ''
 				}`}
-				onClick={() => selectTab(TSDTabOption.Information)}
+				onClick={() => updateTab(TSDTabOption.Information)}
 			>
 				Overview
 			</button>
 			<button
 				className={`chip ${activeTab === TSDTabOption.Rules ? 'active' : ''}`}
-				onClick={() => selectTab(TSDTabOption.Rules)}
+				onClick={() => updateTab(TSDTabOption.Rules)}
 			>
 				Rules
 			</button>
 			<button
 				className={`chip ${activeTab === TSDTabOption.FAQ ? 'active' : ''}`}
-				onClick={() => selectTab(TSDTabOption.FAQ)}
+				onClick={() => updateTab(TSDTabOption.FAQ)}
 			>
 				Errata &amp; FAQ
 			</button>
@@ -37,7 +46,7 @@ export const TSDTabs = ({ activeTab, selectTab }: Props) => {
 				className={`chip ${
 					activeTab === TSDTabOption.Playtesters ? 'active' : ''
 				}`}
-				onClick={() => selectTab(TSDTabOption.Playtesters)}
+				onClick={() => updateTab(TSDTabOption.Playtesters)}
 			>
 				Playtesters
 			</button>
