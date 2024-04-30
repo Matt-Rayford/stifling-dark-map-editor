@@ -55,7 +55,7 @@ export const MapEditor = () => {
 		setSpaceMap,
 	} = useMapContext();
 
-	const { data } = useQuery(LoadMapDocument, {
+	useQuery(LoadMapDocument, {
 		variables: { id: mapId! },
 		skip: !mapId,
 		onCompleted: (data) => {
