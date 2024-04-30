@@ -1,21 +1,43 @@
-import { AdversaryViewer } from './adversary-viewer';
-import { FlashlightViewer } from './flashlight-viewer';
-import { Header } from './header';
-import { InvestigatorViewer } from './investigator-viewer';
-import { OrderNow } from './order-now';
-import { Overview } from './overview';
-import { PlayNow } from './play-now';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
+import { TSDOverview } from './overview/main-overview';
+import { TSDTabOption, TSDTabs } from './tsd-tabs';
+import { TSDRules } from './rules/rules';
+import { FaqAndErrata } from './faq-and-errata/faq-and-errta';
+import { Playtesters } from './playtesters/playtesters';
 
 export const TheStiflingDarkPage = () => {
+	const [tab, setTab] = useState(TSDTabOption.Information);
+
+	const [searchParams] = useSearchParams();
+
+	useEffect(() => {
+		const tab = searchParams.get('tab');
+		if (tab) {
+			if (tab === TSDTabOption.FAQ) {
+				setTab(TSDTabOption.FAQ);
+			}
+			if (tab === TSDTabOption.Information) {
+				setTab(TSDTabOption.Information);
+			}
+			if (tab === TSDTabOption.Playtesters) {
+				setTab(TSDTabOption.Playtesters);
+			}
+			if (tab === TSDTabOption.Rules) {
+				setTab(TSDTabOption.Rules);
+			}
+		}
+	}, [searchParams]);
+
 	return (
-		<div className='tsd-page'>
-			<Header />
-			<Overview />
-			<InvestigatorViewer />
-			<FlashlightViewer />
-			<AdversaryViewer />
-			<PlayNow />
-			<OrderNow />
+		<div>
+			<TSDTabs activeTab={tab} selectTab={setTab} />
+
+			{tab === TSDTabOption.Information && <TSDOverview />}
+			{tab === TSDTabOption.Rules && <TSDRules />}
+			{tab === TSDTabOption.FAQ && <FaqAndErrata />}
+			{tab === TSDTabOption.Playtesters && <Playtesters />}
 		</div>
 	);
 };
