@@ -9,8 +9,6 @@ export const Home = () => {
 				<h2>Our Games</h2>
 				<OurGames />
 			</div>
-
-			<h2>Tools</h2>
 		</div>
 	);
 };

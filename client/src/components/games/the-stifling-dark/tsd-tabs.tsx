@@ -1,8 +1,8 @@
 export enum TSDTabOption {
-	Information,
-	FAQ,
-	Playtesters,
-	Rules,
+	Information = 'information',
+	FAQ = 'faq',
+	Playtesters = 'playtesters',
+	Rules = 'rules',
 }
 
 interface Props {

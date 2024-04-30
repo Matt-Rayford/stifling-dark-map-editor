@@ -112,6 +112,9 @@ canvas {
 .flex-v-center {
 	align-items: center;
 }
+.flex-wrap {
+	flex-wrap: wrap;
+}
 
 .float-left {
 	float: left;
@@ -128,6 +131,40 @@ canvas {
 }
 .gap-2 {
 	gap: 2rem !important;
+}
+
+.horizontal-card {
+	display: flex;
+	width: fit-content;
+	height: 60px;
+	border: 1px solid var(--tsd-green-dark);
+	border-radius: 8px;
+	transition: border-color 0.3s;
+}
+.horizontal-card div:first-child {
+	width: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--tsd-green-dark);
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	transition: background-color 0.3s;
+}
+.horizontal-card div:nth-child(2) {
+	display: flex;
+	align-items: center;
+	padding: 0.25rem 1rem;
+}
+.horizontal-card p,
+.horizontal-card h5 {
+	margin: 0;
+}
+.horizontal-card:hover {
+	border-color: var(--tsd-green-light);
+}
+.horizontal-card:hover div:first-child {
+	background-color: var(--tsd-green-light);
 }
 
 .image-card {

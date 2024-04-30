@@ -3,14 +3,15 @@ import { FlashlightViewer } from './flashlight-viewer';
 import { Header } from './header';
 import { InvestigatorViewer } from './investigator-viewer';
 import { OrderNow } from './order-now';
-import { Overview } from './overview';
+import { Description } from './description';
+
 import { PlayNow } from './play-now';
 
-export const TSDInformation = () => {
+export const TSDOverview = () => {
 	return (
 		<div className='tsd-container'>
 			<Header />
-			<Overview />
+			<Description />
 			<InvestigatorViewer />
 			<FlashlightViewer />
 			<AdversaryViewer />

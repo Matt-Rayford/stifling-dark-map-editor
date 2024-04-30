@@ -1,4 +1,4 @@
-export const Overview = () => {
+export const Description = () => {
 	return (
 		<div className='content-container '>
 			<h1>The Stifling Dark</h1>
