@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Plus } from 'react-bootstrap-icons';
 import { useQuery } from '@apollo/client';
 import { useTour } from '@reactour/tour';
 import {
@@ -64,6 +65,15 @@ export const YourMaps = () => {
 							</button>
 						);
 					})}
+
+					<button
+						className='btn btn-primary'
+						type='button'
+						onClick={() => navigate('/maps/new')}
+						style={{ height: '38px' }}
+					>
+						<Plus width={24} height={24} /> New Map
+					</button>
 				</div>
 			)}
 		</div>
