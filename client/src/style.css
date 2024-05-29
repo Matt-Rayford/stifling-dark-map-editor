@@ -1,4 +1,6 @@
 :root {
+	--sc-white: #fff;
+	--sc-light-grey: #eee;
 	--infinite-scroll-time: 60s;
 	--bg-dark: #212529;
 	--tsd-glow: #fff;
@@ -36,10 +38,23 @@ body {
 	color: #fff;
 }
 
+.btn {
+	color: var(--bg-dark);
+	background-color: var(--sc-white);
+	border: none;
+}
+.btn:hover {
+	color: var(--bg-dark);
+	background-color: var(--sc-white);
+	box-shadow: 0 0 5px 2px var(--sc-white);
+	transition: all 0.5s;
+}
+
 canvas {
 	border: 2px solid black;
 	border-radius: 5px;
 }
+
 #info-pane {
 	width: calc(100% - 1355px);
 	margin-left: 15px;
