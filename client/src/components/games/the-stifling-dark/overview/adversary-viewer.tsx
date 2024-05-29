@@ -22,6 +22,7 @@ export const AdversaryViewer = () => {
 										height={height}
 										src={adversary.imageSrc}
 										alt={`Portrait of ${adversary.name}`}
+										loading="lazy"
 									/>
 								</div>
 								<div className='flip-card-back bg-dark p-2'>

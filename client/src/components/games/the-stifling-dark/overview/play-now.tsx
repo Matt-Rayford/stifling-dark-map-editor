@@ -16,6 +16,7 @@ export const PlayNow = () => {
 						src='/images/third-party/tabletop-simulator.png'
 						alt='Tabletop Simulator Logo'
 						width='90%'
+						loading="lazy"
 					/>
 				</a>
 				<a
@@ -27,6 +28,7 @@ export const PlayNow = () => {
 						src='/images/third-party/tabletop-playground.png'
 						alt='Tabletop Playground Logo'
 						width='90%'
+						loading="lazy"
 					/>
 				</a>
 			</div>
