@@ -46,8 +46,8 @@ body {
 .btn:hover {
 	color: var(--bg-dark);
 	background-color: var(--sc-white);
-	box-shadow: 0 0 5px 2px var(--sc-white);
-	transition: all 0.5s;
+	box-shadow: 0 0 8px 3px var(--sc-white);
+	transition: all 0.3s ease-in-out;
 }
 
 canvas {
