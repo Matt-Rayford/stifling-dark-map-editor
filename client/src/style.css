@@ -293,13 +293,6 @@ canvas {
 	Specific Classes
 */
 
-.nav-logo {
-	transition: transform 0.3s;
-}
-.nav-logo:hover {
-	transform: scale(1.2);
-}
-
 .spaceType img:hover {
 	cursor: pointer;
 	box-shadow: 0 0 5px 0 hsl(0, 0%, 62%);

@@ -9,7 +9,7 @@ export const NavBar = () => {
 			className='navbar navbar-expand-lg navbar-dark bg-dark px-2'
 			style={{ zIndex: 100 }}
 		>
-			<Link className='navbar-brand nav-logo' to='/'>
+			<Link className='navbar-brand tsd-glow' to='/'>
 				<img
 					src='/images/logo/logo-white.png'
 					alt='Company Logo'
