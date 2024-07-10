@@ -1,4 +1,6 @@
 :root {
+	--sc-white: #fff;
+	--sc-light-grey: #eee;
 	--infinite-scroll-time: 60s;
 	--bg-dark: #212529;
 	--tsd-glow: #fff;
@@ -36,10 +38,23 @@ body {
 	color: #fff;
 }
 
+.btn {
+	color: var(--bg-dark);
+	background-color: var(--sc-white);
+	border: none;
+}
+.btn:hover {
+	color: var(--bg-dark);
+	background-color: var(--sc-white);
+	box-shadow: 0 0 8px 3px var(--sc-white);
+	transition: all 0.3s ease-in-out;
+}
+
 canvas {
 	border: 2px solid black;
 	border-radius: 5px;
 }
+
 #info-pane {
 	width: calc(100% - 1355px);
 	margin-left: 15px;
@@ -278,13 +293,6 @@ canvas {
 	Specific Classes
 */
 
-.nav-logo {
-	transition: transform 0.3s;
-}
-.nav-logo:hover {
-	transform: scale(1.2);
-}
-
 .spaceType img:hover {
 	cursor: pointer;
 	box-shadow: 0 0 5px 0 hsl(0, 0%, 62%);
@@ -478,7 +486,7 @@ canvas {
 	transition: 0.3s;
 }
 .tsd-glow:hover {
-	filter: drop-shadow(0 0 10px #fff);
+	filter: drop-shadow(0 0 10px var(--sc-white));
 }
 
 .tsd-container {

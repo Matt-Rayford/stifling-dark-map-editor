@@ -61,6 +61,7 @@ export const InvestigatorViewer = () => {
 								key={`${investigator.name}-2`}
 								width={width}
 								height={height}
+								loading="lazy"
 								src={investigator.imageSrc}
 								alt={`Portrait of ${investigator.name}`}
 								onClick={() => {
