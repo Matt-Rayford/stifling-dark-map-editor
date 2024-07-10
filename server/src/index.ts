@@ -1,4 +1,5 @@
 import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { expressMiddleware } from '@apollo/server/express4';
 import fs from 'fs';
@@ -38,7 +39,7 @@ const startExpressServer = async () => {
 
 const startApolloServer = async () => {
 	console.log('Start server!');
-	await server.start();
+	await startStandaloneServer(server)
 	app.use(
 		cors<cors.CorsRequest>({
 			credentials: true,
@@ -60,6 +61,8 @@ const startApolloServer = async () => {
 		bodyParser.json()
 	);
 };
+
+
 
 try {
 	startExpressServer();
