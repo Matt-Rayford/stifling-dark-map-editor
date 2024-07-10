@@ -41,7 +41,6 @@ export const getMap = async (mapId: string, email: string): Promise<DBMap> => {
 };
 
 export const getMaps = async (email: string): Promise<DBMap[]> => {
-	console.log("Get maps: ", email)
 	const query = 'SELECT * FROM sd_map WHERE creator_email=$1';
 
 	return pool
