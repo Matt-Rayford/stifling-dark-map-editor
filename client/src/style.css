@@ -625,6 +625,9 @@ canvas {
 	.content-container {
 		padding: 0 2rem 2rem 2rem;
 	}
+	.games-list {
+		justify-content: center;
+	}
 }
 
 /*
