@@ -13,9 +13,10 @@ const gamesList: ImageCardProps[] = [
     title: 'Sprocketforge',
     description:
       'The artificers of Sprocketforge need a new court artifcer. Build your machine in this mana-producing engine builder.',
-    href: '/games/sprocketforge-cover',
+    href: 'https://www.kickstarter.com/projects/sophcerb/sprocketforge?ref=6urhfo',
     imageUrl: '/images/games/sprocketforge/box-cover.png',
     imageAlt: 'Sprocketforge Box Art',
+    newWindow: true,
   },
 ];
 
@@ -30,6 +31,7 @@ export const OurGames = () => {
           href={game.href}
           imageUrl={game.imageUrl}
           imageAlt={game.imageAlt}
+          target={game.newWindow ? '_blank' : undefined}
         />
       ))}
     </div>
