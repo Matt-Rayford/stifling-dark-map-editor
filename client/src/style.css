@@ -70,6 +70,10 @@ canvas {
 	clear: both;
 }
 
+#root > div:first-of-type {
+	padding-top: 80px;
+}
+
 /*
 	Composable classes
 */
@@ -292,6 +296,12 @@ canvas {
 /*
 	Specific Classes
 */
+
+.navbar {
+	position: fixed;
+	width: 100%;
+	box-shadow: 0 -8px 15px 5px #fff;
+}
 
 .spaceType img:hover {
 	cursor: pointer;
