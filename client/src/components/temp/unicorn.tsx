@@ -1,7 +1,7 @@
 import { createRef, useEffect, useState } from 'react';
 
 export const Unicorn = () => {
-  const [gameStep, setGameStep] = useState(2);
+  const [gameStep, setGameStep] = useState(1);
   const [code, setCode] = useState('-----');
   const flashlightViewerRef = createRef<HTMLDivElement>();
 
