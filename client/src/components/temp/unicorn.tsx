@@ -32,10 +32,10 @@ export const Unicorn = () => {
         'click',
         ({ x, y, offsetX, offsetY }) => {
           if (
-            offsetX > 550 &&
-            offsetX < 600 &&
-            offsetY > 475 &&
-            offsetY < 525
+            offsetX > 540 &&
+            offsetX < 610 &&
+            offsetY > 445 &&
+            offsetY < 535
           ) {
             setGameStep(2);
           }
@@ -225,7 +225,7 @@ export const Unicorn = () => {
             </li>
             <li>
               Pick a number 1-10. Add the next highest number to that number.
-              Divide the number by 2. Subract the original number.
+              Now add 9. Divide by 2. Subract the original number.
             </li>
             <li>1.</li>
             <li>
