@@ -1,8 +1,8 @@
 import { createRef, useEffect, useState } from 'react';
 
 export const Unicorn = () => {
-  const [gameStep, setGameStep] = useState(1);
-  const [code, setCode] = useState('');
+  const [gameStep, setGameStep] = useState(2);
+  const [code, setCode] = useState('-----');
   const flashlightViewerRef = createRef<HTMLDivElement>();
 
   interface Particle {
@@ -164,6 +164,8 @@ export const Unicorn = () => {
     }
   }, [gameStep]);
 
+  console.log('Code: ', code);
+
   return (
     <div
       className="content-container"
@@ -189,27 +191,51 @@ export const Unicorn = () => {
       {gameStep === 2 && (
         <div>
           <h1>Figure Out The Code</h1>
-          <div className="input-group" style={{ marginTop: '25px' }}>
-            <div className="input-group-prepend">
-              <span
-                className="input-group-text"
+          <div
+            className="input-group"
+            style={{
+              marginTop: '25px',
+              position: 'relative',
+              display: 'flex',
+              gap: '10px',
+            }}
+          >
+            {[1, 2, 3, 4, 5].map((i) => (
+              <input
+                key={i}
+                id={`code-${i}`}
+                type="text"
+                className="form-control"
+                required
+                onClick={() => {
+                  const el = document.getElementById(
+                    `code-${i}`
+                  ) as HTMLInputElement;
+                  el?.select();
+                }}
+                onChange={(e) => {
+                  setCode(
+                    `${code.substring(0, i - 1)}${
+                      e.target.value
+                    }${code.substring(i, 5)}`
+                  );
+                  const el = document.getElementById(
+                    `code-${i + 1}`
+                  ) as HTMLInputElement;
+                  el?.focus();
+                  el?.select();
+                }}
                 style={{
+                  fontSize: '24pt',
                   backgroundColor: 'transparent',
                   color: 'white',
-                  borderTopRightRadius: 0,
-                  borderBottomRightRadius: 0,
+                  width: '20px',
+                  height: '60px',
+                  textAlign: 'center',
                 }}
-              >
-                Secret Code
-              </span>
-            </div>
-            <input
-              type="text"
-              className="form-control"
-              required
-              onChange={(e) => setCode(e.target.value)}
-              style={{ backgroundColor: 'transparent', color: 'white' }}
-            />
+                value={code[i - 1]}
+              />
+            ))}
           </div>
           <h2 style={{ textAlign: 'left', marginTop: '25px' }}>
             Hints for Each Character
@@ -258,7 +284,7 @@ export const Unicorn = () => {
               height: '100vh',
             }}
           />
-          <h1>Congratulations Ahsanicorn! 🦄🦄🦄</h1>
+          <h1>Congratulations Ahsan! 🦄🦄🦄</h1>
           <img src="images/temp/ahsan.jpg" style={{ marginTop: '25px' }} />
         </div>
       )}
