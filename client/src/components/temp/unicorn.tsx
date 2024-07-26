@@ -3,6 +3,7 @@ import { createRef, useEffect, useState } from 'react';
 export const Unicorn = () => {
   const [gameStep, setGameStep] = useState(1);
   const [code, setCode] = useState('-----');
+  const validCode = '4h54n';
   const flashlightViewerRef = createRef<HTMLDivElement>();
 
   interface Particle {
@@ -45,7 +46,7 @@ export const Unicorn = () => {
   }, [flashlightViewerRef.current]);
 
   useEffect(() => {
-    if (code === '4h54n') {
+    if (code === validCode) {
       setGameStep(3);
     }
   }, [code]);
@@ -197,44 +198,79 @@ export const Unicorn = () => {
               marginTop: '25px',
               position: 'relative',
               display: 'flex',
+              justifyContent: 'center',
               gap: '10px',
             }}
           >
             {[1, 2, 3, 4, 5].map((i) => (
-              <input
+              <div
                 key={i}
-                id={`code-${i}`}
-                type="text"
-                className="form-control"
-                required
-                onClick={() => {
-                  const el = document.getElementById(
-                    `code-${i}`
-                  ) as HTMLInputElement;
-                  el?.select();
-                }}
-                onChange={(e) => {
-                  setCode(
-                    `${code.substring(0, i - 1)}${
-                      e.target.value
-                    }${code.substring(i, 5)}`
-                  );
-                  const el = document.getElementById(
-                    `code-${i + 1}`
-                  ) as HTMLInputElement;
-                  el?.focus();
-                  el?.select();
-                }}
                 style={{
-                  fontSize: '24pt',
-                  backgroundColor: 'transparent',
-                  color: 'white',
-                  width: '20px',
-                  height: '60px',
-                  textAlign: 'center',
+                  position: 'relative',
                 }}
-                value={code[i - 1]}
-              />
+              >
+                <input
+                  id={`code-${i}`}
+                  type="text"
+                  className="form-control"
+                  required
+                  onClick={() => {
+                    const el = document.getElementById(
+                      `code-${i}`
+                    ) as HTMLInputElement;
+                    el?.select();
+                  }}
+                  onChange={(e) => {
+                    setCode(
+                      `${code.substring(0, i - 1)}${
+                        e.target.value
+                      }${code.substring(i, 5)}`
+                    );
+                    const el = document.getElementById(
+                      `code-${i + 1}`
+                    ) as HTMLInputElement;
+                    el?.focus();
+                    el?.select();
+                  }}
+                  style={{
+                    fontSize: '24pt',
+                    backgroundColor: 'transparent',
+                    color: 'white',
+                    width: '60px',
+                    height: '60px',
+                    textAlign: 'center',
+                    position: 'relative',
+                  }}
+                  value={code[i - 1]}
+                />
+
+                {code[i - 1] === validCode[i - 1] && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    fill="currentColor"
+                    className="bi bi-check-lg"
+                    viewBox="0 0 16 16"
+                    style={{ marginTop: 5 }}
+                  >
+                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+                  </svg>
+                )}
+                {code[i - 1] !== validCode[i - 1] && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    className="bi bi-x-lg"
+                    viewBox="0 0 16 16"
+                    style={{ marginTop: 10 }}
+                  >
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                  </svg>
+                )}
+              </div>
             ))}
           </div>
           <h2 style={{ textAlign: 'left', marginTop: '25px' }}>
