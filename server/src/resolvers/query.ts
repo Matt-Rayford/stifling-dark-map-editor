@@ -4,7 +4,7 @@ import { getMapSpaces } from './space';
 import { getMapSpaceGroups } from './space-group';
 import { getSpaceTypes } from './space-type';
 import { getUser } from './user';
-import { verifyTokenAndGetUserEmail } from '@/utils/clerk';
+import { verifyTokenAndGetUser, verifyTokenAndGetUserEmail } from '@/utils/clerk';
 
 export const Query = {
 	lightLevels: () => getLightLevels(),
@@ -25,6 +25,14 @@ export const Query = {
 	mapSpaceGroups: (root, { mapId }: { mapId: string }) =>
 		getMapSpaceGroups(mapId),
 	mapSpaces: (root, { mapId }: { mapId: string }) => getMapSpaces(mapId),
+	retailersToVerify: async (root, _, context) => {
+    const user = await verifyTokenAndGetUser(context.token);
+    console.log("USER: ", user)
+    if(user) {
+      return [];
+    }
+    return [];
+  },
 	spaceTypes: () => getSpaceTypes(),
 	user: (root, { email }: { email: string }) => getUser(email),
 };

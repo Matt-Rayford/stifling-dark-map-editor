@@ -36,15 +36,8 @@ export const getRetailersToVerify = () => {
 }
 
 export const Retailer = {
-  retailersToVerify: async (root, _, context) => {
-    const user = await verifyTokenAndGetUser(context.token);
-    console.log("USER: ", user)
-    if(user) {
-      return [];
-    }
-    return [];
-  },
-  retailerAddresses: async (root, {retailerId}: {retailerId: string}, context) => { 
+  addresses: async (retailer, _, context) => { 
+    console.log("Retailer: ", retailer)
     const user = await verifyTokenAndGetUser(context.token);
     if (user) {
 			return []

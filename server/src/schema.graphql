@@ -1,3 +1,6 @@
+scalar Object
+scalar Array
+
 type Query {
   lightLevels: [LightLevel!]
   maps: [Map!]!
@@ -24,6 +27,13 @@ type Mutation {
   uploadMapImage(mapId: ID!, imageUrl: String!): String
 }
 
+type Contact {
+  id: ID!
+  email: String!
+  name: String!
+  phoneNumber: String!
+}
+
 type Map {
   id: ID!
   title: String!
@@ -42,9 +52,6 @@ type MapSettings {
   paddingY: Float!
   spaceRadius: Float!
 }
-
-scalar Object
-scalar Array
 
 type LightLevel {
   id: ID!
@@ -67,8 +74,7 @@ type RetailerAddress {
   city: String!
   state: String
   postalCode: String!
-  phoneNumber: String!
-  contactName: String!
+  contact: Contact!
 }
 
 type SpaceType {
