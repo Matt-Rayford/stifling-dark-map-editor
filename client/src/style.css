@@ -49,6 +49,10 @@ body {
 	box-shadow: 0 0 8px 3px var(--sc-white);
 	transition: all 0.3s ease-in-out;
 }
+.btn:disabled {
+	color: var(--bg-dark);
+	background-color: var(--sc-white);
+}
 
 canvas {
 	border: 2px solid black;

@@ -57,6 +57,9 @@ export const NavBar = ({ hide }: Props) => {
           <Link className="nav-item nav-link" to="/maps">
             Map Editor
           </Link>
+          <Link className="nav-item nav-link" to="/retailers">
+            Retailers
+          </Link>
         </div>
       </div>
       {!isSignedIn && (
