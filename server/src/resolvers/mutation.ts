@@ -1,7 +1,7 @@
 import { MapSettings } from '../types/map-settings';
 import { SpaceInput } from '../types/space';
 import { SpaceGroup } from '../types/space-group';
-import { verifyTokenAndGetUserEmail } from '@/utils/clerk';
+import { verifyTokenAndGetUser, verifyTokenAndGetUserEmail } from '@/utils/clerk';
 import {
 	addMapSpaceGroup,
 	createMap,
@@ -17,7 +17,12 @@ import {
 	updateSpace,
 } from './space';
 import { updateSpaceGroup } from './space-group';
-import { updateUserSettings } from './user';
+import { getUser, updateUserSettings } from './user';
+import { RetailerInput } from '@/types/retailer/retailer';
+import { RetailerAddressInput } from '@/types/retailer/retailer-address';
+import { createRetailAccount } from './retailer/retailer';
+import { createContact } from './user/contact';
+import { createRetailerAddress } from './retailer/retailer-address';
 
 export const Mutation = {
 	addMapSpaceGroup: async (
@@ -62,6 +67,29 @@ export const Mutation = {
 		if (context.token) {
 			const email = await verifyTokenAndGetUserEmail(context.token);
 			return renameMap(mapId, email, mapName);
+		}
+		return null;
+	},
+	requestRetailAccount: async (root, {companyInfo, addressInfo}: {companyInfo: RetailerInput, addressInfo: RetailerAddressInput}, context) => {
+		if (context.token) {
+			const clerkUser = await verifyTokenAndGetUser(context.token);
+			const email = clerkUser.emailAddresses?.[0]?.emailAddress;
+
+			if(email) {
+				const user = await getUser(email, clerkUser.id);
+				if(user) {
+					const retailer = await createRetailAccount(companyInfo.name, companyInfo.taxId, user.id)
+
+					if(retailer) {
+						const contact = await createContact(addressInfo.contact);
+
+						if(contact) {
+							await createRetailerAddress(retailer.id, addressInfo, contact.id);
+						}
+						return retailer;
+					}
+				}
+			}	
 		}
 		return null;
 	},

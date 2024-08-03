@@ -6,6 +6,7 @@ import { taxIdFormatter } from '../../utils/formatters/tax-id-formatter';
 import { USStates } from '../../utils/states/us-states';
 import { zipCodeFormatter } from '../../utils/formatters/zip-code-formatter';
 import { phoneNumberFormatter } from '../../utils/formatters/phone-number-formatter';
+import { useUser } from '@clerk/clerk-react';
 
 const retailFormSchema = z.object({
   companyName: z.string(),
@@ -21,6 +22,7 @@ const retailFormSchema = z.object({
 type RetailForm = z.infer<typeof retailFormSchema>;
 
 export const RetailerForm = () => {
+  const { user } = useUser();
   const {
     handleSubmit,
     setValue,

@@ -20,6 +20,10 @@ type Mutation {
   deleteSpace(mapId: ID!, spaceId: ID!): Boolean
   disconnectSpaces(space1Id: ID!, space2Id: ID!): Boolean
   renameMap(mapId: ID!, mapName: String!): String
+  requestRetailAccount(
+    retailInfo: RetailerInput!
+    addressInfo: RetailerAddressInput!
+  ): Retailer
   updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
   updateUserSettings(settings: UserSettingsInput!): User
   updateSpace(space: SpaceInput!): Space
@@ -121,6 +125,12 @@ type User {
 ################################
 #         INPUT TYPES          #
 ################################
+input ContactInput {
+  email: String!
+  name: String!
+  phoneNumber: String!
+}
+
 input CreateMapInput {
   title: String
 }
@@ -128,6 +138,19 @@ input CreateMapInput {
 input MapSettingsInput {
   backgroundImageUrl: String
   spaceColor: String
+}
+
+input RetailerInput {
+  name: String!
+  taxId: String!
+}
+
+input RetailerAddressInput {
+  address: String!
+  city: String!
+  contact: ContactInput!
+  postalCode: String!
+  state: String!
 }
 
 input SpaceInput {

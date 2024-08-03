@@ -1,7 +1,7 @@
 import { pool } from '..';
 import { DBUser } from '../types/user';
 
-export const getUser = (email: string): Promise<DBUser> => {
+export const getUser = (email: string, clerkId: string): Promise<DBUser> => {
 	const query = 'SELECT * FROM sd_user WHERE email=$1';
 
 	return pool
@@ -11,9 +11,14 @@ export const getUser = (email: string): Promise<DBUser> => {
 		})
 		.then((r) => {
 			if (r.rowCount === 0) {
-				return createUser(email);
+				return createUser(email, clerkId);
 			}
-			return r.rows?.[0] as DBUser;
+			const user = r.rows?.[0] as DBUser;
+
+			if(!user.clerk_id) {
+				return updateUserClerkId(user.id, clerkId);
+			}
+			return user;
 		})
 		.catch((e) => {
 			console.error(`ERROR - getUser(${email}): `, e);
@@ -21,22 +26,39 @@ export const getUser = (email: string): Promise<DBUser> => {
 		});
 };
 
-const createUser = (email: string): Promise<DBUser> => {
-	const query = 'INSERT INTO sd_user (email) VALUES ($1) RETURNING *';
+const createUser = (email: string, clerkId: string): Promise<DBUser> => {
+	const query = 'INSERT INTO sd_user (email, clerk_id) VALUES ($1, $2) RETURNING *';
 
 	return pool
 		.query({
 			text: query,
-			values: [email],
+			values: [email, clerkId],
 		})
 		.then((r) => {
 			return r.rows?.[0] as DBUser;
 		})
 		.catch((e) => {
-			console.error(`ERROR - getUser(${email}): `, e);
-			throw new Error('Error getting user');
+			console.error(`ERROR - createUser(${email}): `, e);
+			throw new Error('Error creating user');
 		});
 };
+
+const updateUserClerkId = (id: string, clerkId: string) => {
+	const query = 'UPDATE sd_user SET clerk_id = $2 WHERE id = $1 RETURNING *';
+
+	return pool
+		.query({
+			text: query,
+			values: [id, clerkId],
+		})
+		.then((r) => {
+			return r.rows?.[0] as DBUser;
+		})
+		.catch((e) => {
+			console.error(`ERROR - updateUserClerkId(${id}): `, e);
+			throw new Error('Error updateUserClerkId');
+		});
+}
 
 export const updateUserSettings = (
 	email: string,

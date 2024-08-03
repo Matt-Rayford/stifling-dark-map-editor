@@ -5,3 +5,16 @@ export interface Retailer {
 	verified: boolean;
   rejected: boolean;
 }
+
+export interface DBRetailer {
+	id: string;
+	name: string;
+	tax_id: string;
+	verified: boolean;
+  rejected: boolean;
+}
+
+export interface RetailerInput {
+	name: string;
+	taxId: string;
+}

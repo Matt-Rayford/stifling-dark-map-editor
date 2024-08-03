@@ -27,12 +27,17 @@ export const Query = {
 	mapSpaces: (root, { mapId }: { mapId: string }) => getMapSpaces(mapId),
 	retailersToVerify: async (root, _, context) => {
     const user = await verifyTokenAndGetUser(context.token);
-    console.log("USER: ", user)
+
     if(user) {
       return [];
     }
     return [];
   },
 	spaceTypes: () => getSpaceTypes(),
-	user: (root, { email }: { email: string }) => getUser(email),
+	user: async (root, { email }: { email: string }, context) => {
+		if (context.token) {
+			const user = await verifyTokenAndGetUser(context.token);
+			return getUser(email, user.id)
+		}
+	},
 };
