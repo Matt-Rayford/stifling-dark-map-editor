@@ -18,6 +18,14 @@ export type Scalars = {
   Object: { input: any; output: any; }
 };
 
+export type Contact = {
+  __typename?: 'Contact';
+  email: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  phoneNumber: Scalars['String']['output'];
+};
+
 export type CreateMapInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -148,6 +156,7 @@ export type Query = {
   mapSpaceGroups?: Maybe<Array<SpaceGroup>>;
   mapSpaces?: Maybe<Array<Maybe<Space>>>;
   maps: Array<Map>;
+  retailersToVerify?: Maybe<Array<Retailer>>;
   spaceTypes?: Maybe<Array<SpaceType>>;
   user: User;
 };
@@ -170,6 +179,26 @@ export type QueryMapSpacesArgs = {
 
 export type QueryUserArgs = {
   email: Scalars['String']['input'];
+};
+
+export type Retailer = {
+  __typename?: 'Retailer';
+  addresses: Array<RetailerAddress>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  rejected: Scalars['Boolean']['output'];
+  taxId: Scalars['String']['output'];
+  verified: Scalars['Boolean']['output'];
+};
+
+export type RetailerAddress = {
+  __typename?: 'RetailerAddress';
+  city: Scalars['String']['output'];
+  contact: Contact;
+  id: Scalars['ID']['output'];
+  postalCode: Scalars['String']['output'];
+  state?: Maybe<Scalars['String']['output']>;
+  streetAddress: Scalars['String']['output'];
 };
 
 export type Space = {
