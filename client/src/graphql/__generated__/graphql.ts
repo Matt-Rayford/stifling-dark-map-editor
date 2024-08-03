@@ -26,6 +26,12 @@ export type Contact = {
   phoneNumber: Scalars['String']['output'];
 };
 
+export type ContactInput = {
+  email: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  phoneNumber: Scalars['String']['input'];
+};
+
 export type CreateMapInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -72,6 +78,7 @@ export type Mutation = {
   deleteSpace?: Maybe<Scalars['Boolean']['output']>;
   disconnectSpaces?: Maybe<Scalars['Boolean']['output']>;
   renameMap?: Maybe<Scalars['String']['output']>;
+  requestRetailAccount?: Maybe<Retailer>;
   updateMapSettings?: Maybe<Map>;
   updateMapSpaceGroup?: Maybe<SpaceGroup>;
   updateSpace?: Maybe<Space>;
@@ -122,6 +129,12 @@ export type MutationRenameMapArgs = {
 };
 
 
+export type MutationRequestRetailAccountArgs = {
+  addressInfo: RetailerAddressInput;
+  retailInfo: RetailerInput;
+};
+
+
 export type MutationUpdateMapSettingsArgs = {
   mapId?: InputMaybe<Scalars['ID']['input']>;
   settings?: InputMaybe<MapSettingsInput>;
@@ -151,6 +164,7 @@ export type MutationUploadMapImageArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  getRetailAccount?: Maybe<Retailer>;
   lightLevels?: Maybe<Array<LightLevel>>;
   map?: Maybe<Map>;
   mapSpaceGroups?: Maybe<Array<SpaceGroup>>;
@@ -199,6 +213,19 @@ export type RetailerAddress = {
   postalCode: Scalars['String']['output'];
   state?: Maybe<Scalars['String']['output']>;
   streetAddress: Scalars['String']['output'];
+};
+
+export type RetailerAddressInput = {
+  address: Scalars['String']['input'];
+  city: Scalars['String']['input'];
+  contact: ContactInput;
+  postalCode: Scalars['String']['input'];
+  state: Scalars['String']['input'];
+};
+
+export type RetailerInput = {
+  name: Scalars['String']['input'];
+  taxId: Scalars['String']['input'];
 };
 
 export type Space = {

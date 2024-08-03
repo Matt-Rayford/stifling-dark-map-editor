@@ -1,4 +1,4 @@
-import { clerkClient } from '@clerk/clerk-sdk-node';
+import { clerkClient, User } from '@clerk/clerk-sdk-node';
 
 export const verifyTokenAndGetUser = async (token: string) => {
 	try {
@@ -34,3 +34,7 @@ export const verifyTokenAndGetUserEmail = async (token: string) => {
 		throw new Error('ERROR: Could not verify user');
 	}
 };
+
+export const getUserEmail = (user: User) => {
+	return user.emailAddresses?.[0]?.emailAddress;
+}

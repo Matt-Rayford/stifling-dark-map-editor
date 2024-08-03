@@ -1,13 +1,21 @@
 import { getLightLevels } from './light-level';
 import { getMap, getMaps } from './map';
+import { getRetailAccountByUserId } from './retailer/retailer';
 import { getMapSpaces } from './space';
 import { getMapSpaceGroups } from './space-group';
 import { getSpaceTypes } from './space-type';
 import { getUser } from './user';
-import { verifyTokenAndGetUser, verifyTokenAndGetUserEmail } from '@/utils/clerk';
+import { getUserEmail, verifyTokenAndGetUser, verifyTokenAndGetUserEmail } from '@/utils/clerk';
 
 export const Query = {
 	lightLevels: () => getLightLevels(),
+	getRetailAccount: async (root, _, context) => {
+		const clerkUser = await verifyTokenAndGetUser(context.token);
+		const email = getUserEmail(clerkUser);
+
+		const user = await getUser(email, clerkUser.id);
+		return getRetailAccountByUserId(user.id);
+	},
 	map: async (root, { id }: { id: string }, context) => {
 		if (context.token) {
 			const email = await verifyTokenAndGetUserEmail(context.token);

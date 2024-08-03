@@ -36,6 +36,24 @@ export const getRetailersToVerify = () => {
   });
 }
 
+export const getRetailAccountByUserId = (userId: string) => {
+  const query = 
+    'SELECT * FROM retailer WHERE created_by_id = $1';
+
+  return pool
+		.query({
+			text: query,
+			values: [ userId],
+		})
+		.then((r) => {
+			return r.rows?.[0] as DBRetailer;
+		})
+		.catch((e) => {
+			console.error(`ERROR - getRetailAccountByUserId(${userId}): `, e);
+			throw new Error('Error getting retail account');
+		});
+}
+
 export const createRetailAccount = async (
 	name: string,
 	taxId: string,

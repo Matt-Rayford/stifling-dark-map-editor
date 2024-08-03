@@ -2,6 +2,7 @@ scalar Object
 scalar Array
 
 type Query {
+  getRetailAccount: Retailer
   lightLevels: [LightLevel!]
   maps: [Map!]!
   map(id: ID!): Map
