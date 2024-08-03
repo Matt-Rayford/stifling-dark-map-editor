@@ -4,7 +4,7 @@ import { getMapSpaces } from './space';
 import { getMapSpaceGroups } from './space-group';
 import { getSpaceTypes } from './space-type';
 import { getUser } from './user';
-import { verifyTokenAndGetUserEmail } from '../utils/clerk';
+import { verifyTokenAndGetUserEmail } from '@/utils/clerk';
 
 export const Query = {
 	lightLevels: () => getLightLevels(),

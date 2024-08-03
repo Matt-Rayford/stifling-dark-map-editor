@@ -1,6 +1,5 @@
 import { pool } from '..';
 import { DBSpaceGroup, SpaceGroup } from '../types/space-group';
-import { getMap } from './map';
 
 export const updateSpaceGroup = async (mapId: string, group: SpaceGroup) => {
 	//getMap(mapId);

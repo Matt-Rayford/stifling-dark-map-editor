@@ -6,6 +6,7 @@ import { LightLevel } from './resolvers/light-level';
 import { MapSettings } from './resolvers/map-settings';
 import { User } from './resolvers/user';
 import { SpaceType } from './resolvers/space-type';
+import { Retailer } from './resolvers/retailer/retailer';
 
 export const resolvers = {
 	Query,
@@ -13,6 +14,7 @@ export const resolvers = {
 	LightLevel,
 	Map,
 	MapSettings,
+	Retailer,
 	Space,
 	SpaceType,
 	User,

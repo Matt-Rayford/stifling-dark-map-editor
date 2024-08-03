@@ -1,7 +1,7 @@
 import { MapSettings } from '../types/map-settings';
 import { SpaceInput } from '../types/space';
 import { SpaceGroup } from '../types/space-group';
-import { verifyTokenAndGetUserEmail } from '../utils/clerk';
+import { verifyTokenAndGetUserEmail } from '@/utils/clerk';
 import {
 	addMapSpaceGroup,
 	createMap,

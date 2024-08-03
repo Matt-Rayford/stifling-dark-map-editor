@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"scripts": {
 		"compile": "tsc",
-		"start": "npm run compile && node ./dist/index.js"
+		"start": "npm run compile && tsc-alias && node ./dist/index.js"
 	},
 	"dependencies": {
 		"@apollo/server": "^4.10.4",
@@ -24,6 +24,7 @@
 		"@types/node": "^20.11.7",
 		"@types/pg": "^8.11.0",
 		"nodemon": "2.0.7",
+		"tsc-alias": "^1.8.10",
 		"typescript": "^5.3.3"
 	}
 }

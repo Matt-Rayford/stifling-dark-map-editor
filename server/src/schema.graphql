@@ -1,126 +1,146 @@
 type Query {
-	lightLevels: [LightLevel!]
-	maps: [Map!]!
-	map(id: ID!): Map
-	mapSpaceGroups(mapId: ID!): [SpaceGroup!]
-	mapSpaces(mapId: ID!): [Space]
-	spaceTypes: [SpaceType!]
-	user(email: String!): User!
+  lightLevels: [LightLevel!]
+  maps: [Map!]!
+  map(id: ID!): Map
+  mapSpaceGroups(mapId: ID!): [SpaceGroup!]
+  mapSpaces(mapId: ID!): [Space]
+  retailersToVerify: [Retailer!]
+  spaceTypes: [SpaceType!]
+  user(email: String!): User!
 }
 
 type Mutation {
-	addMapSpaceGroup(mapId: ID!, group: SpaceGroupInput!): SpaceGroup
-	connectSpaces(space1Id: ID!, space2Id: ID!): Boolean
-	disconnectSpaces(space1Id: ID!, space2Id: ID!): Boolean
-	createMap(title: String!, email: String!): Map
-	deleteMapSpaceGroup(mapId: ID, groupId: ID): Boolean
-	deleteSpace(mapId: ID!, spaceId: ID!): Boolean
-	renameMap(mapId: ID!, mapName: String!): String
-	updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
-	updateUserSettings(settings: UserSettingsInput!): User
-	updateSpace(space: SpaceInput!): Space
-	updateMapSpaceGroup(mapId: ID!, group: SpaceGroupInput!): SpaceGroup
-	uploadMapImage(mapId: ID!, imageUrl: String!): String
+  addMapSpaceGroup(mapId: ID!, group: SpaceGroupInput!): SpaceGroup
+  connectSpaces(space1Id: ID!, space2Id: ID!): Boolean
+  createMap(title: String!, email: String!): Map
+  deleteMapSpaceGroup(mapId: ID, groupId: ID): Boolean
+  deleteSpace(mapId: ID!, spaceId: ID!): Boolean
+  disconnectSpaces(space1Id: ID!, space2Id: ID!): Boolean
+  renameMap(mapId: ID!, mapName: String!): String
+  updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
+  updateUserSettings(settings: UserSettingsInput!): User
+  updateSpace(space: SpaceInput!): Space
+  updateMapSpaceGroup(mapId: ID!, group: SpaceGroupInput!): SpaceGroup
+  uploadMapImage(mapId: ID!, imageUrl: String!): String
 }
 
 type Map {
-	id: ID!
-	title: String!
-	settings: MapSettings!
-	spaces: [Space!]!
-	spaceGroups: [SpaceGroup!]
+  id: ID!
+  title: String!
+  settings: MapSettings!
+  spaces: [Space!]!
+  spaceGroups: [SpaceGroup!]
 }
 
 type MapSettings {
-	backgroundImageUrl: String
-	spaceColor: String!
-	horizontalSpacing: Float!
-	verticalSpacing: Float!
-	indent: Float!
-	paddingX: Float!
-	paddingY: Float!
-	spaceRadius: Float!
+  backgroundImageUrl: String
+  spaceColor: String!
+  horizontalSpacing: Float!
+  verticalSpacing: Float!
+  indent: Float!
+  paddingX: Float!
+  paddingY: Float!
+  spaceRadius: Float!
 }
 
 scalar Object
 scalar Array
 
 type LightLevel {
-	id: ID!
-	name: String!
-	movementPoints: Int!
+  id: ID!
+  name: String!
+  movementPoints: Int!
+}
+
+type Retailer {
+  id: ID!
+  name: String!
+  taxId: String!
+  verified: Boolean!
+  rejected: Boolean!
+  addresses: [RetailerAddress!]!
+}
+
+type RetailerAddress {
+  id: ID!
+  streetAddress: String!
+  city: String!
+  state: String
+  postalCode: String!
+  phoneNumber: String!
+  contactName: String!
 }
 
 type SpaceType {
-	id: ID!
-	name: String!
-	iconUrl: String
-	description: String!
-	color: String!
+  id: ID!
+  name: String!
+  iconUrl: String
+  description: String!
+  color: String!
 }
 
 type SpaceGroup {
-	id: ID!
-	name: String!
-	prefix: String!
+  id: ID!
+  name: String!
+  prefix: String!
 }
 
 type Space {
-	id: ID!
-	number: Int!
-	displayNumber: Int!
-	type: SpaceType!
-	lightLevel: LightLevel!
-	connections: [Int!]!
-	row: Int!
-	col: Int!
-	isDeleted: Boolean
-	group: SpaceGroup
+  id: ID!
+  number: Int!
+  displayNumber: Int!
+  type: SpaceType!
+  lightLevel: LightLevel!
+  connections: [Int!]!
+  row: Int!
+  col: Int!
+  isDeleted: Boolean
+  group: SpaceGroup
 }
 
 type SpaceSetting {
-	id: ID!
-	name: String!
-	imageUrl: String
-	fontColor: String
-	spaceColor: String
+  id: ID!
+  name: String!
+  imageUrl: String
+  fontColor: String
+  spaceColor: String
 }
 
 type User {
-	id: ID!
-	email: ID!
-	viewedSetup: Boolean!
+  id: ID!
+  email: ID!
+  viewedSetup: Boolean!
 }
 
 ################################
 #         INPUT TYPES          #
 ################################
 input CreateMapInput {
-	title: String
+  title: String
 }
 
 input MapSettingsInput {
-	backgroundImageUrl: String
-	spaceColor: String
+  backgroundImageUrl: String
+  spaceColor: String
 }
 
 input SpaceInput {
-	id: ID!
-	isDeleted: Boolean
-	groupId: ID
-	typeId: ID
-	lightLevelId: ID
-	spaceGroupId: ID
-	connections: [Int]
+  id: ID!
+  isDeleted: Boolean
+  groupId: ID
+  typeId: ID
+  lightLevelId: ID
+  spaceGroupId: ID
+  connections: [Int]
 }
 
 input SpaceGroupInput {
-	id: ID
-	name: String!
-	prefix: String!
+  id: ID
+  name: String!
+  prefix: String!
 }
 
 input UserSettingsInput {
-	email: String!
-	viewedSetup: Boolean
+  email: String!
+  viewedSetup: Boolean
 }
