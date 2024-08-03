@@ -11,7 +11,6 @@ import { MapContextProvider } from '../utils/map-context';
 import { TheStiflingDarkPage } from './games/the-stifling-dark/the-stifling-dark-page';
 import { YourMaps } from './map-editor/your-maps';
 import { Games } from './routes/games';
-import { Unicorn } from './temp/unicorn';
 
 export const App = () => {
   const { pathname } = useLocation();
@@ -40,7 +39,6 @@ export const App = () => {
             path="/games/the-stifling-dark"
             element={<TheStiflingDarkPage />}
           />
-          <Route path="/unicorn" element={<Unicorn />} />
         </Routes>
       </MapContextProvider>
     </TourProvider>
