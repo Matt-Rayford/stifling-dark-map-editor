@@ -8,8 +8,12 @@ import {
   RetailAccountQuery,
 } from '../../graphql/__generated__/graphql';
 import { RetailAccountStatus } from './retail-account-status';
+import { useSdUser } from '../../contexts/user-context';
+import { RetailAccountApprovals } from './retail-account-approvals';
 
 export const RetailLandingPage = () => {
+  const { user } = useSdUser();
+
   const [retailAccount, setRetailAccount] =
     useState<RetailAccountQuery['retailAccount']>();
 
@@ -26,6 +30,15 @@ export const RetailLandingPage = () => {
       }
     },
   });
+
+  if (user?.isSuperAdmin) {
+    return (
+      <div className="content-container">
+        <h1>Retail Account Requests</h1>
+        <RetailAccountApprovals />
+      </div>
+    );
+  }
 
   return (
     <div className="content-container">

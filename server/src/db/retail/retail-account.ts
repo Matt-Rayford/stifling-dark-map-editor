@@ -81,3 +81,39 @@ export const createRetailAccount = async (
       throw new Error('Error creating retail account group');
     });
 };
+
+export const approvalRetailAccount = async (id: string) => {
+  const query =
+    'UPDATE retail_account SET verified=true WHERE id = $1 RETURNING *';
+
+  return pool
+    .query({
+      text: query,
+      values: [id],
+    })
+    .then((r) => {
+      return r.rows?.[0] as DBRetailAccount;
+    })
+    .catch((e) => {
+      console.error(`ERROR - approvalRetailAccount(${id}): `, e);
+      throw new Error('Error approving retail account');
+    });
+};
+
+export const rejectRetailAccount = async (id: string) => {
+  const query =
+    'UPDATE retail_account SET rejected=true WHERE id = $1 RETURNING *';
+
+  return pool
+    .query({
+      text: query,
+      values: [id],
+    })
+    .then((r) => {
+      return r.rows?.[0] as DBRetailAccount;
+    })
+    .catch((e) => {
+      console.error(`ERROR - rejectRetailAccount(${id}): `, e);
+      throw new Error('Error rejecting retail account');
+    });
+};

@@ -1,6 +1,11 @@
 scalar Object
 scalar Array
 
+enum Approval {
+  Approved
+  Rejected
+}
+
 type Query {
   getRetailAccount: RetailAccount
   lightLevels: [LightLevel!]
@@ -25,11 +30,12 @@ type Mutation {
     retailAccountInfo: RetailAccountInput!
     addressInfo: RetailAddressInput!
   ): RetailAccount
-  updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
-  updateUserSettings(settings: UserSettingsInput!): User
-  updateSpace(space: SpaceInput!): Space
-  updateMapSpaceGroup(mapId: ID!, group: SpaceGroupInput!): SpaceGroup
   uploadMapImage(mapId: ID!, imageUrl: String!): String
+  updateRetailAccountApproval(id: ID!, approval: Approval!): RetailAccount
+  updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
+  updateMapSpaceGroup(mapId: ID!, group: SpaceGroupInput!): SpaceGroup
+  updateSpace(space: SpaceInput!): Space
+  updateUserSettings(settings: UserSettingsInput!): User
 }
 
 type Contact {

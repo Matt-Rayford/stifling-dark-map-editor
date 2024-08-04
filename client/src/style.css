@@ -54,6 +54,19 @@ body {
 	background-color: var(--sc-white);
 }
 
+.btn-outline {
+	background-color: var(--bg-dark);
+	color: var(--sc-white);
+	border: 1px solid var(--sc-white);
+}
+.btn-outline:hover {
+	border: 1px solid var(--sc-white);
+	color: var(--sc-white);
+	background-color: var(--bg-dark);
+	box-shadow: 0 0 8px 3px var(--sc-white);
+	transition: all 0.3s ease-in-out;
+}
+
 canvas {
 	border: 2px solid black;
 	border-radius: 5px;
@@ -156,6 +169,13 @@ canvas {
 	gap: 2rem !important;
 }
 
+.row-gap-0 {
+	row-gap: 0 !important;
+}
+.row-gap-half {
+	row-gap: 0.5rem !important;
+}
+
 .horizontal-card {
 	display: flex;
 	width: fit-content;
@@ -221,10 +241,6 @@ canvas {
 	border-radius: 16px;
 	transition: all ease-in 0.25s;
 }
-.retail-property-card:hover {
-	cursor: pointer;
-	box-shadow: 0 0 10px 5px #fff;
-}
 
 .link {
 	color: inherit;
@@ -239,6 +255,9 @@ canvas {
 
 .m-0 {
 	margin: 0 !important;
+}
+.mt-1 {
+	margin-top: 1rem !important;
 }
 
 .overflow-hide {

@@ -1,10 +1,15 @@
 import {
+  isSuperAdmin,
   verifyTokenAndGetUser,
   verifyTokenAndGetUserEmail,
 } from '@/utils/clerk';
 
 import { createContact } from '@/db/user/contact';
-import { createRetailAccount } from '@/db/retail/retail-account';
+import {
+  approvalRetailAccount,
+  createRetailAccount,
+  rejectRetailAccount,
+} from '@/db/retail/retail-account';
 import { createRetailAddress } from '@/db/retail/retail-address';
 import {
   addMapSpaceGroup,
@@ -28,6 +33,7 @@ import { RetailAddressInput } from '@/types/retail/retail-address';
 import { SpaceGroup } from '@/types/tsd-map/space-group';
 import { MapSettings } from '@/types/tsd-map/map-settings';
 import { SpaceInput } from '@/types/tsd-map/space';
+import { Approval } from '@/utils/approval';
 
 export const Mutation = {
   addMapSpaceGroup: async (
@@ -131,6 +137,25 @@ export const Mutation = {
     root,
     { mapId, group }: { mapId: string; group: SpaceGroup }
   ) => updateSpaceGroup(mapId, group),
+  updateRetailAccountApproval: async (
+    root,
+    { id, approval }: { id: string; approval: Approval },
+    context
+  ) => {
+    const user = await verifyTokenAndGetUser(context.token);
+
+    if (user && isSuperAdmin(user)) {
+      if (approval === Approval.Approved) {
+        return approvalRetailAccount(id);
+      } else {
+        return rejectRetailAccount(id);
+      }
+    }
+
+    throw new Error(
+      'You are not authorized to modify retail account approvals'
+    );
+  },
   updateUserSettings: async (
     root,
     {
