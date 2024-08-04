@@ -78,7 +78,7 @@ export type Mutation = {
   deleteSpace?: Maybe<Scalars['Boolean']['output']>;
   disconnectSpaces?: Maybe<Scalars['Boolean']['output']>;
   renameMap?: Maybe<Scalars['String']['output']>;
-  requestRetailAccount?: Maybe<Retailer>;
+  requestRetailAccount?: Maybe<RetailAccount>;
   updateMapSettings?: Maybe<Map>;
   updateMapSpaceGroup?: Maybe<SpaceGroup>;
   updateSpace?: Maybe<Space>;
@@ -130,8 +130,8 @@ export type MutationRenameMapArgs = {
 
 
 export type MutationRequestRetailAccountArgs = {
-  addressInfo: RetailerAddressInput;
-  retailInfo: RetailerInput;
+  addressInfo: RetailAddressInput;
+  retailAccountInfo: RetailAccountInput;
 };
 
 
@@ -164,13 +164,13 @@ export type MutationUploadMapImageArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  getRetailAccount?: Maybe<Retailer>;
+  getRetailAccount?: Maybe<RetailAccount>;
   lightLevels?: Maybe<Array<LightLevel>>;
   map?: Maybe<Map>;
   mapSpaceGroups?: Maybe<Array<SpaceGroup>>;
   mapSpaces?: Maybe<Array<Maybe<Space>>>;
   maps: Array<Map>;
-  retailersToVerify?: Maybe<Array<Retailer>>;
+  retailAccountsToVerify?: Maybe<Array<RetailAccount>>;
   spaceTypes?: Maybe<Array<SpaceType>>;
   user: User;
 };
@@ -195,9 +195,9 @@ export type QueryUserArgs = {
   email: Scalars['String']['input'];
 };
 
-export type Retailer = {
-  __typename?: 'Retailer';
-  addresses: Array<RetailerAddress>;
+export type RetailAccount = {
+  __typename?: 'RetailAccount';
+  addresses: Array<RetailAddress>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   rejected: Scalars['Boolean']['output'];
@@ -205,8 +205,13 @@ export type Retailer = {
   verified: Scalars['Boolean']['output'];
 };
 
-export type RetailerAddress = {
-  __typename?: 'RetailerAddress';
+export type RetailAccountInput = {
+  name: Scalars['String']['input'];
+  taxId: Scalars['String']['input'];
+};
+
+export type RetailAddress = {
+  __typename?: 'RetailAddress';
   city: Scalars['String']['output'];
   contact: Contact;
   id: Scalars['ID']['output'];
@@ -215,17 +220,12 @@ export type RetailerAddress = {
   streetAddress: Scalars['String']['output'];
 };
 
-export type RetailerAddressInput = {
-  address: Scalars['String']['input'];
+export type RetailAddressInput = {
   city: Scalars['String']['input'];
   contact: ContactInput;
   postalCode: Scalars['String']['input'];
   state: Scalars['String']['input'];
-};
-
-export type RetailerInput = {
-  name: Scalars['String']['input'];
-  taxId: Scalars['String']['input'];
+  streetAddress: Scalars['String']['input'];
 };
 
 export type Space = {
@@ -336,6 +336,19 @@ export type LoadMapQueryVariables = Exact<{
 
 export type LoadMapQuery = { __typename?: 'Query', map?: { __typename?: 'Map', id: string, title: string, settings: { __typename?: 'MapSettings', backgroundImageUrl?: string | null, spaceColor: string, horizontalSpacing: number, verticalSpacing: number, indent: number, paddingX: number, paddingY: number, spaceRadius: number }, spaces: Array<{ __typename?: 'Space', id: string, number: number, displayNumber: number, row: number, col: number, connections: Array<number>, isDeleted?: boolean | null, type: { __typename?: 'SpaceType', id: string, iconUrl?: string | null, color: string, name: string, description: string }, lightLevel: { __typename?: 'LightLevel', id: string, name: string, movementPoints: number }, group?: { __typename?: 'SpaceGroup', id: string, name: string, prefix: string } | null }>, spaceGroups?: Array<{ __typename?: 'SpaceGroup', id: string, name: string, prefix: string }> | null } | null };
 
+export type RetailAccountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RetailAccountQuery = { __typename?: 'Query', retailAccount?: { __typename?: 'RetailAccount', id: string, name: string, verified: boolean, rejected: boolean } | null };
+
+export type RequestRetailAccountMutationVariables = Exact<{
+  retailAccountInfo: RetailAccountInput;
+  addressInfo: RetailAddressInput;
+}>;
+
+
+export type RequestRetailAccountMutation = { __typename?: 'Mutation', retailAccount?: { __typename?: 'RetailAccount', id: string, name: string, verified: boolean, rejected: boolean } | null };
+
 export type SpaceGroupsQueryVariables = Exact<{
   mapId: Scalars['ID']['input'];
 }>;
@@ -424,6 +437,8 @@ export const CreateMapDocument = {"kind":"Document","definitions":[{"kind":"Oper
 export const UploadMapImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UploadMapImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mapId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"imageUrl"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uploadMapImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"mapId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mapId"}}},{"kind":"Argument","name":{"kind":"Name","value":"imageUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"imageUrl"}}}]}]}}]} as unknown as DocumentNode<UploadMapImageMutation, UploadMapImageMutationVariables>;
 export const LoadMapsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LoadMaps"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"maps"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<LoadMapsQuery, LoadMapsQueryVariables>;
 export const LoadMapDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LoadMap"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"map"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"settings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"backgroundImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"spaceColor"}},{"kind":"Field","name":{"kind":"Name","value":"horizontalSpacing"}},{"kind":"Field","name":{"kind":"Name","value":"verticalSpacing"}},{"kind":"Field","name":{"kind":"Name","value":"indent"}},{"kind":"Field","name":{"kind":"Name","value":"paddingX"}},{"kind":"Field","name":{"kind":"Name","value":"paddingY"}},{"kind":"Field","name":{"kind":"Name","value":"spaceRadius"}}]}},{"kind":"Field","name":{"kind":"Name","value":"spaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"number"}},{"kind":"Field","name":{"kind":"Name","value":"displayNumber"}},{"kind":"Field","name":{"kind":"Name","value":"type"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"iconUrl"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lightLevel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"movementPoints"}}]}},{"kind":"Field","name":{"kind":"Name","value":"row"}},{"kind":"Field","name":{"kind":"Name","value":"col"}},{"kind":"Field","name":{"kind":"Name","value":"connections"}},{"kind":"Field","name":{"kind":"Name","value":"isDeleted"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"prefix"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"spaceGroups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"prefix"}}]}}]}}]}}]} as unknown as DocumentNode<LoadMapQuery, LoadMapQueryVariables>;
+export const RetailAccountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"RetailAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"retailAccount"},"name":{"kind":"Name","value":"getRetailAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"verified"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}}]}}]}}]} as unknown as DocumentNode<RetailAccountQuery, RetailAccountQueryVariables>;
+export const RequestRetailAccountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RequestRetailAccount"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"retailAccountInfo"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RetailAccountInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"addressInfo"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RetailAddressInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"retailAccount"},"name":{"kind":"Name","value":"requestRetailAccount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"retailAccountInfo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"retailAccountInfo"}}},{"kind":"Argument","name":{"kind":"Name","value":"addressInfo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"addressInfo"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"verified"}},{"kind":"Field","name":{"kind":"Name","value":"rejected"}}]}}]}}]} as unknown as DocumentNode<RequestRetailAccountMutation, RequestRetailAccountMutationVariables>;
 export const SpaceGroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SpaceGroups"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mapId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"spaceGroups"},"name":{"kind":"Name","value":"mapSpaceGroups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"mapId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mapId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"prefix"}}]}}]}}]} as unknown as DocumentNode<SpaceGroupsQuery, SpaceGroupsQueryVariables>;
 export const AddMapSpaceGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddMapSpaceGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mapId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"group"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SpaceGroupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"newGroup"},"name":{"kind":"Name","value":"addMapSpaceGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"mapId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mapId"}}},{"kind":"Argument","name":{"kind":"Name","value":"group"},"value":{"kind":"Variable","name":{"kind":"Name","value":"group"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"prefix"}}]}}]}}]} as unknown as DocumentNode<AddMapSpaceGroupMutation, AddMapSpaceGroupMutationVariables>;
 export const DeleteMapSpaceGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMapSpaceGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mapId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"wasSuccess"},"name":{"kind":"Name","value":"deleteMapSpaceGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"mapId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mapId"}}},{"kind":"Argument","name":{"kind":"Name","value":"groupId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}]}]}}]} as unknown as DocumentNode<DeleteMapSpaceGroupMutation, DeleteMapSpaceGroupMutationVariables>;

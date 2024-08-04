@@ -1,0 +1,23 @@
+query RetailAccount {
+  retailAccount: getRetailAccount {
+    id
+    name
+    verified
+    rejected
+  }
+}
+
+mutation RequestRetailAccount(
+  $retailAccountInfo: RetailAccountInput!
+  $addressInfo: RetailAddressInput!
+) {
+  retailAccount: requestRetailAccount(
+    retailAccountInfo: $retailAccountInfo
+    addressInfo: $addressInfo
+  ) {
+    id
+    name
+    verified
+    rejected
+  }
+}

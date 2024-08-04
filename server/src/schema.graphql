@@ -2,13 +2,13 @@ scalar Object
 scalar Array
 
 type Query {
-  getRetailAccount: Retailer
+  getRetailAccount: RetailAccount
   lightLevels: [LightLevel!]
   maps: [Map!]!
   map(id: ID!): Map
   mapSpaceGroups(mapId: ID!): [SpaceGroup!]
   mapSpaces(mapId: ID!): [Space]
-  retailersToVerify: [Retailer!]
+  retailAccountsToVerify: [RetailAccount!]
   spaceTypes: [SpaceType!]
   user(email: String!): User!
 }
@@ -22,9 +22,9 @@ type Mutation {
   disconnectSpaces(space1Id: ID!, space2Id: ID!): Boolean
   renameMap(mapId: ID!, mapName: String!): String
   requestRetailAccount(
-    retailInfo: RetailerInput!
-    addressInfo: RetailerAddressInput!
-  ): Retailer
+    retailAccountInfo: RetailAccountInput!
+    addressInfo: RetailAddressInput!
+  ): RetailAccount
   updateMapSettings(mapId: ID, settings: MapSettingsInput): Map
   updateUserSettings(settings: UserSettingsInput!): User
   updateSpace(space: SpaceInput!): Space
@@ -64,16 +64,16 @@ type LightLevel {
   movementPoints: Int!
 }
 
-type Retailer {
+type RetailAccount {
   id: ID!
   name: String!
   taxId: String!
   verified: Boolean!
   rejected: Boolean!
-  addresses: [RetailerAddress!]!
+  addresses: [RetailAddress!]!
 }
 
-type RetailerAddress {
+type RetailAddress {
   id: ID!
   streetAddress: String!
   city: String!
@@ -141,17 +141,17 @@ input MapSettingsInput {
   spaceColor: String
 }
 
-input RetailerInput {
+input RetailAccountInput {
   name: String!
   taxId: String!
 }
 
-input RetailerAddressInput {
-  address: String!
+input RetailAddressInput {
   city: String!
   contact: ContactInput!
   postalCode: String!
   state: String!
+  streetAddress: String!
 }
 
 input SpaceInput {

@@ -1,28 +1,39 @@
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@apollo/client';
 
 import { taxIdFormatter } from '../../utils/formatters/tax-id-formatter';
 import { USStates } from '../../utils/states/us-states';
 import { zipCodeFormatter } from '../../utils/formatters/zip-code-formatter';
 import { phoneNumberFormatter } from '../../utils/formatters/phone-number-formatter';
-import { useUser } from '@clerk/clerk-react';
+import {
+  RequestRetailAccountDocument,
+  RetailAccountQuery,
+} from '../../graphql/__generated__/graphql';
 
 const retailFormSchema = z.object({
-  companyName: z.string(),
+  companyName: z.string().min(1),
   taxId: z.string().regex(/^[0-9]{2}-[0-9]{7}$/g),
-  storeAddress: z.string(),
-  storeCity: z.string(),
-  storeState: z.string(),
+  storeAddress: z.string().min(1),
+  storeCity: z.string().min(1),
+  storeState: z.string().min(1),
   storePostalCode: z.string().regex(/^[0-9]{5}(-\d{4})?$/g),
-  contactName: z.string(),
+  contactName: z.string().min(1),
   contactPhoneNumber: z.string().regex(/^\d{3}-\d{3}-\d{4}$/g),
   contactEmail: z.string().regex(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g),
 });
 type RetailForm = z.infer<typeof retailFormSchema>;
 
-export const RetailerForm = () => {
-  const { user } = useUser();
+interface Props {
+  onRequest: (retailAccount: RetailAccountQuery['retailAccount']) => void;
+}
+
+export const RetailAccountForm = ({ onRequest }: Props) => {
+  const [requestRetailAccount, { loading: savingRequest }] = useMutation(
+    RequestRetailAccountDocument
+  );
+
   const {
     handleSubmit,
     setValue,
@@ -30,10 +41,33 @@ export const RetailerForm = () => {
     formState: { isValid },
   } = useForm<RetailForm>({
     resolver: zodResolver(retailFormSchema),
+    mode: 'onChange',
   });
 
-  const onSubmit = () => {
-    console.log('Submit');
+  const onSubmit: SubmitHandler<RetailForm> = (values) => {
+    requestRetailAccount({
+      variables: {
+        addressInfo: {
+          city: values.storeCity,
+          contact: {
+            email: values.contactEmail,
+            name: values.contactName,
+            phoneNumber: values.contactPhoneNumber,
+          },
+          postalCode: values.storePostalCode,
+          state: values.storeState,
+          streetAddress: values.storeAddress,
+        },
+        retailAccountInfo: {
+          name: values.companyName,
+          taxId: values.taxId,
+        },
+      },
+    }).then((r) => {
+      if (r.data?.retailAccount) {
+        onRequest(r.data.retailAccount);
+      }
+    });
   };
 
   return (
@@ -80,7 +114,7 @@ export const RetailerForm = () => {
         </div>
         <input
           className="form-control"
-          placeholder="My Store..."
+          placeholder="1111 Store St..."
           {...register('storeAddress')}
         />
       </div>
@@ -138,13 +172,13 @@ export const RetailerForm = () => {
           </div>
           <input
             className="form-control "
-            placeholder="Matt..."
+            placeholder="John Deer..."
             {...register('contactName')}
           />
         </div>
         <div className="input-group mb-3 flex-1">
           <div className="input-group-prepend">
-            <span className="input-group-text">Contact Name</span>
+            <span className="input-group-text">Contact Phone #</span>
           </div>
           <input
             className="form-control "
@@ -174,7 +208,7 @@ export const RetailerForm = () => {
 
       <button
         className="btn btn-primary"
-        disabled={!isValid}
+        disabled={!isValid && !savingRequest}
         type="submit"
         style={{ height: '38px' }}
       >
