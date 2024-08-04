@@ -210,6 +210,22 @@ canvas {
 	-webkit-box-orient: vertical;
 }
 
+
+.retail-property-card {
+	width: 30rem;
+	height: 15rem;
+	background-color: var(--bg-dark);
+	color: #fff;
+	border: 1px solid #fff;
+	padding: 1rem;
+	border-radius: 16px;
+	transition: all ease-in 0.25s;
+}
+.retail-property-card:hover {
+	cursor: pointer;
+	box-shadow: 0 0 10px 5px #fff;
+}
+
 .link {
 	color: inherit;
 }
@@ -290,6 +306,10 @@ canvas {
 
 .relative {
 	position: relative;
+}
+
+.underline {
+	text-decoration: underline;
 }
 
 .v-stack {

@@ -1,12 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { FullRetailAccountDocument } from '../../graphql/__generated__/graphql';
+import { RetailProperties } from './retail-properties';
 
 export const RetailAccount = () => {
   const { data, loading } = useQuery(FullRetailAccountDocument);
 
   const retailAccount = data?.retailAccount;
-
-  console.log('Retail account: ', retailAccount);
 
   if (!retailAccount && !loading) {
     return (
@@ -33,7 +32,9 @@ export const RetailAccount = () => {
 
   return (
     <div className="content-container">
-      <h1>{retailAccount.name}</h1>
+      <h1>{retailAccount.name} | Retail Account</h1>
+      <h2>Your Properties</h2>
+      <RetailProperties properties={retailAccount.addresses} />
     </div>
   );
 };
