@@ -29,9 +29,8 @@ export const createRetailAddress = (
   contactId: string
 ) => {
   const query =
-    'INSERT INTO retail_address (retail_account_id, street_address, city, state, postal_code, contact_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+    'INSERT INTO retail_address (retail_account_id, street_address, city, state, postal_code, contact_id, name) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
 
-  console.log('CREATE RETAIL ADDRESS', addressInfo);
   return pool
     .query({
       text: query,
@@ -42,6 +41,7 @@ export const createRetailAddress = (
         addressInfo.state,
         addressInfo.postalCode,
         contactId,
+        addressInfo.name ?? null,
       ],
     })
     .then((r) => {

@@ -7,6 +7,16 @@ query RetailAccount {
   }
 }
 
+query RetailAccountsToVerify {
+  retailAccounts: retailAccountsToVerify {
+    id
+    name
+    taxId
+    verified
+    rejected
+  }
+}
+
 mutation RequestRetailAccount(
   $retailAccountInfo: RetailAccountInput!
   $addressInfo: RetailAddressInput!

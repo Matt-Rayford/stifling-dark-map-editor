@@ -2,24 +2,27 @@ import { ContactInput } from '../user/contact';
 
 export interface RetailAddress {
   id: string;
-  streetAddress: string;
   city: string;
+  name?: string | null;
   state: string;
+  streetAddress: string;
   postalCode: string;
 }
 
 export interface DBRetailAddress {
   id: string;
-  street_address: string;
   city: string;
+  name?: string | null;
   state: string;
+  street_address: string;
   postal_code: string;
 }
 
 export interface RetailAddressInput {
-  streetAddress: string;
   city: string;
-  state: string;
-  postalCode: string;
   contact: ContactInput;
+  name?: string | null;
+  state: string;
+  streetAddress: string;
+  postalCode: string;
 }

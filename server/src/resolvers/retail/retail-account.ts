@@ -1,5 +1,8 @@
 import { pool } from '../..';
-import { DBRetailAccount } from '@/types/retail/retail-account';
+import {
+  DBRetailAccount,
+  RetailAccount as RetailAccountType,
+} from '@/types/retail/retail-account';
 import { getRetailAddressesByRetailAccountId } from './retail-address';
 
 export const getRetailAccountAddressesById = (retailerId: string) => {
@@ -32,7 +35,7 @@ export const getRetailAccountsToVerify = () => {
       text: query,
     })
     .then((r) => {
-      const data = r.rows;
+      const data = r.rows as RetailAccountType[];
       return data;
     })
     .catch((e) => {

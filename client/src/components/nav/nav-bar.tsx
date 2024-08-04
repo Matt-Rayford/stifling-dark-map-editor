@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const NavBar = ({ hide }: Props) => {
-  const { isSignedIn } = useUser();
+  const { isSignedIn, user } = useUser();
 
   if (hide) {
     return null;

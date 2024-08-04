@@ -6,6 +6,7 @@ import {
   RetailAccountDocument,
   RetailAccountQuery,
 } from '../../graphql/__generated__/graphql';
+import { RetailAccountStatus } from './retail-account-status';
 
 export const RetailLandingPage = () => {
   const [retailAccount, setRetailAccount] =
@@ -28,13 +29,7 @@ export const RetailLandingPage = () => {
         />
       )}
       {retailAccount && !loading && !retailAccount.verified && (
-        <>
-          <h1>Your Account is Pending</h1>
-          <p>
-            Our team is reviewing your information, and your account will be
-            approved within 48 hours!
-          </p>
-        </>
+        <RetailAccountStatus retailAccount={retailAccount} />
       )}
     </div>
   );

@@ -214,7 +214,7 @@ canvas {
 	color: inherit;
 }
 .link:hover {
-	font-weight: bold;
+	cursor: pointer;
 }
 .link:visited {
 	cursor: pointer;

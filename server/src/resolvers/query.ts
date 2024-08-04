@@ -1,12 +1,16 @@
 import { getLightLevels } from './light-level';
 import { getMap, getMaps } from './map';
-import { getRetailAccountByUserId } from './retail/retail-account';
+import {
+  getRetailAccountByUserId,
+  getRetailAccountsToVerify,
+} from './retail/retail-account';
 import { getMapSpaces } from './space';
 import { getMapSpaceGroups } from './space-group';
 import { getSpaceTypes } from './space-type';
 import { getUser } from './user';
 import {
   getUserEmail,
+  isSuperAdmin,
   verifyTokenAndGetUser,
   verifyTokenAndGetUserEmail,
 } from '@/utils/clerk';
@@ -40,8 +44,8 @@ export const Query = {
   retailAccountsToVerify: async (root, _, context) => {
     const user = await verifyTokenAndGetUser(context.token);
 
-    if (user) {
-      return [];
+    if (user && isSuperAdmin(user)) {
+      return getRetailAccountsToVerify();
     }
     return [];
   },

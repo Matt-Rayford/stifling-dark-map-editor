@@ -17,6 +17,7 @@ const retailFormSchema = z.object({
   taxId: z.string().regex(/^[0-9]{2}-[0-9]{7}$/g),
   storeAddress: z.string().min(1),
   storeCity: z.string().min(1),
+  storeName: z.string().nullish(),
   storeState: z.string().min(1),
   storePostalCode: z.string().regex(/^[0-9]{5}(-\d{4})?$/g),
   contactName: z.string().min(1),
@@ -54,6 +55,7 @@ export const RetailAccountForm = ({ onRequest }: Props) => {
             name: values.contactName,
             phoneNumber: values.contactPhoneNumber,
           },
+          name: values.storeName ?? null,
           postalCode: values.storePostalCode,
           state: values.storeState,
           streetAddress: values.storeAddress,
@@ -83,7 +85,7 @@ export const RetailAccountForm = ({ onRequest }: Props) => {
         </div>
         <input
           className="form-control"
-          placeholder="My Store..."
+          placeholder="My Company..."
           {...register('companyName')}
         />
       </div>
@@ -107,6 +109,19 @@ export const RetailAccountForm = ({ onRequest }: Props) => {
 
       <h2>Store Info</h2>
       <p>(You can add more addresses after registering!)</p>
+
+      <div className="input-group mb-3">
+        <div className="input-group-prepend">
+          <span className="input-group-text">
+            Store Location Name (Optional)
+          </span>
+        </div>
+        <input
+          className="form-control"
+          placeholder="Regional Store..."
+          {...register('storeName')}
+        />
+      </div>
 
       <div className="input-group mb-3">
         <div className="input-group-prepend">

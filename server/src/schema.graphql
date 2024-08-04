@@ -75,9 +75,10 @@ type RetailAccount {
 
 type RetailAddress {
   id: ID!
-  streetAddress: String!
   city: String!
+  name: String
   state: String
+  streetAddress: String!
   postalCode: String!
   contact: Contact!
 }
@@ -149,6 +150,7 @@ input RetailAccountInput {
 input RetailAddressInput {
   city: String!
   contact: ContactInput!
+  name: String
   postalCode: String!
   state: String!
   streetAddress: String!
