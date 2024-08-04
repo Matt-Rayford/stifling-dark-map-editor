@@ -23,9 +23,17 @@ export const RetailAccount = () => {
     );
   }
 
+  if ((!retailAccount && loading) || !retailAccount) {
+    return (
+      <div className="content-container">
+        <p>Loading your account</p>
+      </div>
+    );
+  }
+
   return (
     <div className="content-container">
-      <h1>retailAccount.com</h1>
+      <h1>{retailAccount.name}</h1>
     </div>
   );
 };

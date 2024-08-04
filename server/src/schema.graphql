@@ -34,7 +34,7 @@ type Mutation {
 
 type Contact {
   id: ID!
-  email: String!
+  emailAddress: String!
   name: String!
   phoneNumber: String!
 }

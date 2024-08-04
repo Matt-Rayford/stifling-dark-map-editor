@@ -21,7 +21,7 @@ query FullRetailAccount {
       postalCode
       contact {
         id
-        email
+        emailAddress
         name
         phoneNumber
       }
