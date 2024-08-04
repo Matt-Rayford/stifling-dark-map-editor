@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const NavBar = ({ hide }: Props) => {
-  const { isSignedIn } = useUser();
+  const { isSignedIn, user } = useUser();
 
   if (hide) {
     return null;
@@ -56,6 +56,9 @@ export const NavBar = ({ hide }: Props) => {
 				*/}
           <Link className="nav-item nav-link" to="/maps">
             Map Editor
+          </Link>
+          <Link className="nav-item nav-link" to="/retailers">
+            Retailers
           </Link>
         </div>
       </div>

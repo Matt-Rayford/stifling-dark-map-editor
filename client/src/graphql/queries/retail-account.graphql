@@ -1,0 +1,94 @@
+query RetailAccount {
+  retailAccount: getRetailAccount {
+    id
+    name
+    verified
+    rejected
+  }
+}
+
+query FullRetailAccount {
+  retailAccount: getRetailAccount {
+    id
+    name
+    verified
+    rejected
+    addresses {
+      id
+      city
+      name
+      state
+      streetAddress
+      postalCode
+      contact {
+        id
+        emailAddress
+        name
+        phoneNumber
+      }
+    }
+  }
+}
+
+query RetailAccountsToVerify {
+  retailAccounts: retailAccountsToVerify {
+    id
+    name
+    taxId
+    verified
+    rejected
+    addresses {
+      id
+      city
+      name
+      state
+      streetAddress
+      postalCode
+      contact {
+        id
+        emailAddress
+        name
+        phoneNumber
+      }
+    }
+  }
+}
+
+mutation RequestRetailAccount(
+  $retailAccountInfo: RetailAccountInput!
+  $addressInfo: RetailPropertyInput!
+) {
+  retailAccount: requestRetailAccount(
+    retailAccountInfo: $retailAccountInfo
+    addressInfo: $addressInfo
+  ) {
+    id
+    name
+    verified
+    rejected
+  }
+}
+
+mutation UpdateRetailAccountApproval($id: ID!, $approval: Approval!) {
+  updateRetailAccountApproval(id: $id, approval: $approval) {
+    id
+    name
+    taxId
+    verified
+    rejected
+    addresses {
+      id
+      city
+      name
+      state
+      streetAddress
+      postalCode
+      contact {
+        id
+        emailAddress
+        name
+        phoneNumber
+      }
+    }
+  }
+}

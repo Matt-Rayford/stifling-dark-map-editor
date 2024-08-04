@@ -49,6 +49,23 @@ body {
 	box-shadow: 0 0 8px 3px var(--sc-white);
 	transition: all 0.3s ease-in-out;
 }
+.btn:disabled {
+	color: var(--bg-dark);
+	background-color: var(--sc-white);
+}
+
+.btn-outline {
+	background-color: var(--bg-dark);
+	color: var(--sc-white);
+	border: 1px solid var(--sc-white);
+}
+.btn-outline:hover {
+	border: 1px solid var(--sc-white);
+	color: var(--sc-white);
+	background-color: var(--bg-dark);
+	box-shadow: 0 0 8px 3px var(--sc-white);
+	transition: all 0.3s ease-in-out;
+}
 
 canvas {
 	border: 2px solid black;
@@ -116,7 +133,7 @@ canvas {
 	display: flex;
 }
 .flex-1 {
-	flex-grow: 1;
+	flex: 1;
 }
 .flex-col {
 	flex-direction: column;
@@ -150,6 +167,13 @@ canvas {
 }
 .gap-2 {
 	gap: 2rem !important;
+}
+
+.row-gap-0 {
+	row-gap: 0 !important;
+}
+.row-gap-half {
+	row-gap: 0.5rem !important;
 }
 
 .horizontal-card {
@@ -206,11 +230,23 @@ canvas {
 	-webkit-box-orient: vertical;
 }
 
+
+.retail-property-card {
+	width: 30rem;
+	height: 15rem;
+	background-color: var(--bg-dark);
+	color: #fff;
+	border: 1px solid #fff;
+	padding: 1rem;
+	border-radius: 16px;
+	transition: all ease-in 0.25s;
+}
+
 .link {
 	color: inherit;
 }
 .link:hover {
-	font-weight: bold;
+	cursor: pointer;
 }
 .link:visited {
 	cursor: pointer;
@@ -219,6 +255,9 @@ canvas {
 
 .m-0 {
 	margin: 0 !important;
+}
+.mt-1 {
+	margin-top: 1rem !important;
 }
 
 .overflow-hide {
@@ -286,6 +325,10 @@ canvas {
 
 .relative {
 	position: relative;
+}
+
+.underline {
+	text-decoration: underline;
 }
 
 .v-stack {
@@ -624,50 +667,6 @@ canvas {
 
 .flashlight-viewer::after {
 	clip-path: circle(60px at var(--x, 50%) var(--y, 50%));
-	z-index: 1;
-}
-
-/*
-  TEMP: Delete after next week
-*/
-.texas-viewer-container {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-}
-
-.texas-viewer {
-	width: 1000px;
-	height: 750px;
-	position: relative;
-	cursor: none;
-	/*mask-image: radial-gradient(
-		circle at center,
-		#fff,
-		#fff 10%,
-		#fff 80%,
-		transparent 85%
-	);*/
-}
-.texas-viewer::before,
-.texas-viewer::after {
-	content: '';
-	display: block;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	background-image: url('/public/images/temp/texas-map.jpg');
-	background-repeat: no-repeat;
-}
-
-.texas-viewer::before {
-	filter: brightness(0);
-}
-
-.texas-viewer::after {
-	clip-path: circle(30px at var(--x, 50%) var(--y, 50%));
 	z-index: 1;
 }
 
