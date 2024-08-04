@@ -1,6 +1,6 @@
 import { ContactInput } from '../user/contact';
 
-export interface RetailAddress {
+export interface RetailProperty {
   id: string;
   city: string;
   name?: string | null;
@@ -9,7 +9,7 @@ export interface RetailAddress {
   postalCode: string;
 }
 
-export interface DBRetailAddress {
+export interface DBRetailProperty {
   id: string;
   city: string;
   contact_id: string;
@@ -19,7 +19,7 @@ export interface DBRetailAddress {
   postal_code: string;
 }
 
-export interface RetailAddressInput {
+export interface RetailPropertyInput {
   city: string;
   contact: ContactInput;
   name?: string | null;

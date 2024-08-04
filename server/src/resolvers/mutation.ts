@@ -10,7 +10,6 @@ import {
   createRetailAccount,
   rejectRetailAccount,
 } from '@/db/retail/retail-account';
-import { createRetailAddress } from '@/db/retail/retail-address';
 import {
   addMapSpaceGroup,
   createMap,
@@ -29,11 +28,12 @@ import {
 import { getUser, updateUserSettings } from '@/db/user/user';
 
 import { RetailAccountInput } from '@/types/retail/retail-account';
-import { RetailAddressInput } from '@/types/retail/retail-address';
 import { SpaceGroup } from '@/types/tsd-map/space-group';
 import { MapSettings } from '@/types/tsd-map/map-settings';
 import { SpaceInput } from '@/types/tsd-map/space';
 import { Approval } from '@/utils/approval';
+import { createRetailProperty } from '@/db/retail/retail-property';
+import { RetailPropertyInput } from '@/types/retail/retail-property';
 
 export const Mutation = {
   addMapSpaceGroup: async (
@@ -88,7 +88,7 @@ export const Mutation = {
       addressInfo,
     }: {
       retailAccountInfo: RetailAccountInput;
-      addressInfo: RetailAddressInput;
+      addressInfo: RetailPropertyInput;
     },
     context
   ) => {
@@ -109,7 +109,7 @@ export const Mutation = {
             const contact = await createContact(addressInfo.contact);
 
             if (contact) {
-              await createRetailAddress(
+              await createRetailProperty(
                 retailAccount.id,
                 addressInfo,
                 contact.id

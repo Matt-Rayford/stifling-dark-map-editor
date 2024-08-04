@@ -28,7 +28,7 @@ type Mutation {
   renameMap(mapId: ID!, mapName: String!): String
   requestRetailAccount(
     retailAccountInfo: RetailAccountInput!
-    addressInfo: RetailAddressInput!
+    addressInfo: RetailPropertyInput!
   ): RetailAccount
   uploadMapImage(mapId: ID!, imageUrl: String!): String
   updateRetailAccountApproval(id: ID!, approval: Approval!): RetailAccount
@@ -76,10 +76,10 @@ type RetailAccount {
   taxId: String!
   verified: Boolean!
   rejected: Boolean!
-  addresses: [RetailAddress!]!
+  addresses: [RetailProperty!]!
 }
 
-type RetailAddress {
+type RetailProperty {
   id: ID!
   city: String!
   name: String
@@ -153,7 +153,7 @@ input RetailAccountInput {
   taxId: String!
 }
 
-input RetailAddressInput {
+input RetailPropertyInput {
   city: String!
   contact: ContactInput!
   name: String

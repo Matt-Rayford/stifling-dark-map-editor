@@ -7,7 +7,7 @@ import { MapSettings } from './resolvers/tsd-map/map-settings';
 import { User } from './resolvers/tsd-map/user';
 import { SpaceType } from './resolvers/tsd-map/space-type';
 import { RetailAccount } from './resolvers/retail/retail-account';
-import { RetailAddress } from './resolvers/retail/retail-address';
+import { RetailProperty } from './resolvers/retail/retail-property';
 import { Contact } from './resolvers/user/contact';
 
 export const resolvers = {
@@ -18,7 +18,7 @@ export const resolvers = {
   Map,
   MapSettings,
   RetailAccount,
-  RetailAddress,
+  RetailProperty,
   Space,
   SpaceType,
   User,
