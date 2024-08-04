@@ -31,7 +31,10 @@ export const isSuperAdmin = () => {
   const memberships = organizations?.userMemberships?.data ?? [];
 
   for (let membership of memberships) {
-    console.log('membership: ', membership.organization.id);
+    console.log(
+      'membership: ',
+      process.env.REACT_APP_CLERK_SUPER_ADMIN_COMPANY_ID
+    );
     if (
       membership.organization.id ===
       process.env.REACT_APP_CLERK_SUPER_ADMIN_COMPANY_ID
