@@ -12,6 +12,7 @@ export interface RetailAddress {
 export interface DBRetailAddress {
   id: string;
   city: string;
+  contact_id: string;
   name?: string | null;
   state: string;
   street_address: string;

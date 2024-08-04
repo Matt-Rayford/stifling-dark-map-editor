@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { RetailAccountForm } from './retail-account-form';
 import {
@@ -12,10 +13,16 @@ export const RetailLandingPage = () => {
   const [retailAccount, setRetailAccount] =
     useState<RetailAccountQuery['retailAccount']>();
 
+  const navigate = useNavigate();
+
   const { loading } = useQuery(RetailAccountDocument, {
     onCompleted: (data) => {
       if (data.retailAccount) {
-        setRetailAccount(data.retailAccount);
+        if (data.retailAccount.verified) {
+          navigate(`/retailer/${data.retailAccount.id}`);
+        } else {
+          setRetailAccount(data.retailAccount);
+        }
       }
     },
   });

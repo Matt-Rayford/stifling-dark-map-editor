@@ -1,4 +1,5 @@
 import { clerkClient, User } from '@clerk/clerk-sdk-node';
+
 import { Roles } from './clerk-roles';
 
 export const verifyTokenAndGetUser = async (token: string) => {

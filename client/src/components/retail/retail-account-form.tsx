@@ -51,7 +51,7 @@ export const RetailAccountForm = ({ onRequest }: Props) => {
         addressInfo: {
           city: values.storeCity,
           contact: {
-            email: values.contactEmail,
+            emailAddress: values.contactEmail,
             name: values.contactName,
             phoneNumber: values.contactPhoneNumber,
           },

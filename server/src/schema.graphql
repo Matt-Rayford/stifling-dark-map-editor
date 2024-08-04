@@ -128,7 +128,7 @@ type User {
 #         INPUT TYPES          #
 ################################
 input ContactInput {
-  email: String!
+  emailAddress: String!
   name: String!
   phoneNumber: String!
 }

@@ -1,19 +1,19 @@
 export interface Contact {
-	id: string;
-	name: string;
-	phoneNumber: string;
-	email: string;
+  id: string;
+  emailAddress: string;
+  name: string;
+  phoneNumber: string;
 }
 
 export interface ContactInput {
-	name: string;
-	phoneNumber: string;
-	email: string;
+  emailAddress: string;
+  name: string;
+  phoneNumber: string;
 }
 
 export interface DBContact {
-	id: string;
-	name: string;
-	phone_number: string;
-	email: string;
+  id: string;
+  email_address: string;
+  name: string;
+  phone_number: string;
 }

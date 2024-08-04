@@ -12,6 +12,7 @@ import { TheStiflingDarkPage } from './games/the-stifling-dark/the-stifling-dark
 import { YourMaps } from './map-editor/your-maps';
 import { Games } from './routes/games';
 import { RetailLandingPage } from './retail/retailer-landing-page';
+import { RetailAccount } from './retail/retail-acount';
 
 export const App = () => {
   const { pathname } = useLocation();
@@ -41,6 +42,7 @@ export const App = () => {
             element={<TheStiflingDarkPage />}
           />
           <Route path="/retailers" element={<RetailLandingPage />} />
+          <Route path="/retailer/:accountId" element={<RetailAccount />} />
         </Routes>
       </MapContextProvider>
     </TourProvider>

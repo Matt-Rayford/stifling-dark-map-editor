@@ -1,19 +1,20 @@
-import { getLightLevels } from './light-level';
-import { getMap, getMaps } from './map';
-import {
-  getRetailAccountByUserId,
-  getRetailAccountsToVerify,
-} from './retail/retail-account';
-import { getMapSpaces } from './space';
-import { getMapSpaceGroups } from './space-group';
-import { getSpaceTypes } from './space-type';
-import { getUser } from './user';
 import {
   getUserEmail,
   isSuperAdmin,
   verifyTokenAndGetUser,
   verifyTokenAndGetUserEmail,
 } from '@/utils/clerk';
+
+import {
+  getRetailAccountByUserId,
+  getRetailAccountsToVerify,
+} from '@/db/retail/retail-account';
+import { getLightLevels } from '@/db/tsd-map/light-level';
+import { getMap, getMaps } from '@/db/tsd-map/map';
+import { getMapSpaceGroups } from '@/db/tsd-map/space-group';
+import { getSpaceTypes } from '@/db/tsd-map/space-type';
+import { getMapSpaces } from '@/db/tsd-map/space';
+import { getUser } from '@/db/user/user';
 
 export const Query = {
   lightLevels: () => getLightLevels(),

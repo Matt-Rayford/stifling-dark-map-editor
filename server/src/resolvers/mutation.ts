@@ -1,10 +1,11 @@
-import { MapSettings } from '../types/map-settings';
-import { SpaceInput } from '../types/space';
-import { SpaceGroup } from '../types/space-group';
 import {
   verifyTokenAndGetUser,
   verifyTokenAndGetUserEmail,
 } from '@/utils/clerk';
+
+import { createContact } from '@/db/user/contact';
+import { createRetailAccount } from '@/db/retail/retail-account';
+import { createRetailAddress } from '@/db/retail/retail-address';
 import {
   addMapSpaceGroup,
   createMap,
@@ -12,20 +13,21 @@ import {
   renameMap,
   updateMapImage,
   updateMapSettings,
-} from './map';
+} from '@/db/tsd-map/map';
+import { updateSpaceGroup } from '@/db/tsd-map/space-group';
 import {
   connectSpaces,
   deleteSpace,
   disconnectSpaces,
   updateSpace,
-} from './space';
-import { updateSpaceGroup } from './space-group';
-import { getUser, updateUserSettings } from './user';
+} from '@/db/tsd-map/space';
+import { getUser, updateUserSettings } from '@/db/user/user';
+
 import { RetailAccountInput } from '@/types/retail/retail-account';
 import { RetailAddressInput } from '@/types/retail/retail-address';
-import { createRetailAccount } from './retail/retail-account';
-import { createContact } from './user/contact';
-import { createRetailAddress } from './retail/retail-address';
+import { SpaceGroup } from '@/types/tsd-map/space-group';
+import { MapSettings } from '@/types/tsd-map/map-settings';
+import { SpaceInput } from '@/types/tsd-map/space';
 
 export const Mutation = {
   addMapSpaceGroup: async (

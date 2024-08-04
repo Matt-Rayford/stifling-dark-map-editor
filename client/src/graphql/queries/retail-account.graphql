@@ -7,6 +7,28 @@ query RetailAccount {
   }
 }
 
+query FullRetailAccount {
+  retailAccount: getRetailAccount {
+    id
+    name
+    verified
+    rejected
+    addresses {
+      id
+      city
+      name
+      streetAddress
+      postalCode
+      contact {
+        id
+        email
+        name
+        phoneNumber
+      }
+    }
+  }
+}
+
 query RetailAccountsToVerify {
   retailAccounts: retailAccountsToVerify {
     id
