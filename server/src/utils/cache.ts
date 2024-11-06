@@ -9,9 +9,9 @@ export const cachedSpaceTypes: Map<string, DBSpaceType> = new Map();
 export const cachedSpaceGroups: Map<string, SpaceGroup[]> = new Map();
 
 export const initDBCache = async () => {
-  initLightLevelCache();
-  initSpaceTypesCache();
-  initSpaceGroupsCache();
+  // initLightLevelCache();
+  // initSpaceTypesCache();
+  // initSpaceGroupsCache();
 };
 
 const initLightLevelCache = async () => {

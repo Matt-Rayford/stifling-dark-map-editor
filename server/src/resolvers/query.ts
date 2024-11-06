@@ -15,8 +15,18 @@ import { getMapSpaceGroups } from '@/db/tsd-map/space-group';
 import { getSpaceTypes } from '@/db/tsd-map/space-type';
 import { getMapSpaces } from '@/db/tsd-map/space';
 import { getUser } from '@/db/user/user';
+import { beerCan } from '@/types/beer/beercan';
 
 export const Query = {
+  beerCan: (_, args: { name: string }) => {
+    const { name } = args;
+    const beerCans: beerCan[] = [
+      { id: '12345', name: 'Schlitz' },
+      { id: '67890', name: 'Blatz' },
+      { id: '99999', name: 'Schlitz' },
+    ];
+    return beerCans.filter((beerCan) => beerCan.name === name);
+  },
   lightLevels: () => getLightLevels(),
   getRetailAccount: async (root, _, context) => {
     const clerkUser = await verifyTokenAndGetUser(context.token);

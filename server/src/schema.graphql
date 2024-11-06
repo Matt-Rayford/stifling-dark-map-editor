@@ -8,6 +8,7 @@ enum Approval {
 
 type Query {
   getRetailAccount: RetailAccount
+  beerCan(name: String!): [BeerCan!]
   lightLevels: [LightLevel!]
   maps: [Map!]!
   map(id: ID!): Map
@@ -36,6 +37,12 @@ type Mutation {
   updateMapSpaceGroup(mapId: ID!, group: SpaceGroupInput!): SpaceGroup
   updateSpace(space: SpaceInput!): Space
   updateUserSettings(settings: UserSettingsInput!): User
+}
+
+type BeerCan {
+  id: ID!
+  name: String!
+  description: String
 }
 
 type Contact {
