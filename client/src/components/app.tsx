@@ -33,9 +33,6 @@ export const App = () => {
         <NavBar hide={pathname === '/unicorn'} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/map/:mapId" element={<MapEditor />} />
-          <Route path="/maps" element={<YourMaps />} />
-          <Route path="/maps/new" element={<MapForm />} />
           <Route path="/games" element={<Games />} />
           <Route
             path="/games/the-stifling-dark"
