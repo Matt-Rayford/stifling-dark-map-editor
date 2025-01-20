@@ -24,7 +24,11 @@ import { initializeSpaceTypes } from '../../utils/space-types';
 import { useMapContext } from '../../utils/map-context';
 import { ToolsDrawer } from '../drawer/tools-drawer';
 
-export const MapEditor = () => {
+interface Props {
+  mapId: string;
+}
+
+export const MapEditor = ({ mapId }: Props) => {
   const [map, setMap] = useState<LoadMapQuery['map']>();
   const [selectedSpace, setSelectedSpace] = useState<Space>();
   const [canvas, setCanvas] = useState<HTMLCanvasElement>();
@@ -35,7 +39,6 @@ export const MapEditor = () => {
   const highlightedObject = useRef<Space>();
 
   const { user } = useSdUser();
-  const { mapId } = useParams();
   const { setIsOpen, setCurrentStep } = useTour();
   const {
     canvasWidth,
@@ -56,8 +59,7 @@ export const MapEditor = () => {
   } = useMapContext();
 
   useQuery(LoadMapDocument, {
-    variables: { id: mapId! },
-    skip: !mapId,
+    variables: { id: mapId },
     onCompleted: (data) => {
       if (data.map) {
         setMap(data.map);
@@ -115,6 +117,8 @@ export const MapEditor = () => {
 
       if (map.settings.backgroundImageUrl) {
         generateMapImage(map.settings.backgroundImageUrl);
+      } else {
+        clearBackground();
       }
 
       setMap(map);
